@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity(name = "notes")
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String title;
 
     @Column
