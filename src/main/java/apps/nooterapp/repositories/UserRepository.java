@@ -1,4 +1,4 @@
-package apps.nooterapp.repository;
+package apps.nooterapp.repositories;
 
 import apps.nooterapp.model.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
