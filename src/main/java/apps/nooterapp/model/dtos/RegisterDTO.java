@@ -6,11 +6,37 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class RegisterDTO {
-    private String username;
-    private String password;
-    private String confirmPassword;
+     String username;
+     String password;
+     String confirmPassword;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public RegisterDTO setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public RegisterDTO setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public RegisterDTO setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
+    }
 }

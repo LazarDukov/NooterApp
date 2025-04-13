@@ -11,9 +11,17 @@
           th:action="@{/register}"
           th:object="${registerDTO}">
         <label>Username:</label><br>
-        <input><br>
+        <input th:field="*{username}"
+               id="username"
+               name="username"
+               type="text"
+               placeholder="Username"><br>
         <label>Password:</label><br>
-        <input><br>
+        <input th:field="*{password}"
+               id="password"
+               name="password"
+               type="password"
+               placeholder="Password"><br>
         <label>Confirm password:</label><br>
         <input><br>
         <input type="submit" value="Register"><br>

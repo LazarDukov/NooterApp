@@ -28,5 +28,23 @@ public class User {
     @OneToMany
     private List<Note> notes;
 
+    public User setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public User setNotes(List<Note> notes) {
+        this.notes = notes;
+        return this;
+    }
 }
