@@ -12,18 +12,43 @@
           th:object="${registerDTO}">
         <label>Username:</label><br>
         <input th:field="*{username}"
+               th:errorclass="'is-invalid alert-danger'"
                id="username"
                name="username"
                type="text"
                placeholder="Username"><br>
+        <small th:if="${#fields.hasErrors('username')}"
+               th:errorclass="errors"
+               th:errors="*{username}"
+               class="text-danger">
+            Username error!
+        </small>
         <label>Password:</label><br>
         <input th:field="*{password}"
+               th:errorclass="'is-invalid alert-danger'"
                id="password"
                name="password"
                type="password"
                placeholder="Password"><br>
+        <small th:if="${#fields.hasErrors('password')}"
+               th:errorclass="errors"
+               th:errors="*{password}"
+               class="text-danger">
+            Password error!
+        </small>
         <label>Confirm password:</label><br>
-        <input><br>
+        <input th:field="*{confirmPassword}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="confirmPassword"
+               name="confirmPassword"
+               type="password"
+               placeholder="Confirm password"><br><br>
+        <small th:if="${#fields.hasErrors('confirmPassword')}"
+               th:errorclass="errors"
+               th:errors="*{confirmPassword}"
+               class="text-danger">
+            Password error!
+        </small>
         <input type="submit" value="Register"><br>
     </form>
 

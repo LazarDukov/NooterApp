@@ -1,5 +1,8 @@
 package apps.nooterapp.model.dtos;
 
+import apps.nooterapp.util.PasswordMatcherInterface;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@PasswordMatcherInterface(password = "password", confirmPassword = "confirmPassword")
 public class RegisterDTO {
-     String username;
-     String password;
-     String confirmPassword;
+    @Size(min = 6, max = 15, message = "Username input length should be between 6 and 15 letters!")
+
+    private String username;
+    @Size(min = 6, max = 30, message = "Password input length should be between 6 and 30 symbols!")
+
+    private String password;
+
+    private String confirmPassword;
 
     public String getUsername() {
         return username;
@@ -40,3 +49,7 @@ public class RegisterDTO {
         return this;
     }
 }
+
+
+
+
