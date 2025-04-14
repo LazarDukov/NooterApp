@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Nooter App</title>
 </head>
 <body>
+<div>
+    <h1>Register form</h1>
+    <form th:method="post"
+          th:action="@{/login}"
+          th:object="${loginDTO}">
+        <label>Username:</label><br>
+        <input th:field="*{username}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="username"
+               name="username"
+               type="text"
+               placeholder="Username"><br>
+        <label>Password:</label><br>
+        <input th:field="*{password}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="password"
+               name="password"
+               type="password"
+               placeholder="Password"><br>
 
+        <input type="submit" value="Login"><br>
+        <div th:if="${loginError}">
+            <p th:text="${loginError}"></p>
+        </div>
+    </form>
+
+
+</div>
 </body>
 </html>

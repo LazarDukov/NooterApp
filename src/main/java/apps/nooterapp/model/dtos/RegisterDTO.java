@@ -14,7 +14,6 @@ import lombok.Setter;
 @PasswordMatcherInterface(password = "password", confirmPassword = "confirmPassword")
 public class RegisterDTO {
     @Size(min = 6, max = 15, message = "Username input length should be between 6 and 15 letters!")
-
     private String username;
     @Size(min = 6, max = 30, message = "Password input length should be between 6 and 30 symbols!")
 

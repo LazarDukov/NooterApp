@@ -8,10 +8,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -28,9 +25,28 @@ public class User {
     @OneToMany
     private List<Note> notes;
 
+
+    public User() {
+    }
+
+    public User(Long id, String username, String password, List<Note> notes) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.notes = notes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public User setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public User setUsername(String username) {
@@ -38,9 +54,17 @@ public class User {
         return this;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public User setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
     }
 
     public User setNotes(List<Note> notes) {
