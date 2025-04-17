@@ -19,12 +19,5 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    private User getUser(Principal principal) {
-        return userRepository.findUserByUsername(principal.getName()).orElse(null);
-    }
 
-    public List<Note> getNotes(Principal principal) {
-        User user = getUser(principal);
-        return user.getNotes();
-    }
 }

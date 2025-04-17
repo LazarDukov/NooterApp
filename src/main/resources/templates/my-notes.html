@@ -15,9 +15,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="note: ${myNotes}">
-            <td th:text="*{note.title}"></td>
-            <td th:text="*{note.description}"></td>
+        <tr th:each="note : ${myNotes}">
+            <td th:text="${note.title}"></td>
+            <td th:text="${note.description}"></td>
         </tr>
         </tbody>
 

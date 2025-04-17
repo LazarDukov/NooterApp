@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ApplicationUserDetailsService implements UserDetailsService {
@@ -18,11 +21,19 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByUsername(username).map(this::mapUser).orElseThrow(() -> new UsernameNotFoundException("User with this username does not exist!"));
+        System.out.println("Im in this method");
+        return userRepository.getUserByUsername(username).map(this::mapUser)
+                .orElseThrow(() -> new UsernameNotFoundException("User with this username does not exist!"));
     }
 
     private UserDetails mapUser(User user) {
-        return org.springframework.security.core.userdetails.User.builder().username(user.getUsername()).password(user.getPassword()).build();
+        System.out.println("starting create user builder");
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .authorities(List.of())
+                .build();
     }
 }

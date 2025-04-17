@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class User {
     @Column
     private String password;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+
     private List<Note> notes;
 
 

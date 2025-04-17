@@ -27,7 +27,7 @@ public class Note {
     @Column
     private boolean active;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     public Note() {

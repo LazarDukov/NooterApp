@@ -15,7 +15,6 @@ public class LoginService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    private Model model;
 
 
     @Autowired
@@ -25,7 +24,7 @@ public class LoginService {
     }
 
     public User loginUser(LoginDTO loginDTO) {
-        Optional<User> optionalUser = userRepository.findUserByUsername(loginDTO.getUsername());
+        Optional<User> optionalUser = userRepository.getUserByUsername(loginDTO.getUsername());
         if (optionalUser.isPresent()) {
             String userPassword = optionalUser.get().getPassword();
             String credentialPassword = loginDTO.getPassword();

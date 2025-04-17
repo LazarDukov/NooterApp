@@ -3,6 +3,7 @@ package apps.nooterapp.web;
 import apps.nooterapp.model.dtos.LoginDTO;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.LoginService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +32,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute LoginDTO loginDTO, Model model) {
+    public String loginUser(@Valid @ModelAttribute LoginDTO loginDTO, Model model, HttpSession httpSession) {
         User user = loginService.loginUser(loginDTO);
         if (user != null && user.getUsername() != null) {
+
+            httpSession.setAttribute("user", user);
+            System.out.println("Successfully logged");
             return "redirect:/";
         }
         model.addAttribute("loginError", "Invalid username or password");
