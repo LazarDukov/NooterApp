@@ -11,6 +11,10 @@
     <li><a sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a></li>
     <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Log in</a></li>
     <li><a sec:authorize="isAuthenticated()" th:href="@{/my-notes}">My notes</a></li>
+
+    <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}" th:href="@{/}">
+        <input type="submit" name="" value="Logout">
+    </form>
 </ul>
 </body>
 </html>

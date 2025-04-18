@@ -5,6 +5,9 @@ import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.LoginService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,26 +25,19 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
-
-    @ModelAttribute("loginDTO")
-    public LoginDTO initLoginDTO() {
-        return new LoginDTO();
-    }
-
-    @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute LoginDTO loginDTO, Model model, HttpSession httpSession) {
-        User user = loginService.loginUser(loginDTO);
-        if (user != null && user.getUsername() != null) {
-
-            httpSession.setAttribute("user", user);
-            System.out.println("Successfully logged");
-            return "redirect:/";
+    public String loginPage(Model model) {
+        if (!model.containsAttribute("username")) {
+            model.addAttribute("username", "");
         }
-        model.addAttribute("loginError", "Invalid username or password");
         return "login";
+    }
+
+    @GetMapping("/login-error")
+    public String loginUserError(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
+                                 RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
+        redirectAttributes.addFlashAttribute("bad_credentials", true);
+        return "redirect:/login";
     }
 
 }
