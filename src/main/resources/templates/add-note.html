@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nooter App</title>
+</head>
+<body>
+<div>
+    <h1>Add note</h1>
+    <form th:method="post"
+          th:action="@{/add-note}"
+          th:object="${addNoteDTO}">
+        <label>Username:</label><br>
+        <input th:value="${addNoteDTO.title}" id="title"
+               name="title"
+               type="text"
+               placeholder="Title"><br>
+        <label>Description:</label><br>
+        <input th:value="${addNoteDTO.description}" id="description"
+               name="description"
+               type="text"
+               placeholder="Description"><br>
+        <input type="submit" value="Add note"><br>
+
+    </form>
+
+
+</div>
+</body>
+</html>

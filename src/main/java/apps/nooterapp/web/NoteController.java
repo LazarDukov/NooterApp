@@ -1,6 +1,7 @@
 package apps.nooterapp.web;
 
 
+import apps.nooterapp.model.dtos.AddNoteDTO;
 import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.w3c.dom.Node;
 
 import java.security.Principal;
@@ -23,13 +26,30 @@ public class NoteController {
 
 
     @GetMapping("/my-notes")
-    public String myNotesPage(Model model, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        if (user == null) {
+    public String myNotesPage(Principal principal, Model model) {
+        User loggedUser = noteService.loggedUser(principal);
+        if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
-        List<Note> notes = user.getNotes();
-        model.addAttribute("myNotes", notes);
+        List<Note> noteList = loggedUser.getNotes();
+        model.addAttribute("myNotes", noteList);
         return "my-notes";
     }
+
+    @GetMapping("/add-note")
+    public String addNotePage() {
+        return "add-note";
+    }
+
+    @ModelAttribute("addNoteDTO")
+    public AddNoteDTO addNoteDTO() {
+        return new AddNoteDTO();
+    }
+
+    @PostMapping("/add-note")
+    public String addNotePost(AddNoteDTO addNoteDTO, Principal principal) {
+        noteService.addNote(principal, addNoteDTO);
+        return "redirect:/my-notes";
+    }
+
 }
