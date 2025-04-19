@@ -10,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.w3c.dom.Node;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class NoteController {
@@ -31,7 +34,7 @@ public class NoteController {
         if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
-        List<Note> noteList = loggedUser.getNotes();
+        List<Note> noteList = loggedUser.getNotes().stream().filter(Note::isActive).collect(Collectors.toList());
         model.addAttribute("myNotes", noteList);
         return "my-notes";
     }
@@ -52,5 +55,9 @@ public class NoteController {
         return "redirect:/my-notes";
     }
 
-
+    @GetMapping("/my-notes/{id}")
+    public String archiveNoteOrTask(@PathVariable Long id, Principal principal) {
+        noteService.archiveNoteOrTask(id, principal);
+        return "redirect:/my-notes";
+    }
 }

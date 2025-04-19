@@ -12,6 +12,9 @@
         <tr>
             <th>Title</th>
             <th>Description</th>
+            <th>Type</th>
+            <th>Reminder time</th>
+            <th>If finished</th>
         </tr>
         </thead>
         <tbody>
@@ -19,8 +22,14 @@
             <td th:text="${note.title}"></td>
             <td th:text="${note.description}"></td>
             <td th:text="${note.type}"></td>
-            <td th:text="${note.active}"></td>
-            <td th:text="${note.reminderTime}"></td>
+            <td>
+                <span th:text="${note.reminderTime != null ? note.reminderTime : 'no reminder time'}"></span>
+                </span>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/{id}(id=${note.id})}">Done
+                    <i class="material-icons" style="color: yellow">remove_red_eye</i></a>
+            </td>
         </tr>
         </tbody>
 
