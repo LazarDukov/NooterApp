@@ -1,23 +1,30 @@
 package apps.nooterapp.model.dtos;
 
 import apps.nooterapp.model.enums.NoteType;
+import jakarta.persistence.Enumerated;
+
+import java.time.LocalDateTime;
 
 public class AddNoteDTO {
     private String title;
     private String description;
 
-    private String type;
+    @Enumerated
+    private NoteType type;
 
     private boolean active;
+
+    private LocalDateTime reminderTime;
 
     public AddNoteDTO() {
     }
 
-    public AddNoteDTO(String title, String description, String type, boolean active) {
+    public AddNoteDTO(String title, String description, NoteType type, boolean active, LocalDateTime reminderTime) {
         this.title = title;
         this.description = description;
         this.type = type;
         this.active = active;
+        this.reminderTime = reminderTime;
     }
 
 
@@ -39,11 +46,11 @@ public class AddNoteDTO {
         return this;
     }
 
-    public String getType() {
+    public NoteType getType() {
         return type;
     }
 
-    public AddNoteDTO setType(String type) {
+    public AddNoteDTO setType(NoteType type) {
         this.type = type;
         return this;
     }
@@ -54,6 +61,15 @@ public class AddNoteDTO {
 
     public AddNoteDTO setActive(boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public LocalDateTime getReminderTime() {
+        return reminderTime;
+    }
+
+    public AddNoteDTO setReminderTime(LocalDateTime reminderTime) {
+        this.reminderTime = reminderTime;
         return this;
     }
 }

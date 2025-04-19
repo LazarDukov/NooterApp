@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Nooter App</title>
+
+    <script>
+        function handleTypeChange(select) {
+            const reminderField = document.getElementById("reminderField");
+            if (select.value === "TASK") {
+                reminderField.style.display = "block";
+            } else {
+                reminderField.style.display = "none";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const typeSelect = document.getElementById("type");
+            handleTypeChange(typeSelect); // On load, check if it's already set to TASK
+            typeSelect.addEventListener("change", function () {
+                handleTypeChange(this);
+            });
+        });
+    </script>
 </head>
 <body>
 <div>
@@ -20,6 +39,16 @@
                name="description"
                type="text"
                placeholder="Description"><br>
+        <label>Choose type:</label>
+        <select name="type" id="type">
+            <option disabled selected hidden>Choose note or task:</option>
+            <option value="NOTE">Note</option>
+            <option value="TASK">Task</option>
+        </select>
+        <div id="reminderField" style="display: none;">
+            <label>Reminder date and time:</label><br>
+            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime" name="reminderTime"><br>
+        </div>
         <input type="submit" value="Add note"><br>
 
     </form>

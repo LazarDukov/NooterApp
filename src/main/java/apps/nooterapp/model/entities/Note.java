@@ -2,10 +2,8 @@ package apps.nooterapp.model.entities;
 
 import apps.nooterapp.model.enums.NoteType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 
 @Table
@@ -21,11 +19,14 @@ public class Note {
     @Column
     private String description;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private NoteType type;
 
     @Column
     private boolean active;
+
+    @Column
+    private LocalDateTime reminderTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
@@ -33,13 +34,14 @@ public class Note {
     public Note() {
     }
 
-    public Note(Long id, String title, String description, NoteType type, boolean active, User user) {
+    public Note(Long id, String title, String description, NoteType type, boolean active, LocalDateTime reminderTime, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.type = type;
         this.active = active;
         this.user = user;
+        this.reminderTime = reminderTime;
     }
 
     public Long getId() {
@@ -84,6 +86,15 @@ public class Note {
 
     public Note setActive(boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public LocalDateTime getReminderTime() {
+        return reminderTime;
+    }
+
+    public Note setReminderTime(LocalDateTime reminderTime) {
+        this.reminderTime = reminderTime;
         return this;
     }
 

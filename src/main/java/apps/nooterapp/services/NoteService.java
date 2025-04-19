@@ -27,21 +27,20 @@ public class NoteService {
     }
 
     public void addNote(Principal principal, AddNoteDTO addNoteDTO) {
-        System.out.println("Im in add note method");
         User loggedUser = userRepository.findUserByUsername(principal.getName());
-        System.out.println("logged user found");
         Note note = new Note();
         note.setTitle(addNoteDTO.getTitle());
         note.setDescription(addNoteDTO.getDescription());
-        note.setType(NoteType.NOTE);
+        note.setType(addNoteDTO.getType());
         note.setActive(true);
         note.setUser(loggedUser);
-        System.out.println("note created");
+        if (note.getType().equals(NoteType.TASK)) {
+            note.setReminderTime(addNoteDTO.getReminderTime());
+        }
         loggedUser.getNotes().add(note);
-        System.out.println(loggedUser.getNotes().size());
         noteRepository.save(note);
         userRepository.save(loggedUser);
-        System.out.println("method done");
+
 
     }
 }

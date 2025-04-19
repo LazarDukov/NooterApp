@@ -18,6 +18,9 @@
         <tr th:each="note : ${myNotes}">
             <td th:text="${note.title}"></td>
             <td th:text="${note.description}"></td>
+            <td th:text="${note.type}"></td>
+            <td th:text="${note.active}"></td>
+            <td th:text="${note.reminderTime}"></td>
         </tr>
         </tbody>
 
