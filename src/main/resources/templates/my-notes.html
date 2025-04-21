@@ -24,7 +24,7 @@
             <td th:text="${note.type}"></td>
             <td>
                 <span th:text="${note.reminderTime != null ? note.reminderTime : 'no reminder time'}"></span>
-                </span>
+
             </td>
             <td>
                 <a th:href="@{/my-notes/{id}(id=${note.id})}">Done

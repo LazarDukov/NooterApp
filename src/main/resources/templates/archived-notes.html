@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  <h1>My notes</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>Reminder time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note : ${archivedNotes}">
+      <td th:text="${note.title}"></td>
+      <td th:text="${note.description}"></td>
+      <td th:text="${note.type}"></td>
+      <td>
+        <span th:text="${note.reminderTime != null ? note.reminderTime : 'no reminder time'}"></span>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+
+</div>
+</body>
+</html>

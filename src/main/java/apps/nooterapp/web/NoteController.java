@@ -39,6 +39,18 @@ public class NoteController {
         return "my-notes";
     }
 
+    @GetMapping("/archived-notes")
+    public String archivedNotesPage(Principal principal, Model model) {
+        User loggedUser = noteService.loggedUser(principal);
+        if (loggedUser==null) {
+            return "redirect:/login";
+        }
+        List<Note> archivedNotes = loggedUser.getNotes().stream().filter(note -> !note.isActive()).toList();
+        model.addAttribute("archivedNotes", archivedNotes);
+        return "archived-notes";
+
+    }
+
     @GetMapping("/add-note")
     public String addNotePage() {
         return "add-note";
@@ -60,4 +72,6 @@ public class NoteController {
         noteService.archiveNoteOrTask(id, principal);
         return "redirect:/my-notes";
     }
+
+
 }
