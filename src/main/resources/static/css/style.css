@@ -1,4 +1,4 @@
-body.index-page {
+body.index-page, body.register {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -10,8 +10,50 @@ body.index-page {
     align-items: center;
     position: relative;
 }
-a.gold-button {
-    background-color: gold;
+
+.register-form {
+    background-color: darkgoldenrod;
+    padding: 30px;
+    color: black;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    width: 250px;
+    text-align: center;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    animation: fade-in 2.0s ease-in forwards;
+}
+
+.register-form input {
+    background-color: gray;
+    margin-bottom: 15px;
+}
+
+.register-form input::placeholder {
+    text-align: center;
+    color: black;
+    opacity: 0.5;
+}
+
+.register h1 {
+    text-align: center;
+    position: center;
+    color: white;
+}
+
+label {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.text-danger {
+    font-size: 0.9em;
+    color: red;
+    animation: fade-in 0.5 ease-in forwards;
+}
+
+a.gold-button, .register-button-input {
+    background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
     font-size: 18px;
@@ -22,12 +64,21 @@ a.gold-button {
     opacity: 0;
     animation-fill-mode: forwards;
     cursor: pointer;
+
 }
 
-.from-top {
+
+.from-top, .register h1 {
     animation: slideFromTop 1s ease-out forwards;
     animation-delay: 0.2s;
 }
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
 
 @keyframes slideFromTop {
     from {
@@ -40,7 +91,7 @@ a.gold-button {
     }
 }
 
-.from-bottom {
+.from-bottom, .register-button-input {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }
@@ -56,6 +107,7 @@ a.gold-button {
     }
 
 }
+
 .information-text {
     position: absolute;
     top: 30%;
@@ -64,11 +116,9 @@ a.gold-button {
     text-align: center;
     font-size: 24px;
     opacity: 0;
-    animation: slideInFromLeft 1s ease-out forwards;
-    animation-delay: 0.5s; /* AFTER buttons */
+    animation: slideFromTop 1s ease-out forwards;
+    animation-delay: 0.7s; /* AFTER buttons */
 }
 
-@keyframes slideInFromLeft {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
+
+

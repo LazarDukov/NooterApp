@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
-<body>
-<div>
-    <h1>Register form</h1>
-    <form th:method="post"
+<body class="register">
+<h1>Register form</h1>
+<div class="register-form  transparency-animation">
+    <form id="registerForm"
+            th:method="post"
           th:action="@{/register}"
           th:object="${registerDTO}">
         <label>Username:</label><br>
@@ -49,10 +52,10 @@
                class="text-danger">
             Password error!
         </small>
-        <input type="submit" value="Register"><br>
     </form>
-
-
+</div>
+<div>
+    <input class="register-button-input" type="submit" value="Register" form="registerForm"><br>
 </div>
 </body>
 </html>
