@@ -17,15 +17,16 @@
         Here you can organize your notes and reminders!
     </h1>
 </div>
-<ul style="list-style: none">
+<div class="button-container-my-profile">
 
-    <li><a th:href="@{/my-notes}">My notes</a></li>
-    <li><a th:href="@{/add-note}">Add note</a></li>
-    <li><a th:href="@{/archived-notes}">Archived note</a></li>
 
-    <form th:method="post" th:action="@{/logout}" th:href="@{/}">
-        <input type="submit" name="" value="Logout">
+    <a class="my-profile-button" th:href="@{/add-note}">Add note</a>
+    <a class="my-profile-button" th:href="@{/my-notes}">My notes</a>
+    <a class="my-profile-button" th:href="@{/archived-notes}">Archived note</a>
+
+    <form class="logout-form-wrapper" th:method="post" th:action="@{/logout}" th:href="@{/}">
+        <input type="submit" name="" value="Logout" class="my-profile-button logout-form">
     </form>
-</ul>
+</div>
 </body>
 </html>

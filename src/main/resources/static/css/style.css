@@ -1,4 +1,4 @@
-body.index-page, body.register, body.login, body.my-profile {
+body.index-page, body.register, body.login, body.my-profile, body.add-note {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -11,7 +11,7 @@ body.index-page, body.register, body.login, body.my-profile {
     position: relative;
 }
 
-.register-form, .login-form {
+.register-form, .login-form, .add-note-form {
     background-color: darkgoldenrod;
     padding: 30px;
     color: black;
@@ -52,7 +52,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -91,9 +91,27 @@ a.gold-button, .register-button-input, .login-button-input {
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input {
+.from-bottom, .register-button-input, .login-button-input, .my-profile-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logout-form-wrapper {
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    display: inline; /* Makes the form behave like the links */
+    margin: 0;
+
 }
 
 @keyframes slideFromBottom {

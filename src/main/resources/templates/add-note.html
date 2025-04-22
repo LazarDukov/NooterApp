@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Nooter App</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <script>
         function handleTypeChange(select) {
             const reminderField = document.getElementById("reminderField");
@@ -23,8 +26,8 @@
         });
     </script>
 </head>
-<body>
-<div>
+<body class="add-note">
+<div class="add-note-form">
     <h1>Add note</h1>
     <form th:method="post"
           th:action="@{/add-note}"
@@ -39,7 +42,7 @@
                name="description"
                type="text"
                placeholder="Description"><br>
-        <label>Choose type:</label>
+        <label>Choose type:</label><br>
         <select name="type" id="type">
             <option disabled selected hidden>Choose note or task:</option>
             <option value="NOTE">Note</option>
