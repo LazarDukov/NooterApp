@@ -9,27 +9,24 @@ import apps.nooterapp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class NoteService {
     private UserRepository userRepository;
     private NoteRepository noteRepository;
+    private UserService userService;
 
-    public NoteService(UserRepository userRepository, NoteRepository noteRepository) {
+    public NoteService(UserRepository userRepository, NoteRepository noteRepository, UserService userService) {
         this.userRepository = userRepository;
         this.noteRepository = noteRepository;
+        this.userService = userService;
     }
 
 
-    public User loggedUser(Principal principal) {
-        return userRepository.findUserByUsername(principal.getName());
-    }
+
 
     public void addNote(Principal principal, AddNoteDTO addNoteDTO) {
-        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        User loggedUser = userService.loggedUser(principal);
         Note note = new Note();
         note.setTitle(addNoteDTO.getTitle());
         note.setDescription(addNoteDTO.getDescription());
@@ -46,7 +43,7 @@ public class NoteService {
 
     }
 
-    public void archiveNoteOrTask(Long id, Principal principal) {
+    public void archiveNoteOrTask(Long id) {
         Note note = noteRepository.findNoteById(id);
         note.setActive(false);
         noteRepository.save(note);

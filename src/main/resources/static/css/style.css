@@ -1,4 +1,4 @@
-body.index-page, body.register {
+body.index-page, body.register, body.login, body.my-profile {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -11,7 +11,7 @@ body.index-page, body.register {
     position: relative;
 }
 
-.register-form {
+.register-form, .login-form {
     background-color: darkgoldenrod;
     padding: 30px;
     color: black;
@@ -24,18 +24,18 @@ body.index-page, body.register {
     animation: fade-in 2.0s ease-in forwards;
 }
 
-.register-form input {
+.register-form input, .login-form input {
     background-color: gray;
     margin-bottom: 15px;
 }
 
-.register-form input::placeholder {
+.register-form input::placeholder, .login-form input::placeholder {
     text-align: center;
     color: black;
     opacity: 0.5;
 }
 
-.register h1 {
+.register h1, .login h1 {
     text-align: center;
     position: center;
     color: white;
@@ -52,7 +52,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input {
+a.gold-button, .register-button-input, .login-button-input {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -68,7 +68,7 @@ a.gold-button, .register-button-input {
 }
 
 
-.from-top, .register h1 {
+.from-top, .register h1, .login h1 {
     animation: slideFromTop 1s ease-out forwards;
     animation-delay: 0.2s;
 }
@@ -91,7 +91,7 @@ a.gold-button, .register-button-input {
     }
 }
 
-.from-bottom, .register-button-input {
+.from-bottom, .register-button-input, .login-button-input {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+<body class="my-profile">
+<div class="">
+    <h1 class="information-text"> Welcome,
+        <th:block sec:authentication="name"></th:block>
+        Here you can organize your notes and reminders!
+    </h1>
+</div>
+<ul style="list-style: none">
+
+    <li><a th:href="@{/my-notes}">My notes</a></li>
+    <li><a th:href="@{/add-note}">Add note</a></li>
+    <li><a th:href="@{/archived-notes}">Archived note</a></li>
+
+    <form th:method="post" th:action="@{/logout}" th:href="@{/}">
+        <input type="submit" name="" value="Logout">
+    </form>
+</ul>
+</body>
+</html>

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Nooter App</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<div>
-    <h1>Register form</h1>
-    <form th:method="post"
+<body class="login">
+<h1>Login</h1>
+<div class="login-form">
+    <form id="loginForm"
+          th:method="post"
           th:action="@{/login}">
         <label>Username:</label><br>
         <input th:value="${username}" id="username"
@@ -19,12 +22,14 @@
                name="password"
                type="password"
                placeholder="Password"><br>
-        <p class="errors alert alert-danger" th:if="${bad_credentials}">Username or password incorrect!</p>
-        <input type="submit" value="Login"><br>
+        <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
 
     </form>
 
 
+</div>
+<div>
+    <input class="login-button-input" type="submit" value="Login" form="loginForm"><br>
 </div>
 </body>
 </html>

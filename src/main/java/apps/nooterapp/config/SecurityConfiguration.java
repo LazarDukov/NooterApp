@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).
-                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/", "/login", "/register", "/h2-console/**", "/my-notes", "/add-note", "/archived-notes")
+                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/", "/login", "/register", "/h2-console/**","/my-profile", "/my-notes", "/add-note", "/archived-notes")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         .loginPage("/login")
                         .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                         .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/my-profile", true)
                         .failureUrl("/login-error")
                         .permitAll())
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID"));

@@ -5,32 +5,32 @@ import apps.nooterapp.model.dtos.AddNoteDTO;
 import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
-import jakarta.servlet.http.HttpSession;
+import apps.nooterapp.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.w3c.dom.Node;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Controller
 public class NoteController {
     private NoteService noteService;
+    private UserService userService;
 
-    public NoteController(NoteService notesService) {
+    public NoteController(NoteService notesService, UserService userService) {
         this.noteService = notesService;
+        this.userService = userService;
     }
 
 
     @GetMapping("/my-notes")
     public String myNotesPage(Principal principal, Model model) {
-        User loggedUser = noteService.loggedUser(principal);
+        User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
@@ -41,8 +41,8 @@ public class NoteController {
 
     @GetMapping("/archived-notes")
     public String archivedNotesPage(Principal principal, Model model) {
-        User loggedUser = noteService.loggedUser(principal);
-        if (loggedUser==null) {
+        User loggedUser = userService.loggedUser(principal);
+        if (loggedUser == null) {
             return "redirect:/login";
         }
         List<Note> archivedNotes = loggedUser.getNotes().stream().filter(note -> !note.isActive()).toList();
@@ -68,8 +68,8 @@ public class NoteController {
     }
 
     @GetMapping("/my-notes/{id}")
-    public String archiveNoteOrTask(@PathVariable Long id, Principal principal) {
-        noteService.archiveNoteOrTask(id, principal);
+    public String archiveNoteOrTask(@PathVariable Long id) {
+        noteService.archiveNoteOrTask(id);
         return "redirect:/my-notes";
     }
 
