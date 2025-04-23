@@ -27,9 +27,13 @@
     </script>
 </head>
 <body class="add-note">
+<div th:replace="~{fragments/button-container::button-container}">
+    Button container
+</div>
 <div class="add-note-form">
     <h1>Add note</h1>
-    <form th:method="post"
+    <form id="addNoteForm"
+          th:method="post"
           th:action="@{/add-note}"
           th:object="${addNoteDTO}">
         <label>Username:</label><br>
@@ -50,13 +54,15 @@
         </select>
         <div id="reminderField" style="display: none;">
             <label>Reminder date and time:</label><br>
-            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime" name="reminderTime"><br>
+            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
+                   name="reminderTime"><br>
         </div>
-        <input type="submit" value="Add note"><br>
 
     </form>
 
-
+</div>
+<div>
+    <input class="add-note-input" type="submit" value="Add note" form="addNoteForm"><br>
 </div>
 </body>
 </html>
