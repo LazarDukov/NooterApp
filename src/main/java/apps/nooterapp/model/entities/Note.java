@@ -1,10 +1,10 @@
 package apps.nooterapp.model.entities;
 
 import apps.nooterapp.model.enums.NoteType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-
 
 @Table
 @Entity(name = "notes")

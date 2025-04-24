@@ -23,8 +23,6 @@ public class NoteService {
     }
 
 
-
-
     public void addNote(Principal principal, AddNoteDTO addNoteDTO) {
         User loggedUser = userService.loggedUser(principal);
         Note note = new Note();
@@ -47,5 +45,10 @@ public class NoteService {
         Note note = noteRepository.findNoteById(id);
         note.setActive(false);
         noteRepository.save(note);
+    }
+
+    public Note viewNoteOrTask(Long id) {
+        return noteRepository.findNoteById(id);
+
     }
 }

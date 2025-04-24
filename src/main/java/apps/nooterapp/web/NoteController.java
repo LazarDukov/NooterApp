@@ -6,12 +6,10 @@ import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -67,10 +65,17 @@ public class NoteController {
         return "redirect:/my-notes";
     }
 
-    @GetMapping("/my-notes/{id}")
+    @GetMapping("/my-notes/finish/{id}")
     public String archiveNoteOrTask(@PathVariable Long id) {
         noteService.archiveNoteOrTask(id);
         return "redirect:/my-notes";
+    }
+
+    @GetMapping("/my-notes/view/{id}")
+    @ResponseBody
+    public ResponseEntity<Note> viewNoteOrTask(@PathVariable Long id) {
+        Note note = noteService.viewNoteOrTask(id);
+        return ResponseEntity.ok(note);
     }
 
 
