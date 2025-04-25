@@ -1,4 +1,4 @@
-body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes {
+body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -11,7 +11,7 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     position: relative;
 }
 
-.register-form, .login-form, .add-note-form, .my-notes-table {
+.register-form, .login-form, .add-note-form, .my-notes-table, .archived-notes-table {
     background-color: darkgoldenrod;
     padding: 30px;
     color: black;
@@ -36,7 +36,7 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     opacity: 0.5;
 }
 
-.register h1, .login h1, .my-notes h1 {
+.register h1, .login h1, .my-notes h1, .archived-notes h1 {
     text-align: center;
     position: center;
     color: white;
@@ -53,7 +53,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input,  .popup a.close-popUp-button {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .popup a.close-popUp-button {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -67,8 +67,6 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     cursor: pointer;
 
 }
-
-
 
 
 .from-top, .register h1, .login h1, .my-profile-button {
@@ -94,7 +92,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input, .add-note-input,  .popup a.close-popUp-button {
+.from-bottom, .register-button-input, .login-button-input, .add-note-input, .popup a.close-popUp-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }
@@ -141,7 +139,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     animation-delay: 0.7s; /* AFTER buttons */
 }
 
-.my-notes-table {
+.my-notes-table, .archived-notes-table {
     border-collapse: collapse;
     width: auto;
     min-width: 1000px;
@@ -151,7 +149,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     animation: fade-in 1s ease-out forwards;
 }
 
-.my-notes {
+.my-notes, .archived-notes {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -164,7 +162,9 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 .my-notes-table th,
-.my-notes-table td {
+.my-notes-table td,
+.archived-notes-table th,
+.archived-notes-table td {
     background-color: darkgoldenrod;
     width: 200px;
     height: 20px;
@@ -174,17 +174,18 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     color: black;
 }
 
-.my-notes-table th {
+.my-notes-table th, .archived-notes-table th {
     font-size: 20px;
 }
 
-.my-notes-table td a, .my-notes-table td a i {
+.my-notes-table td a, .my-notes-table td a i,
+.archived-notes-table td a {
     color: black;
     text-decoration: none;
 
 }
 
-.my-notes-table td a:hover {
+.my-notes-table td a:hover, .archived-notes-table td a:hover {
     color: black;
     text-decoration: underline;
 }
@@ -227,6 +228,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     white-space: normal;
     text-align: center;
 }
+
 .close-popUp-button {
     display: inline-block;
     margin-top: 20px;

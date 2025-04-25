@@ -77,6 +77,11 @@ public class NoteController {
         Note note = noteService.viewNoteOrTask(id);
         return ResponseEntity.ok(note);
     }
-
+    @GetMapping("/archived-notes/view/{id}")
+    @ResponseBody
+    public ResponseEntity<Note> viewArchivedNoteOrTask(@PathVariable Long id) {
+        Note note = noteService.viewNoteOrTask(id);
+        return ResponseEntity.ok(note);
+    }
 
 }
