@@ -1,6 +1,6 @@
 body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes, body.edit-note {
     background-color: black;
-    color: white;
+    color: darkgoldenrod;
     font-family: sans-serif;
     height: 100vh;
     margin: 0;
@@ -40,7 +40,7 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
 .register h1, .login h1, .my-notes h1, .archived-notes h1 {
     text-align: center;
     position: center;
-    color: white;
+    color: darkgoldenrod;
 }
 
 label {
@@ -152,7 +152,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 
 .my-notes, .archived-notes {
     background-color: black;
-    color: white;
+    color: darkgoldenrod;
     font-family: sans-serif;
     height: 100vh;
     margin: 0;
