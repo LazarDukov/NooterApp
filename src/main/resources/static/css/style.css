@@ -1,5 +1,5 @@
 body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes, body.edit-note {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.9);
     color: darkgoldenrod;
     font-family: sans-serif;
     height: 100vh;
@@ -37,6 +37,8 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     opacity: 0.5;
 }
 
+
+
 .register h1, .login h1, .my-notes h1, .archived-notes h1 {
     text-align: center;
     position: center;
@@ -54,7 +56,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input,.edit-note-input, .popup a.close-popUp-button {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -93,7 +95,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input, .add-note-input,.edit-note-input, .popup a.close-popUp-button {
+.from-bottom, .register-button-input, .login-button-input, .add-note-input, .edit-note-input, .popup a.close-popUp-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }

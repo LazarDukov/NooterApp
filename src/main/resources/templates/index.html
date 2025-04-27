@@ -15,18 +15,18 @@
     <h3 class="information-text" sec:authorize="!isAuthenticated()">To proceed forward,<br> please register or log in!
     </h3>
 </div>
-<ul style="list-style: none">
-    <div class="button-container">
-        <a class="gold-button from-top" sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a>
-        <a class="gold-button from-bottom" sec:authorize="!isAuthenticated()" th:href="@{/login}">Log in</a>
-    </div>
-    <li><a sec:authorize="isAuthenticated()" th:href="@{/my-notes}">My notes</a></li>
-    <li><a sec:authorize="isAuthenticated()" th:href="@{/add-note}">Add note</a></li>
-    <li><a sec:authorize="isAuthenticated()" th:href="@{/archived-notes}">Archived note</a></li>
 
-    <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}" th:href="@{/}">
-        <input type="submit" name="" value="Logout">
-    </form>
-</ul>
+<div class="button-container">
+    <a class="gold-button from-top" sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a>
+    <a class="gold-button from-bottom" sec:authorize="!isAuthenticated()" th:href="@{/login}">Log in</a>
+</div>
+<a sec:authorize="isAuthenticated()" th:href="@{/my-notes}">My notes</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/add-note}">Add note</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/archived-notes}">Archived note</a>
+
+<form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}" th:href="@{/}">
+    <input type="submit" name="" value="Logout">
+</form>
+
 </body>
 </html>
