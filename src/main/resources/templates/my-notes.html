@@ -25,6 +25,7 @@
             <th>Type</th>
             <th>Reminder time</th>
             <th>Description</th>
+            <th>Edit</th>
             <th>If finished</th>
         </tr>
         </thead>
@@ -50,6 +51,10 @@
                         Close
                     </a>
                 </div>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: yellow">edit</i></a>
             </td>
             <td>
                 <a th:href="@{/my-notes/finish/{id}(id=${note.id})}">

@@ -26,35 +26,35 @@
         });
     </script>
 </head>
-<body class="add-note">
+<body class="edit-note">
 <div th:replace="~{fragments/button-container::button-container}">
     Button container
 </div>
-<div class="add-note-form">
-    <h1>Add note</h1>
-    <form id="addNoteForm"
+<div class="edit-note-form">
+    <h1>Edit note</h1>
+    <form id="editNoteForm"
           th:method="post"
-          th:action="@{/add-note}"
-          th:object="${addNoteDTO}">
+          th:action="@{/my-notes/edit-note/{id}(id=${editNoteDTO.id})}"
+          th:object="${editNoteDTO}">
         <label>Title:</label><br>
-        <input th:value="${addNoteDTO.title}" id="title"
+        <input th:field="${editNoteDTO.title}" id="title"
                name="title"
                type="text"
                placeholder="Title"><br>
         <label>Description:</label><br>
-        <input th:value="${addNoteDTO.description}" id="description"
+        <input th:field="${editNoteDTO.description}" id="description"
                name="description"
                type="text"
                placeholder="Description"><br>
         <label>Choose type:</label><br>
-        <select name="type" id="type">
-            <option disabled selected hidden>Choose note or task:</option>
+        <select name="type" id="type" th:field="*{type}">
+            <option disabled hidden value="">Choose note or task:</option>
             <option value="NOTE">Note</option>
             <option value="TASK">Task</option>
         </select>
         <div id="reminderField" style="display: none;">
             <label>Reminder date and time:</label><br>
-            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
+            <input th:field="${editNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
                    name="reminderTime"><br>
         </div>
 
@@ -62,7 +62,7 @@
 
 </div>
 <div>
-    <input class="add-note-input" type="submit" value="Add note" form="addNoteForm"><br>
+    <input class="edit-note-input" type="submit" value="Edit note" form="editNoteForm"><br>
 </div>
 </body>
 </html>

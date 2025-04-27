@@ -2,6 +2,7 @@ package apps.nooterapp.web;
 
 
 import apps.nooterapp.model.dtos.AddNoteDTO;
+import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
@@ -59,6 +60,11 @@ public class NoteController {
         return new AddNoteDTO();
     }
 
+    @ModelAttribute("editNoteDTO")
+    public EditNoteDTO editNoteDTO() {
+        return new EditNoteDTO();
+    }
+
     @PostMapping("/add-note")
     public String addNotePost(AddNoteDTO addNoteDTO, Principal principal) {
         noteService.addNote(principal, addNoteDTO);
@@ -77,6 +83,7 @@ public class NoteController {
         Note note = noteService.viewNoteOrTask(id);
         return ResponseEntity.ok(note);
     }
+
     @GetMapping("/archived-notes/view/{id}")
     @ResponseBody
     public ResponseEntity<Note> viewArchivedNoteOrTask(@PathVariable Long id) {
@@ -84,4 +91,17 @@ public class NoteController {
         return ResponseEntity.ok(note);
     }
 
+    @GetMapping("/my-notes/edit-note/{id}")
+    public String showEditNotePage(@PathVariable Long id, Model model) {
+        Note note = noteService.viewNoteOrTask(id);
+        model.addAttribute("editNoteDTO", note);
+        return "edit-note";
+    }
+
+    @PostMapping("/my-notes/edit-note/{id}")
+    public String postEditNotePage(@PathVariable Long id, @ModelAttribute EditNoteDTO editNoteDTO) {
+        noteService.editNoteOrTask(id, editNoteDTO);
+        return "redirect:/my-notes";
+
+    }
 }

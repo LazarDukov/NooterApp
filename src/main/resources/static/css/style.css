@@ -1,4 +1,4 @@
-body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes {
+body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes, body.edit-note {
     background-color: black;
     color: white;
     font-family: sans-serif;
@@ -11,7 +11,7 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     position: relative;
 }
 
-.register-form, .login-form, .add-note-form, .my-notes-table, .archived-notes-table {
+.register-form, .login-form, .add-note-form, .edit-note-form, .my-notes-table, .archived-notes-table {
     background-color: darkgoldenrod;
     padding: 30px;
     color: black;
@@ -25,12 +25,13 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     animation: fade-in 2.0s ease-in forwards;
 }
 
-.register-form input, .login-form input, .add-note-form input, .add-note-form select {
+.register-form input, .login-form input, .add-note-form input, .add-note-form select, .edit-note-form input, .edit-note-form select {
     background-color: gray;
     margin-bottom: 15px;
 }
 
-.register-form input::placeholder, .login-form input::placeholder, .add-note input::placeholder, .add-note select::placeholder {
+.register-form input::placeholder, .login-form input::placeholder, .add-note input::placeholder, .add-note select::placeholder,
+.edit-note input::placeholder, .edit-note select::placeholder {
     text-align: center;
     color: black;
     opacity: 0.5;
@@ -53,7 +54,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .popup a.close-popUp-button {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input,.edit-note-input, .popup a.close-popUp-button {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -92,7 +93,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input, .add-note-input, .popup a.close-popUp-button {
+.from-bottom, .register-button-input, .login-button-input, .add-note-input,.edit-note-input, .popup a.close-popUp-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }

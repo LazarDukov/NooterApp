@@ -1,6 +1,7 @@
 package apps.nooterapp.services;
 
 import apps.nooterapp.model.dtos.AddNoteDTO;
+import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.model.enums.NoteType;
@@ -50,5 +51,17 @@ public class NoteService {
     public Note viewNoteOrTask(Long id) {
         return noteRepository.findNoteById(id);
 
+    }
+
+    public void editNoteOrTask(Long id, EditNoteDTO editNoteDTO) {
+        Note note = noteRepository.findNoteById(id);
+        note.setTitle(editNoteDTO.getTitle());
+        note.setDescription(editNoteDTO.getDescription());
+        note.setType(editNoteDTO.getType());
+        note.setActive(true);
+        if (note.getType().equals(NoteType.TASK)) {
+            note.setReminderTime(editNoteDTO.getReminderTime());
+        }
+        noteRepository.save(note);
     }
 }
