@@ -23,7 +23,7 @@
         <tr>
             <th>Title</th>
             <th>Type</th>
-            <th>Reminder time</th>
+            <th>Reminder time<br>(dd/MM/yy HH:mm)</th>
             <th>Description</th>
             <th>Edit</th>
             <th>If finished</th>
@@ -35,8 +35,8 @@
             <td th:text="${note.title}"></td>
             <td th:text="${note.type}"></td>
             <td>
-                <span th:text="${note.reminderTime != null ? note.reminderTime : 'no reminder time'}"></span>
 
+                <span th:text="${note.reminderTime != null ? #temporals.format(note.reminderTime, 'dd/MM/yy HH:mm') : 'no reminder time'}"></span>
             </td>
             <td>
                 <a class="open-popUp-button" popup-open="popup-1" href="javascript:void(0)">
