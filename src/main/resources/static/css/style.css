@@ -10,6 +10,15 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     align-items: center;
     position: relative;
 }
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 10px;
+}
 
 .register-form, .login-form, .add-note-form, .edit-note-form, .my-notes-table, .archived-notes-table {
     background-color: darkgoldenrod;

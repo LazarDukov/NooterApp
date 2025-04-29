@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nooter application</title>
     <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
@@ -57,5 +57,9 @@
 <div>
     <input class="register-button-input" type="submit" value="Register" form="registerForm"><br>
 </div>
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
 </body>
 </html>
