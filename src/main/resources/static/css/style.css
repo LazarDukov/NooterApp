@@ -10,6 +10,7 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     align-items: center;
     position: relative;
 }
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -45,7 +46,6 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     color: black;
     opacity: 0.5;
 }
-
 
 
 .register h1, .login h1, .my-notes h1, .archived-notes h1 {
@@ -109,6 +109,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     animation-delay: 0.2s;
 }
 
+
 .button-container {
     display: flex;
     gap: 20px;
@@ -139,9 +140,16 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 
 }
 
+.welcome-username, .welcome-email {
+    color: gold;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
 .information-text {
     position: absolute;
-    top: 30%;
+    top: 11%;
     left: 0;
     width: 100%;
     text-align: center;
@@ -149,6 +157,12 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     opacity: 0;
     animation: slideFromTop 1s ease-out forwards;
     animation-delay: 0.7s; /* AFTER buttons */
+}
+
+.my-profile h2 {
+    text-align: center;
+    width: 100%;
+
 }
 
 .my-notes-table, .archived-notes-table {

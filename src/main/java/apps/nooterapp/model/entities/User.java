@@ -1,6 +1,7 @@
 package apps.nooterapp.model.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,21 @@ public class User {
     private String username;
 
     @Column
+    private String email;
+    @Column
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
-
     private List<Note> notes;
 
 
     public User() {
     }
 
-    public User(Long id, String username, String password, List<Note> notes) {
+    public User(Long id, String username, String email, String password, List<Note> notes) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.notes = notes;
     }
@@ -53,6 +56,15 @@ public class User {
 
     public User setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 

@@ -14,13 +14,36 @@
 <body class="my-profile">
 <div>
     <h1 class="information-text"> Welcome,
-        <th:block sec:authentication="name"></th:block>
+        <div class="welcome-username">
+            <th:block sec:authentication="name"></th:block>
+        </div>
         Here you can organize your notes and reminders!
     </h1>
 </div>
 <div th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
+<div>
+    <h2>Your email:
+        <div class="welcome-email">
+            <th:block th:text="${email}"></th:block>
+        </div>
+    </h2>
+    <h2>
+        Your score:<br>
+        Note number:
+        <div class="welcome-email">
+            <th:block th:text="${notesNumber}"></th:block>
+        </div>
+        Task number:
+        <div class="welcome-email">
+            <th:block th:text="${taskNumber}"></th:block>
+        </div>
+
+    </h2>
+
+</div>
+
 <footer th:replace="~{fragments/copyright :: footer}">
 
 

@@ -22,6 +22,7 @@ public class RegisterService {
     public void registerNewUser(RegisterDTO registerDTO) {
         User newUser = new User();
         newUser.setUsername(registerDTO.getUsername());
+        newUser.setEmail(registerDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         userRepository.save(newUser);
