@@ -79,7 +79,7 @@ public class NoteController {
     @PostMapping("/add-note")
     public String addNotePost(AddNoteDTO addNoteDTO, Principal principal) {
         noteService.addNote(principal, addNoteDTO);
-        return "redirect:/my-notes";
+        return "redirect:/my-profile";
     }
 
     @GetMapping("/my-notes/finish/{id}")
