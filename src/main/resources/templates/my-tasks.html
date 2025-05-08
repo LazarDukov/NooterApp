@@ -10,34 +10,39 @@
 
 </head>
 
-<body class="my-notes">
+<body class="my-tasks">
 
-<h1>My notes</h1>
+<h1>My tasks</h1>
 <div th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
 
 <div>
-    <table class="my-notes-table">
+    <table class="my-tasks-table">
         <thead>
         <tr>
             <th>Title</th>
+            <th>Reminder time<br>(dd/MM/yy HH:mm)</th>
             <th>Description</th>
             <th>Edit</th>
             <th>If finished</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="note : ${myNotes}"
-            th:attr="data-description=${note.description}">
-            <td th:text="${note.title}"></td>
+        <tr th:each="task : ${myTasks}"
+            th:attr="data-description=${task.description}">
+            <td th:text="${task.title}"></td>
+            <td>
+
+                <span th:text="${task.reminderTime != null ? #temporals.format(task.reminderTime, 'dd/MM/yy HH:mm') : 'no reminder time'}"></span>
+            </td>
             <td>
                 <a class="open-popUp-button" popup-open="popup-1" href="javascript:void(0)">
                     <i class="material-icons" style="color: antiquewhite">remove_red_eye</i></a>
                 <div class="popup" popup-name="popup-1">
                     <div class="popup-content">
                         <h2>Description</h2>
-                        <p th:text="${note.description}"></p>
+                        <p th:text="${task.description}"></p>
 
                     </div>
                     <a class="close-popUp-button" popup-close="popup-1" href="javascript:void(0)">
@@ -46,11 +51,11 @@
                 </div>
             </td>
             <td>
-                <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
+                <a th:href="@{/my-tasks/edit-task/{id}(id=${task.id})}">
                     <i class="material-icons" style="color: yellow">edit</i></a>
             </td>
             <td>
-                <a th:href="@{/my-notes/finish/{id}(id=${note.id})}">
+                <a th:href="@{/my-tasks/finish/{id}(id=${task.id})}">
                     <i class="material-icons" style="color: greenyellow">done</i></a>
             </td>
         </tr>

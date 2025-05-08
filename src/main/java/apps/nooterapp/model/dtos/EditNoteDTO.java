@@ -2,6 +2,7 @@ package apps.nooterapp.model.dtos;
 
 import apps.nooterapp.model.enums.NoteType;
 import jakarta.persistence.Enumerated;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +14,7 @@ public class EditNoteDTO {
     private NoteType type;
 
     private boolean active;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime reminderTime;
 
     public EditNoteDTO() {

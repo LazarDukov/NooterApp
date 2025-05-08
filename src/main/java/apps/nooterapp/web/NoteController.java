@@ -33,9 +33,20 @@ public class NoteController {
         if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
-        List<Note> noteList = loggedUser.getNotes().stream().filter(Note::isActive).collect(Collectors.toList());
+        List<Note> noteList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("NOTE")).collect(Collectors.toList());
         model.addAttribute("myNotes", noteList);
         return "my-notes";
+    }
+
+    @GetMapping("/my-tasks")
+    public String myTasksPage(Principal principal, Model model) {
+        User loggedUser = userService.loggedUser(principal);
+        if (loggedUser == null) {
+            return "redirect:/login"; // or show an error
+        }
+        List<Note> taskList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK")).collect(Collectors.toList());
+        model.addAttribute("myTasks", taskList);
+        return "my-tasks";
     }
 
     @GetMapping("/archived-notes")
@@ -72,14 +83,27 @@ public class NoteController {
     }
 
     @GetMapping("/my-notes/finish/{id}")
-    public String archiveNoteOrTask(@PathVariable Long id) {
+    public String archiveNote(@PathVariable Long id) {
         noteService.archiveNoteOrTask(id);
         return "redirect:/my-notes";
     }
 
+    @GetMapping("/my-tasks/finish/{id}")
+    public String archiveTask(@PathVariable Long id) {
+        noteService.archiveNoteOrTask(id);
+        return "redirect:/my-tasks";
+    }
+
     @GetMapping("/my-notes/view/{id}")
     @ResponseBody
-    public ResponseEntity<Note> viewNoteOrTask(@PathVariable Long id) {
+    public ResponseEntity<Note> viewNote(@PathVariable Long id) {
+        Note note = noteService.viewNoteOrTask(id);
+        return ResponseEntity.ok(note);
+    }
+
+    @GetMapping("/my-tasks/view/{id}")
+    @ResponseBody
+    public ResponseEntity<Note> viewTask(@PathVariable Long id) {
         Note note = noteService.viewNoteOrTask(id);
         return ResponseEntity.ok(note);
     }
@@ -97,6 +121,12 @@ public class NoteController {
         model.addAttribute("editNoteDTO", note);
         return "edit-note";
     }
+    @GetMapping("/my-tasks/edit-task/{id}")
+    public String showEditTaskPage(@PathVariable Long id, Model model) {
+        Note note = noteService.viewNoteOrTask(id);
+        model.addAttribute("editNoteDTO", note);
+        return "edit-task";
+    }
 
     @PostMapping("/my-notes/edit-note/{id}")
     public String postEditNotePage(@PathVariable Long id, @ModelAttribute EditNoteDTO editNoteDTO) {
@@ -104,4 +134,13 @@ public class NoteController {
         return "redirect:/my-notes";
 
     }
+
+
+    @PostMapping("/my-tasks/edit-task/{id}")
+    public String postEditTaskPage(@PathVariable Long id, @ModelAttribute EditNoteDTO editNoteDTO) {
+        noteService.editNoteOrTask(id, editNoteDTO);
+        return "redirect:/my-tasks";
+
+    }
+
 }
