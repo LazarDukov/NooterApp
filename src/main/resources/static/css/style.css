@@ -65,7 +65,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .open-popUp-button {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -104,11 +104,16 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input, .add-note-input, .edit-note-input, .popup a.close-popUp-button {
+.from-bottom, .register-button-input, .login-button-input, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .open-popUp-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }
-
+.open-popUp-button {
+    padding-top: 5px;
+    padding-left: 5px;
+    height: 40px;
+    width: 10px;
+}
 
 .button-container {
     display: flex;
@@ -116,6 +121,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    padding-top: 10px;
 }
 
 .logout-form-wrapper {
@@ -162,6 +168,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 .my-profile h2 {
     text-align: center;
     width: 100%;
+    margin-bottom: 0;
 
 }
 

@@ -8,6 +8,8 @@
     <title>Nooter application</title>
     <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 
 </head>
@@ -27,23 +29,43 @@
     <h2>Your email:
         <div class="welcome-email">
             <th:block th:text="${email}"></th:block>
+            <button class="open-popUp-button" popup-open="popup-edit-email"><i class="material-icons"
+                                                                               style="color: yellow">edit</i></a>
+            </button>
         </div>
     </h2>
-    <h2>
-        Active notes:
-        <div class="welcome-email">
-            <th:block th:text="${notesNumber}"></th:block>
-        </div>
-        Active tasks:
-        <div class="welcome-email">
-            <th:block th:text="${taskNumber}"></th:block>
-        </div>
-        Total Archived:
-        <div class="welcome-email">
-            <th:block th:text="${totalArchived}"></th:block>
-        </div>
+</div>
 
-    </h2>
+<!-- Popup Modal -->
+<div class="popup" popup-name="popup-edit-email" style="display: none;">
+    <div class="popup-content">
+        <h2>Edit Your Email</h2>
+        <form th:action="@{/my-profile/edit-email}" method="post">
+            <label for="newEmail">New Email:</label><br>
+            <input type="email" id="newEmail" name="newEmail" required
+                   th:value="${email}"><br><br>
+            <input type="submit" value="Update Email">
+        </form>
+    </div>
+    <a class="close-popUp-button" popup-close="popup-edit-email" href="javascript:void(0)">
+        Close
+    </a>
+</div>
+<h2>
+    Active notes:
+    <div class="welcome-email">
+        <th:block th:text="${notesNumber}"></th:block>
+    </div>
+    Active tasks:
+    <div class="welcome-email">
+        <th:block th:text="${taskNumber}"></th:block>
+    </div>
+    Total Archived:
+    <div class="welcome-email">
+        <th:block th:text="${totalArchived}"></th:block>
+    </div>
+
+</h2>
 
 </div>
 
@@ -51,5 +73,28 @@
 
 
 </footer>
+<script>
+    $(function () {
+        // Open popup
+        $('[popup-open]').on('click', function () {
+            const popupName = $(this).attr('popup-open');
+            $('[popup-name="' + popupName + '"]').fadeIn(300);
+        });
+
+        // Close popup
+        $('[popup-close]').on('click', function () {
+            const popupName = $(this).attr('popup-close');
+            $('[popup-name="' + popupName + '"]').fadeOut(300);
+        });
+
+        // Close when clicking outside
+        $('.popup').on('click', function () {
+            const popupName = $(this).find('[popup-close]').attr('popup-close');
+            $('[popup-name="' + popupName + '"]').fadeOut(300);
+        }).children().click(function (e) {
+            return false;
+        });
+    });
+</script>
 </body>
 </html>
