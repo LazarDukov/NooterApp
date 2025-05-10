@@ -29,8 +29,8 @@
     <h2>Your email:
         <div class="welcome-email">
             <th:block th:text="${email}"></th:block>
-            <button class="open-popUp-button" popup-open="popup-edit-email"><i class="material-icons"
-                                                                               style="color: yellow">edit</i></a>
+            <button class="open-popUp-button" popup-open="popup-edit-email">
+                <i class="material-icons" style="color: yellow">edit</i>
             </button>
         </div>
     </h2>
@@ -40,13 +40,15 @@
 <div class="popup" popup-name="popup-edit-email" style="display: none;">
     <div class="popup-content">
         <h2>Edit Your Email</h2>
-        <form th:action="@{/my-profile/edit-email}" method="post">
+        <form id="editEmailForm"
+              th:action="@{/my-profile/edit-email}"
+              method="post">
             <label for="newEmail">New Email:</label><br>
             <input type="email" id="newEmail" name="newEmail" required
                    th:value="${email}"><br><br>
-            <input type="submit" value="Update Email">
         </form>
     </div>
+    <input class="edit-note-input" type="submit" value="Update Email" form="editEmailForm">
     <a class="close-popUp-button" popup-close="popup-edit-email" href="javascript:void(0)">
         Close
     </a>
@@ -88,12 +90,6 @@
         });
 
         // Close when clicking outside
-        $('.popup').on('click', function () {
-            const popupName = $(this).find('[popup-close]').attr('popup-close');
-            $('[popup-name="' + popupName + '"]').fadeOut(300);
-        }).children().click(function (e) {
-            return false;
-        });
     });
 </script>
 </body>

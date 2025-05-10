@@ -126,7 +126,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 
 .logout-form-wrapper {
     padding: 0;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: bold;
     border-radius: 8px;
     display: inline; /* Makes the form behave like the links */

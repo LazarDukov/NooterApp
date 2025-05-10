@@ -14,7 +14,6 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
 
-
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -24,5 +23,11 @@ public class UserService {
 
     public User loggedUser(Principal principal) {
         return userRepository.findUserByUsername(principal.getName());
+    }
+
+    public void changeEmail(Principal principal, String newEmail) {
+        User loggedUser = loggedUser(principal);
+        loggedUser.setEmail(newEmail);
+        userRepository.save(loggedUser);
     }
 }

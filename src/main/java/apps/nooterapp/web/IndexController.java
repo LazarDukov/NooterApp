@@ -7,6 +7,8 @@ import apps.nooterapp.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -43,4 +45,9 @@ public class IndexController {
         return "my-profile";
     }
 
+    @PostMapping("/my-profile/edit-email")
+    public String emailChange(Principal principal, @RequestParam("newEmail") String newEmail) {
+        userService.changeEmail(principal, newEmail);
+        return "redirect:/my-profile";
+    }
 }
