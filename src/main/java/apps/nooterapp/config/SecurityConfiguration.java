@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).
-                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/", "/login", "/register", "/h2-console/**","/my-profile", "/my-notes", "/add-note", "/archived-notes")
+                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/sendEmail","/", "/login", "/register", "/h2-console/**","/my-profile", "/my-notes", "/add-note", "/archived-notes")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
