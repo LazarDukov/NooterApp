@@ -10,6 +10,7 @@ import apps.nooterapp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 public class NoteService {
@@ -63,5 +64,9 @@ public class NoteService {
             note.setReminderTime(editNoteDTO.getReminderTime());
         }
         noteRepository.save(note);
+    }
+
+    public List<Note> findAllActiveTasks() {
+        return noteRepository.findAllByTypeAndActiveOrderByReminderTime(NoteType.TASK, true);
     }
 }
