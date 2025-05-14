@@ -1,9 +1,12 @@
 package apps.nooterapp.util;
 
 import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.User;
+import apps.nooterapp.services.EmailSenderService;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -14,11 +17,13 @@ import java.util.List;
 public class EmailSenderScheduler {
     private UserService userService;
     private NoteService noteService;
+    private EmailSenderService senderService;
 
 
-    public EmailSenderScheduler(UserService userService, NoteService noteService) {
+    public EmailSenderScheduler(UserService userService, NoteService noteService, EmailSenderService senderService) {
         this.userService = userService;
         this.noteService = noteService;
+        this.senderService = senderService;
     }
 
     @Scheduled(cron = "0 * * * * *")
@@ -32,11 +37,15 @@ public class EmailSenderScheduler {
             LocalDateTime taskTime = reminder.truncatedTo(ChronoUnit.MINUTES);
 
             if (taskTime.isAfter(now)) {
-                // No more tasks can match, because the list is sorted
                 break;
             } else if (taskTime.equals(now)) {
-                // 🎯 Found a task that matches current time
-                System.out.println("Reminder! Task: " + task.getTitle());
+                String username = task.getUser().getUsername();
+                User userOfGivenTask = userService.getUser(username);
+                String email = userOfGivenTask.getEmail();
+                String taskTitle = task.getTitle();
+                String taskDescription = task.getDescription();
+                senderService.sendReminder(email, taskTitle, taskDescription);
+
             }
         }
     }

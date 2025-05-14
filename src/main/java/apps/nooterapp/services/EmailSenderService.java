@@ -21,13 +21,13 @@ public class EmailSenderService {
     @Value("$(nooter.application)")
     private String fromEmailId;
 
-    public void sendReminder(String recipient, String body, String subject) {
+    public void sendReminder(String recipient, String title, String body) {
 
         SimpleMailMessage smm = new SimpleMailMessage();
         smm.setFrom(fromEmailId);
         smm.setTo(recipient);
         smm.setText(body);
-        smm.setSubject(subject);
+        smm.setSubject(title);
         javaMailSender.send(smm);
     }
 

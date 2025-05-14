@@ -20,10 +20,11 @@ import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
 public class SecurityConfiguration {
+    // TODO: should make authentication validation for existance of the username and email
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).
-                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/sendEmail","/", "/login", "/register", "/h2-console/**","/my-profile", "/my-notes", "/add-note", "/archived-notes")
+                authorizeHttpRequests(auth -> auth.requestMatchers("/css/**","/images/**","/", "/login", "/register", "/h2-console/**","/my-profile", "/my-notes", "/add-note", "/archived-notes")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
