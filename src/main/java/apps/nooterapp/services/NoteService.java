@@ -69,4 +69,17 @@ public class NoteService {
     public List<Note> findAllActiveTasks() {
         return noteRepository.findAllByTypeAndActiveOrderByReminderTime(NoteType.TASK, true);
     }
+
+    public void deleteNote(Long id) {
+        Note note = noteRepository.findNoteById(id);
+        User user = userRepository.findUserByUsername(note.getUser().getUsername());
+        user.getNotes().remove(note);
+        userRepository.save(user);
+        noteRepository.delete(note);
+    }
+
+    public void deleteArchived() {
+        //TODO: take all tasks from user and delete before delete all
+        noteRepository.deleteAll();
+    }
 }

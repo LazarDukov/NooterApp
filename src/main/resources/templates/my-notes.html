@@ -24,6 +24,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Edit</th>
+            <th>Delete</th>
             <th>If finished</th>
         </tr>
         </thead>
@@ -48,6 +49,10 @@
             <td>
                 <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
                     <i class="material-icons" style="color: yellow">edit</i></a>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/delete-note/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: red">delete</i></a>
             </td>
             <td>
                 <a th:href="@{/my-notes/finish/{id}(id=${note.id})}">

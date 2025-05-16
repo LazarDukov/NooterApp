@@ -25,6 +25,7 @@
             <th>Reminder time<br>(dd/MM/yy HH:mm)</th>
             <th>Description</th>
             <th>Edit</th>
+            <th>Delete</th>
             <th>If finished</th>
         </tr>
         </thead>
@@ -53,6 +54,10 @@
             <td>
                 <a th:href="@{/my-tasks/edit-task/{id}(id=${task.id})}">
                     <i class="material-icons" style="color: yellow">edit</i></a>
+            </td>
+            <td>
+                <a th:href="@{/my-tasks/delete-task/{id}(id=${task.id})}">
+                    <i class="material-icons" style="color: red">delete</i></a>
             </td>
             <td>
                 <a th:href="@{/my-tasks/finish/{id}(id=${task.id})}">

@@ -65,7 +65,7 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .open-popUp-button {
+a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .update-email-button, .delete-all-archived {
     background-color: darkgoldenrod;
     color: black;
     padding: 15px 30px;
@@ -81,7 +81,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 
-.from-top, .register h1, .login h1, .my-profile-button {
+.from-top, .register h1, .login h1, .my-profile-button, .delete-all-archived {
     animation: slideFromTop 1s ease-out forwards;
     animation-delay: 0.2s;
 }
@@ -104,11 +104,11 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     }
 }
 
-.from-bottom, .register-button-input, .login-button-input, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .open-popUp-button {
+.from-bottom, .register-button-input, .login-button-input, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .update-email-button {
     animation: slideFromBottom 1s ease-out forwards;
     animation-delay: 0.2s;
 }
-.open-popUp-button {
+.open-popUp-button, .update-email-button {
     padding-top: 5px;
     padding-left: 5px;
     height: 40px;
