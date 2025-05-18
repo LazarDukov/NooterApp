@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/button-container::head}">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+<header>
+    <div th:fragment="button-container">
+
+        <a class="my-profile-button" th:href="@{/my-profile}">My profile</a>
+        <a class="my-profile-button" th:href="@{/add-note}">Add note or tasks</a>
+        <a class="my-profile-button" th:href="@{/my-notes}">My notes</a>
+        <a class="my-profile-button" th:href="@{/my-tasks}">My tasks</a>
+        <a class="my-profile-button" th:href="@{/archived-notes}">Archived note and tasks</a>
+
+        <form class="logout-form-wrapper" th:method="post" th:action="@{/logout}" th:href="@{/}">
+            <input type="submit" name="" value="Logout" class="my-profile-button logout-form">
+        </form>
+    </div>
+</header>
+</body>
+</html>

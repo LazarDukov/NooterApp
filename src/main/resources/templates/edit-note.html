@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nooter application</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script>
+        function handleTypeChange(select) {
+            const reminderField = document.getElementById("reminderField");
+            if (select.value === "TASK") {
+                reminderField.style.display = "block";
+            } else {
+                reminderField.style.display = "none";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const typeSelect = document.getElementById("type");
+            handleTypeChange(typeSelect); // On load, check if it's already set to TASK
+            typeSelect.addEventListener("change", function () {
+                handleTypeChange(this);
+            });
+        });
+    </script>
+</head>
+<body class="edit-note">
+<div th:replace="~{fragments/button-container::button-container}">
+    Button container
+</div>
+<div class="edit-note-form">
+    <h1>Edit note</h1>
+    <form id="editNoteForm"
+          th:method="post"
+          th:action="@{/my-notes/edit-note/{id}(id=${editNoteDTO.id})}"
+          th:object="${editNoteDTO}">
+        <label>Title:</label><br>
+        <input th:field="${editNoteDTO.title}" id="title"
+               name="title"
+               type="text"
+               placeholder="Title"><br>
+        <label>Description:</label><br>
+        <input th:field="${editNoteDTO.description}" id="description"
+               name="description"
+               type="text"
+               placeholder="Description"><br>
+        <label>Choose type:</label><br>
+        <select name="type" id="type" th:field="*{type}">
+            <option disabled hidden value="">Choose note or task:</option>
+            <option value="NOTE">Note</option>
+            <option value="TASK">Task</option>
+        </select>
+        <div id="reminderField" style="display: none;">
+            <label>Reminder date and time:</label><br>
+            <input th:field="${editNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
+                   name="reminderTime"><br>
+        </div>
+
+    </form>
+
+</div>
+<div>
+    <input class="edit-note-input" type="submit" value="Edit note" form="editNoteForm"><br>
+</div>
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
+</body>
+</html>

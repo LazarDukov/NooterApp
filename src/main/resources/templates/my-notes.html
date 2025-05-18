@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nooter App</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+</head>
+
+<body class="my-notes">
+
+<h1>My notes</h1>
+<div th:replace="~{fragments/button-container :: button-container}">
+    Button container
+</div>
+
+<div>
+    <table class="my-notes-table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>If finished</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note : ${myNotes}"
+            th:attr="data-description=${note.description}">
+            <td th:text="${note.title}"></td>
+            <td>
+                <a class="open-popUp-button" popup-open="popup-1" href="javascript:void(0)">
+                    <i class="material-icons" style="color: antiquewhite">remove_red_eye</i></a>
+                <div class="popup" popup-name="popup-1">
+                    <div class="popup-content">
+                        <h2>Description</h2>
+                        <p th:text="${note.description}"></p>
+
+                    </div>
+                    <a class="close-popUp-button" popup-close="popup-1" href="javascript:void(0)">
+                        Close
+                    </a>
+                </div>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: yellow">edit</i></a>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/delete-note/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: red">delete</i></a>
+            </td>
+            <td>
+                <a th:href="@{/my-notes/finish/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: greenyellow">done</i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        // Open Popup
+        $('[popup-open]').on('click', function () {
+            var popup_name = $(this).attr('popup-open');
+            var popup = $('[popup-name="' + popup_name + '"]');
+
+            // Get the description from the current row
+            var description = $(this).closest('tr').data('description');
+
+            // Set it inside the popup content
+            popup.find('.popup-content p').text(description);
+
+            // Re-trigger animation
+            popup.css('animation', 'none');
+            popup[0].offsetHeight; // force reflow
+            popup.css('animation', '');
+
+            popup.fadeIn(300);
+        });
+
+        // Close Popup
+        $('[popup-close]').on('click', function () {
+            var popup_name = $(this).attr('popup-close');
+            $('[popup-name="' + popup_name + '"]').fadeOut(300);
+        });
+
+        // Close Popup When Click Outside
+        $('.popup').on('click', function () {
+            var popup_name = $(this).find('[popup-close]').attr('popup-close');
+            $('[popup-name="' + popup_name + '"]').fadeOut(300);
+        }).children().click(function () {
+            return false;
+        });
+    });
+</script>
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nooter application</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body class="register">
+<h1>Register</h1>
+<div class="register-form  transparency-animation">
+    <form id="registerForm"
+            th:method="post"
+          th:action="@{/register}"
+          th:object="${registerDTO}">
+        <label>Username:</label><br>
+        <input th:field="*{username}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="username"
+               name="username"
+               type="text"
+               placeholder="Username"><br>
+        <small th:if="${#fields.hasErrors('username')}"
+               th:errorclass="errors"
+               th:errors="*{username}"
+               class="text-danger">
+            Username error!
+        </small>
+        <label>Email:</label><br>
+        <input th:field="*{email}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="email"
+               name="email"
+               type="text"
+               placeholder="Email"><br>
+        <small th:if="${#fields.hasErrors('email')}"
+               th:errorclass="errors"
+               th:errors="*{email}"
+               class="text-danger">
+            Email error!
+        </small>
+        <label>Password:</label><br>
+        <input th:field="*{password}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="password"
+               name="password"
+               type="password"
+               placeholder="Password"><br>
+        <small th:if="${#fields.hasErrors('password')}"
+               th:errorclass="errors"
+               th:errors="*{password}"
+               class="text-danger">
+            Password error!
+        </small>
+        <label>Confirm password:</label><br>
+        <input th:field="*{confirmPassword}"
+               th:errorclass="'is-invalid alert-danger'"
+               id="confirmPassword"
+               name="confirmPassword"
+               type="password"
+               placeholder="Confirm password"><br><br>
+        <small th:if="${#fields.hasErrors('confirmPassword')}"
+               th:errorclass="errors"
+               th:errors="*{confirmPassword}"
+               class="text-danger">
+            Password error!
+        </small>
+    </form>
+</div>
+<div>
+    <input class="register-button-input" type="submit" value="Register" form="registerForm"><br>
+</div>
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
+</body>
+</html>
