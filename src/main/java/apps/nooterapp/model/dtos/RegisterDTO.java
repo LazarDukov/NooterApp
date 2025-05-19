@@ -1,6 +1,7 @@
 package apps.nooterapp.model.dtos;
 
 import apps.nooterapp.util.PasswordMatcherInterface;
+import apps.nooterapp.util.UsernameValidationInterface;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,10 +15,13 @@ import lombok.Setter;
 @Setter
 @PasswordMatcherInterface(password = "password", confirmPassword = "confirmPassword")
 public class RegisterDTO {
+    @NotBlank(message = "Must not be blank!")
     @Size(min = 6, max = 15, message = "Username input length should be between 6 and 15 letters!")
+    @UsernameValidationInterface
     private String username;
 
     @Email
+    @NotBlank
     private String email;
     @Size(min = 6, max = 30, message = "Password input length should be between 6 and 30 symbols!")
     private String password;
