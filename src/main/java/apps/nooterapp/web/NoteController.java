@@ -155,6 +155,13 @@ public class NoteController {
         return "redirect:/my-notes";
     }
 
+    @GetMapping("/my-notes/all-done")
+    public String allNotesDone(Principal principal) {
+        noteService.allNotesDone(principal);
+        System.out.println("Im in controller for all done notes");
+        return "redirect:/my-notes";
+    }
+
     @GetMapping("/my-tasks/delete-task/{id}")
     public String deleteTask(@PathVariable Long id) {
         noteService.deleteNote(id);
@@ -165,6 +172,12 @@ public class NoteController {
     public String deleteAllArchived(Principal principal) {
         noteService.deleteArchived(principal);
         return "redirect:/my-profile";
+    }
+
+    @GetMapping("/my-tasks/all-done")
+    public String allTasksDone(Principal principal) {
+        noteService.allTasksDone(principal);
+        return "redirect:/my-tasks";
     }
 
 }

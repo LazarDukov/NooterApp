@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -85,5 +86,19 @@ public class NoteService {
         loggedUser.getNotes().clear();
         userRepository.save(loggedUser);
         noteRepository.deleteAll();
+    }
+
+    public void allNotesDone(Principal principal) {
+        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        List<Note> notes = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.NOTE)).toList();
+        notes.forEach(note -> note.setActive(false));
+        noteRepository.saveAll(notes);
+    }
+
+    public void allTasksDone(Principal principal) {
+        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        List<Note> tasks = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.TASK)).toList();
+        tasks.forEach(task -> task.setActive(false));
+        noteRepository.saveAll(tasks);
     }
 }
