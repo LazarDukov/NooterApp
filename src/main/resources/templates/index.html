@@ -11,9 +11,11 @@
 
 </head>
 <body class="index-page">
-<div class="info-wrapper">
-    <h3 class="information-text" sec:authorize="!isAuthenticated()">To proceed forward,<br> please register or log in!
-    </h3>
+<div class="info-welcome">
+    <h1 sec:authorize="!isAuthenticated()">WELCOME!<br></h1>
+    <h2 sec:authorize="!isAuthenticated()">
+        To proceed forward,<br> please register or log in!
+    </h2>
 </div>
 
 <div class="button-container">

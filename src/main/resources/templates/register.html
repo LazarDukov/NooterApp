@@ -24,7 +24,7 @@
                th:errorclass="errors"
                th:errors="*{username}"
                class="text-danger">
-            Username error!<br>
+            Username error!
         </small>
         <label>Email:</label><br>
         <input th:field="*{email}"
@@ -37,7 +37,7 @@
                th:errorclass="errors"
                th:errors="*{email}"
                class="text-danger">
-            Email error!<br>
+            Email error!
         </small>
         <label>Password:</label><br>
         <input th:field="*{password}"
@@ -59,12 +59,6 @@
                name="confirmPassword"
                type="password"
                placeholder="Confirm password"><br><br>
-        <small th:if="${#fields.hasErrors('confirmPassword')}"
-               th:errorclass="errors"
-               th:errors="*{confirmPassword}"
-               class="text-danger">
-            Password error!
-        </small>
     </form>
 </div>
 <div>

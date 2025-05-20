@@ -48,8 +48,10 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
 }
 
 
-.register h1, .login h1, .my-notes h1, .my-tasks h1, .archived-notes h1 {
+.register h1, .login h1, .my-notes h1, .my-tasks h1, .archived-notes h1, .info-welcome h1, .info-welcome h2 {
+    display: flex;
     text-align: center;
+    justify-content: center;
     position: center;
     color: darkgoldenrod;
 }
@@ -60,6 +62,9 @@ label {
 }
 
 .text-danger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 0.9em;
     color: red;
     animation: fade-in 0.5 ease-in forwards;
@@ -111,7 +116,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 
 .open-popUp-button, .update-email-button {
 
-    padding: 5px ;
+    padding: 5px;
     height: 40px;
     width: 40px;
 }
@@ -123,6 +128,16 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     align-items: center;
     flex-wrap: wrap;
     padding-top: 10px;
+}
+/*TODO: Should configure image */
+.welcome-button {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 10px;
+    background-image: url("/static/images/home.png");
 }
 
 .logout-form-wrapper {

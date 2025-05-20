@@ -6,24 +6,23 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.annotation.Annotation;
+public class EmailValidation implements ConstraintValidator<EmailValidationInterface, String> {
 
-public class UsernameValidation implements ConstraintValidator<UsernameValidationInterface, String> {
     private final UserRepository userRepository;
 
-@Autowired
-    public UsernameValidation(UserRepository userRepository) {
+    @Autowired
+    public EmailValidation(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public void initialize(UsernameValidationInterface constraintAnnotation) {
+    public void initialize(EmailValidationInterface constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
-    public boolean isValid(String username, ConstraintValidatorContext context) {
-        User user = this.userRepository.findUserByUsername(username);
+    public boolean isValid(String email, ConstraintValidatorContext context) {
+        User user = userRepository.findUserByEmail(email);
         if (user == null) {
             return true;
         } else {

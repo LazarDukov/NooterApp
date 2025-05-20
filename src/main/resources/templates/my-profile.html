@@ -13,7 +13,12 @@
 
 
 </head>
+
+
 <body class="my-profile">
+<div th:replace="~{fragments/welcome-button :: welcome-button}">
+    welcome button
+</div>
 <div>
     <h1 class="information-text"> Welcome,
         <div class="welcome-username">
@@ -27,12 +32,12 @@
 </div>
 <div class="my-profile-stats">
 
-        <div class="my-profile-item-label">Your email:</div>
-        <div class="welcome-email">
-            <th:block th:text="${email}"></th:block>
-            <button class="update-email-button" popup-open="popup-edit-email">
-                <i class="material-icons" style="color: yellow">edit</i>
-            </button>
+    <div class="my-profile-item-label">Your email:</div>
+    <div class="welcome-email">
+        <th:block th:text="${email}"></th:block>
+        <button class="update-email-button" popup-open="popup-edit-email">
+            <i class="material-icons" style="color: yellow">edit</i>
+        </button>
 
     </div>
 
