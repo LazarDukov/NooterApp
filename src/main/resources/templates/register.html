@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body class="register">
+<div th:replace="~{fragments/welcome-button :: welcome-button}">
+    welcome button
+</div>
 <h1>Register</h1>
 <div class="register-form  transparency-animation">
     <form id="registerForm"

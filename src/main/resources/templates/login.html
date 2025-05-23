@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="login">
+<div th:replace="~{fragments/welcome-button :: welcome-button}">
+    welcome button
+</div>
 <h1>Login</h1>
 <div class="login-form">
     <form id="loginForm"
@@ -23,7 +26,7 @@
                type="password"
                placeholder="Password"><br>
         <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
-
+        <a class="forgot-log-button" th:href="@{/forgot-log}">Forgot your username/password</a>
     </form>
 
 

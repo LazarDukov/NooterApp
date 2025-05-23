@@ -32,4 +32,9 @@ public class LoginController {
         return "redirect:/login";
     }
 
+    @GetMapping("/forgot-log")
+    public String forgotLog() {
+        return "forgot-log";
+    }
+
 }
