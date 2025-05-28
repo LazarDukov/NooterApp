@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Nooter App</title>
-  <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Nooter App</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="login">
 <div th:replace="~{fragments/welcome-button :: welcome-button}">
-  welcome button
+    welcome button
 </div>
 <h1>Login</h1>
 <div class="login-form">
-  <form id="loginForm"
-        th:method="post"
-        th:action="@{/login}">
-    <label>Username:</label><br>
-    <input th:value="${username}" id="username"
-           name="username"
-           type="text"
-           placeholder="Username"><br>
-    <label>Password:</label><br>
-    <input id="password"
-           name="password"
-           type="password"
-           placeholder="Password"><br>
-    <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
-    <button class="forgot-log-button" th:href="@{/forgot-log}">Forgot your username or password</button>
-  </form>
+    <form id="forgotEmail"
+          th:method="post"
+          th:action="@{/forgot-log}"
+          th:object="${forgotPasswordDTO}">
+        <label>Username:</label><br>
+        <input th:value="${forgotPasswordDTO.username}" id="username"
+               name="username"
+               type="text"
+               placeholder="Username"><br>
+        <label>Email:</label><br>
+        <input th:value="${forgotPasswordDTO.email}" id="email"
+               name="email"
+               type="text"
+               placeholder="email"><br>
+        <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
+    </form>
 
 
 </div>
 <div>
-  <input class="login-button-input" type="submit" value="Login" form="loginForm"><br>
+    <input class="login-button-input" type="submit" value="Send new password" form="forgotEmail"><br>
 </div>
 
 <footer th:replace="~{fragments/copyright :: footer}">

@@ -1,6 +1,5 @@
 package apps.nooterapp.services;
 
-import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +7,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 
 @Service
 public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private EmailSenderService emailSenderService;
 
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailSenderService = emailSenderService;
     }
 
 
@@ -37,4 +37,19 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
+    public boolean checkUsernameWithThisEmailExists(String username, String email) {
+        User user = userRepository.findUserByUsername(username);
+        if (user.getEmail().equals(email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void sendNewPassword(String email, String newPassword) {
+        User user = userRepository.findUserByEmail(email);
+        emailSenderService.sendNewPassword(user.getEmail(), newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }
