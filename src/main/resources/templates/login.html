@@ -25,10 +25,9 @@
                name="password"
                type="password"
                placeholder="Password"><br>
-        <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
+        <small class="text-danger" th:if="${bad_credentials}">Username or email doesn't exist!<br>Please try again!</small>
         <a class="forgot-log-button" th:href="@{/forgot-log}">Forgot your username/password</a>
     </form>
-
 
 </div>
 <div>

@@ -37,14 +37,7 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public boolean checkUsernameWithThisEmailExists(String username, String email) {
-        User user = userRepository.findUserByUsername(username);
-        if (user.getEmail().equals(email)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public void sendNewPassword(String email, String newPassword) {
         User user = userRepository.findUserByEmail(email);

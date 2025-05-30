@@ -13,7 +13,7 @@
 <h1>Register</h1>
 <div class="register-form  transparency-animation">
     <form id="registerForm"
-            th:method="post"
+          th:method="post"
           th:action="@{/register}"
           th:object="${registerDTO}">
         <label>Username:</label><br>
@@ -61,7 +61,13 @@
                id="confirmPassword"
                name="confirmPassword"
                type="password"
-               placeholder="Confirm password"><br><br>
+               placeholder="Confirm password"><br>
+        <small th:if="${#fields.hasErrors('confirmPassword')}"
+               th:errorclass="errors"
+               th:errors="*{confirmPassword}"
+               class="text-danger">
+            Confirm password error!
+        </small><br>
     </form>
 </div>
 <div>

@@ -3,6 +3,7 @@ package apps.nooterapp.web;
 import apps.nooterapp.model.dtos.ForgotPasswordDTO;
 import apps.nooterapp.services.UserService;
 import apps.nooterapp.util.CustomPasswordGenerator;
+import jakarta.validation.Valid;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ public class LoginController {
     private CustomPasswordGenerator customPasswordGenerator;
 
 
+
     public LoginController(UserService userService, CustomPasswordGenerator customPasswordGenerator) {
         this.userService = userService;
         this.customPasswordGenerator = customPasswordGenerator;
+
     }
 
     @GetMapping("/login")
@@ -50,12 +53,13 @@ public class LoginController {
     }
 
     @PostMapping("/forgot-log")
-    public String forgotLog(ForgotPasswordDTO forgotPasswordDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String forgotLog(@Valid @ModelAttribute ForgotPasswordDTO forgotPasswordDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         System.out.println("I'm in forgot log post mapping");
-        if (!userService.checkUsernameWithThisEmailExists(forgotPasswordDTO.getUsername(), forgotPasswordDTO.getEmail())) {
+        if (bindingResult.hasErrors()) {
             System.out.println("there are an errors");
             redirectAttributes.addFlashAttribute("forgotPasswordDTO", forgotPasswordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.forgotPasswordDTO", bindingResult);
+            return "redirect:/forgot-log";
         }
         System.out.println("no errors in forgot post mapping");
         String newPassword = customPasswordGenerator.generatePassayPassword();

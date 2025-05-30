@@ -17,19 +17,33 @@
           th:action="@{/forgot-log}"
           th:object="${forgotPasswordDTO}">
         <label>Username:</label><br>
-        <input th:value="${forgotPasswordDTO.username}" id="username"
+        <input th:field="*{username}" id="username"
                name="username"
                type="text"
                placeholder="Username"><br>
+        <small th:if="${#fields.hasErrors('username')}"
+               th:errorclass="errors"
+               th:errors="*{username}"
+               class="text-danger">
+            Username error!
+        </small>
         <label>Email:</label><br>
-        <input th:value="${forgotPasswordDTO.email}" id="email"
+        <input th:field="*{email}" id="email"
                name="email"
                type="text"
                placeholder="email"><br>
-        <p class="text-danger" th:if="${bad_credentials}">Username or password incorrect!<br>Please try again!</p>
+        <small th:if="${#fields.hasErrors('email')}"
+               th:errorclass="errors"
+               th:errors="*{email}"
+               class="text-danger">
+            Email error!
+        </small>
+        <div th:if="${#fields.hasGlobalErrors()}" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Global error message</li>
+            </ul>
+        </div>
     </form>
-
-
 </div>
 <div>
     <input class="login-button-input" type="submit" value="Send new password" form="forgotEmail"><br>
