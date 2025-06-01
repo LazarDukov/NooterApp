@@ -1,7 +1,7 @@
 body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes, body.edit-note, body.my-tasks {
     background-color: rgba(0, 0, 0, 0.9);
     color: darkgoldenrod;
-    font-family: sans-serif;
+    font-family: Inter, SansSerif, fangsong;
     height: 100vh;
     margin: 0;
     display: flex;
@@ -48,11 +48,18 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
 }
 
 
-.register h1, .login h1, .my-notes h1, .my-tasks h1, .archived-notes h1, .info-welcome h1, .info-welcome h2 {
+.register h1, .login h1, .my-notes h1, .my-tasks h1, .archived-notes h1, .info-welcome h2 {
     display: flex;
     text-align: center;
     justify-content: center;
     position: center;
+    color: darkgoldenrod;
+}
+.info-welcome h1 {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
     color: darkgoldenrod;
 }
 
@@ -157,7 +164,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     font-size: 30px;
     font-weight: bold;
     border-radius: 8px;
-    display: inline; /* Makes the form behave like the links */
+    display: inline;
     margin: 0;
 
 }

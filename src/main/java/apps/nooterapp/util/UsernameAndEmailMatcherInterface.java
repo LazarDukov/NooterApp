@@ -15,7 +15,7 @@ public @interface UsernameAndEmailMatcherInterface {
     String username();
     String email();
 
-    String message() default "Username with this email doesn't exist!";
+    String message() default "Invalid username or email!";
 
     Class<?>[] groups() default {};
 

@@ -39,9 +39,7 @@
             Email error!
         </small>
         <div th:if="${#fields.hasGlobalErrors()}" class="text-danger">
-            <ul>
-                <li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Global error message</li>
-            </ul>
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Global error message</p>
         </div>
     </form>
 </div>
