@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nooter application</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+<body class="index-page">
+<p>OOOOOPPPSSS.......We are sorry for that happens...We are working on it!</p>
+<h1>Error</h1>
+<p th:text="${errorMessage}">Unknown error</p>
+
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
+
+</body>
+</html>

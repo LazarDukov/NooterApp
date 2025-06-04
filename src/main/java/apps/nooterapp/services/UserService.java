@@ -3,10 +3,12 @@ package apps.nooterapp.services;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -24,7 +26,8 @@ public class UserService {
 
 
     public User loggedUser(Principal principal) {
-        return userRepository.findUserByUsername(principal.getName());
+        return userRepository.getUserByUsername(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User with username" + principal.getName() + " not found!"));
     }
 
     public void changeEmail(Principal principal, String newEmail) {
