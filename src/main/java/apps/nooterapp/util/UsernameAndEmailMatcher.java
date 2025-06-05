@@ -2,6 +2,7 @@ package apps.nooterapp.util;
 
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
+import apps.nooterapp.services.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
@@ -10,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class UsernameAndEmailMatcher implements ConstraintValidator<UsernameAndEmailMatcherInterface, Object> {
-    private final UserRepository userRepository;
+
+    private final UserService userService;
     private String username;
     private String email;
 
     @Autowired
-    public UsernameAndEmailMatcher(UserRepository userRepository) {
-        this.userRepository = userRepository;
-
+    public UsernameAndEmailMatcher(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -42,12 +43,10 @@ public class UsernameAndEmailMatcher implements ConstraintValidator<UsernameAndE
     }
 
     private boolean isValid(Object username, Object email) {
-        User user = userRepository.findUserByUsername(username.toString());
+        User user = userService.getUserByUsername(username.toString());
         if (user == null) {
-            System.out.println("user not exist");
             return false;
         } else {
-            System.out.println("I will equal two emails");
             return user.getEmail().equals(email.toString());
         }
     }

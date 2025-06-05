@@ -2,17 +2,20 @@ package apps.nooterapp.util;
 
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
+import apps.nooterapp.services.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 public class UsernameValidation implements ConstraintValidator<UsernameValidationInterface, String> {
+
     private final UserRepository userRepository;
 
-@Autowired
+    @Autowired
     public UsernameValidation(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -23,8 +26,8 @@ public class UsernameValidation implements ConstraintValidator<UsernameValidatio
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext context) {
-        User user = this.userRepository.findUserByUsername(username);
-        if (user == null) {
+        Optional<User> user = userRepository.getUserByEmail(username);
+        if (user.isEmpty()) {
             return true;
         } else {
             return false;

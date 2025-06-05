@@ -7,11 +7,13 @@ import apps.nooterapp.model.entities.User;
 import apps.nooterapp.model.enums.NoteType;
 import apps.nooterapp.repositories.NoteRepository;
 import apps.nooterapp.repositories.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,7 +76,7 @@ public class NoteService {
 
     public void deleteNote(Long id) {
         Note note = noteRepository.findNoteById(id);
-        User user = userRepository.findUserByUsername(note.getUser().getUsername());
+        User user = userService.getUserByNote(note.getId());
         user.getNotes().remove(note);
         userRepository.save(user);
         noteRepository.delete(note);
@@ -82,21 +84,21 @@ public class NoteService {
 
     public void deleteArchived(Principal principal) {
         //TODO: take all tasks from user and delete before delete all
-        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        User loggedUser = userService.loggedUser(principal);
         loggedUser.getNotes().clear();
         userRepository.save(loggedUser);
         noteRepository.deleteAll();
     }
 
     public void allNotesDone(Principal principal) {
-        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        User loggedUser = userService.loggedUser(principal);
         List<Note> notes = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.NOTE)).toList();
         notes.forEach(note -> note.setActive(false));
         noteRepository.saveAll(notes);
     }
 
     public void allTasksDone(Principal principal) {
-        User loggedUser = userRepository.findUserByUsername(principal.getName());
+        User loggedUser = userService.loggedUser(principal);
         List<Note> tasks = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.TASK)).toList();
         tasks.forEach(task -> task.setActive(false));
         noteRepository.saveAll(tasks);

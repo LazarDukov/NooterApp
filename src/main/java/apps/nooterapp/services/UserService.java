@@ -26,8 +26,11 @@ public class UserService {
 
 
     public User loggedUser(Principal principal) {
+        if (principal == null) {
+            throw new NullPointerException("There is not logged user!");
+        }
         return userRepository.getUserByUsername(principal.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User with username" + principal.getName() + " not found!"));
+                .orElseThrow(() -> new NullPointerException("User with username" + principal.getName() + " not found!"));
     }
 
     public void changeEmail(Principal principal, String newEmail) {
@@ -36,16 +39,25 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
-    public User getUser(String username) {
-        return userRepository.findUserByUsername(username);
+    public User getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
+    }
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }
 
-
-
     public void sendNewPassword(String email, String newPassword) {
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.getUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
         emailSenderService.sendNewPassword(user.getEmail(), newPassword);
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    public User getUserByNote(Long id) {
+        return userRepository.findUserByNoteId(id).orElseThrow(() -> new UsernameNotFoundException("User of this note is not found!"));
+
     }
 }

@@ -40,7 +40,7 @@ public class EmailSenderScheduler {
                 break;
             } else if (taskTime.equals(now)) {
                 String username = task.getUser().getUsername();
-                User userOfGivenTask = userService.getUser(username);
+                User userOfGivenTask = userService.getUserByUsername(username);
                 String email = userOfGivenTask.getEmail();
                 String taskTitle = task.getTitle();
                 String taskDescription = task.getDescription();

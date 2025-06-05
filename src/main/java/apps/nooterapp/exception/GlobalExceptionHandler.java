@@ -14,4 +14,11 @@ public class GlobalExceptionHandler {
         mav.addObject("errorMessage", ex.getMessage());
         return mav;
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ModelAndView handleNullPointer(NullPointerException ex, Model model) {
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("errorMessage", ex.getMessage());
+        return mav;
+    }
 }
