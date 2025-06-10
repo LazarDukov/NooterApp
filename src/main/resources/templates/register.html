@@ -67,7 +67,9 @@
                th:errors="*{confirmPassword}"
                class="text-danger">
             Confirm password error!
-        </small><br>
+        </small>
+        <p>If you are already registered</p>
+        <a class="forgot-log-button" th:href="@{/login}">Click here</a>
     </form>
 </div>
 <div>

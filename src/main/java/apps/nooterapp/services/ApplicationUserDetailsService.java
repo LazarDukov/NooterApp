@@ -23,7 +23,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Im in this method");
+        System.out.println("Im in this method, YES!");
         return userRepository.getUserByUsername(username).map(this::mapUser)
                 .orElseThrow(() -> new UsernameNotFoundException("User with this username does not exist!"));
     }

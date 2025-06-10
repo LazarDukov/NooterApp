@@ -83,7 +83,6 @@ public class NoteService {
     }
 
     public void deleteArchived(Principal principal) {
-        //TODO: take all tasks from user and delete before delete all
         User loggedUser = userService.loggedUser(principal);
         loggedUser.getNotes().clear();
         userRepository.save(loggedUser);
