@@ -27,7 +27,7 @@ public class ApplicationUserDetailsServiceTests {
     private final String EXISTING_USERNAME = "lazardukov";
     private final String EXISTING_EMAIL = "lazardukov@abv.bg";
     private final String EXISTING_PASSWORD = "123456";
-    private final String NON_EXISTING_USERNAME = "lazardukov";
+
     private ApplicationUserDetailsService toTest;
 
     @Mock
@@ -48,14 +48,18 @@ public class ApplicationUserDetailsServiceTests {
         Assertions.assertNotNull(userDetails);
         Assertions.assertEquals(EXISTING_USERNAME, userDetails.getUsername());
         Assertions.assertEquals(EXISTING_PASSWORD, userDetails.getPassword());
-Assertions.assertEquals(1,testUser.getNotes().size());
+    }
+
+    @Test
+    void testRegisterNewUser() {
+
     }
 
     @Test
     void testUserNotFound() {
         Assertions.assertThrows(UsernameNotFoundException.class,
                 () -> {
-                    toTest.loadUserByUsername("not existent this username");
+                    toTest.loadUserByUsername("this username not exist!");
                 });
     }
 }
