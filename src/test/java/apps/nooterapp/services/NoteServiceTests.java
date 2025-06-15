@@ -26,8 +26,6 @@ public class NoteServiceTests {
     private AddNoteDTO addNoteDTO;
     private Note testNote;
     private User testUser;
-    private final String TITLE = "Most important task today";
-    private final String DESCRIPTION = "I should run today!";
     @Mock
     private NoteRepository mockNoteRepository;
     @Mock
@@ -43,17 +41,14 @@ public class NoteServiceTests {
     @BeforeEach
     void setUp() {
         noteService = new NoteService(mockUserRepository, mockNoteRepository, mockUserService);
-        addNoteDTO = new AddNoteDTO();
-        addNoteDTO.setTitle(TITLE);
-        addNoteDTO.setDescription(DESCRIPTION);
-        addNoteDTO.setActive(true);
-        addNoteDTO.setType(NoteType.NOTE);
-        testNote = new Note(1L, addNoteDTO.getTitle(), addNoteDTO.getDescription(), addNoteDTO.getType(), addNoteDTO.isActive(), null, null);
+
+        testNote = new Note();
         testNote.setId(1L);
         testNote.setTitle("TEST TITLE");
         testNote.setDescription("TEST DESCRIPTION");
         testNote.setType(NoteType.NOTE);
         testNote.setActive(true);
+
         testUser = new User();
         testUser.setId(1L);
         testUser.setUsername("test user");
@@ -69,6 +64,11 @@ public class NoteServiceTests {
         User mockUser = new User();
         mockUser.setNotes(new ArrayList<>());
         when(mockUserService.loggedUser(mockPrincipal)).thenReturn(mockUser);
+        addNoteDTO = new AddNoteDTO();
+        addNoteDTO.setTitle("Most important task today");
+        addNoteDTO.setDescription("I should run today!");
+        addNoteDTO.setActive(true);
+        addNoteDTO.setType(NoteType.NOTE);
         noteService.addNote(mockPrincipal, addNoteDTO);
         verify(mockNoteRepository).save(noteArgumentCaptor.capture());
         Note savedNote = noteArgumentCaptor.getValue();
@@ -82,8 +82,20 @@ public class NoteServiceTests {
     }
 
     @Test
-    void archiveNoteOrTask() {
+    void testArchiveNoteOrTask() {
+        when(mockNoteRepository.findNoteById(testNote.getId())).thenReturn(testNote);
+        noteService.archiveNoteOrTask(testNote.getId());
+        verify(mockNoteRepository).save(noteArgumentCaptor.capture());
+        Note savedNote = noteArgumentCaptor.getValue();
+        Assertions.assertFalse(savedNote.isActive(), "Note should be archived");
+    }
 
+    @Test
+    void testViewNoteOrTask() {
+        String title = "TEST TITLE";
+        when(mockNoteRepository.findNoteById(testNote.getId())).thenReturn(testNote);
+        Note result = noteService.viewNoteOrTask(testNote.getId());
+        Assertions.assertEquals(title, result.getTitle());
     }
 
 }
