@@ -1,6 +1,7 @@
 package apps.nooterapp.services;
 
 import apps.nooterapp.model.dtos.AddNoteDTO;
+import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.model.enums.NoteType;
@@ -95,7 +96,24 @@ public class NoteServiceTests {
         String title = "TEST TITLE";
         when(mockNoteRepository.findNoteById(testNote.getId())).thenReturn(testNote);
         Note result = noteService.viewNoteOrTask(testNote.getId());
-        Assertions.assertEquals(title, result.getTitle());
+        Assertions.assertSame(testNote, result);
+    }
+
+    @Test
+    void testEditNoteOrTask() {
+        when(mockNoteRepository.findNoteById(testNote.getId())).thenReturn(testNote);
+        EditNoteDTO editNoteDTO = new EditNoteDTO();
+        editNoteDTO.setTitle("EDIT TITLE");
+        editNoteDTO.setDescription("EDIT DESCRIPTION");
+        editNoteDTO.setType(NoteType.NOTE);
+        editNoteDTO.setActive(true);
+        noteService.editNoteOrTask(testNote.getId(), editNoteDTO);
+        verify(mockNoteRepository).save(noteArgumentCaptor.capture());
+        Note savedNote = noteArgumentCaptor.getValue();
+        Assertions.assertEquals(editNoteDTO.getTitle(), savedNote.getTitle());
+        Assertions.assertEquals(editNoteDTO.getDescription(), savedNote.getDescription());
+        Assertions.assertEquals(editNoteDTO.getType(), savedNote.getType());
+        Assertions.assertTrue(savedNote.isActive(), "Yes, this is active!");
     }
 
 }
