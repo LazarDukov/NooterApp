@@ -17,7 +17,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -38,6 +40,9 @@ public class NoteServiceTests {
 
     @Captor
     private ArgumentCaptor<Note> noteArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<List<Note>> listNotesArgumentCaptor;
 
     @BeforeEach
     void setUp() {
@@ -93,7 +98,6 @@ public class NoteServiceTests {
 
     @Test
     void testViewNoteOrTask() {
-        String title = "TEST TITLE";
         when(mockNoteRepository.findNoteById(testNote.getId())).thenReturn(testNote);
         Note result = noteService.viewNoteOrTask(testNote.getId());
         Assertions.assertSame(testNote, result);
@@ -115,5 +119,63 @@ public class NoteServiceTests {
         Assertions.assertEquals(editNoteDTO.getType(), savedNote.getType());
         Assertions.assertTrue(savedNote.isActive(), "Yes, this is active!");
     }
+
+    @Test
+    void testFindAllActiveTasks() {
+        Note note1 = new Note();
+        note1.setTitle("TEST TASK 1");
+        note1.setDescription("I should run today!");
+        note1.setActive(true);
+        note1.setType(NoteType.TASK);
+        note1.setReminderTime(LocalDateTime.parse("2035-12-03T10:30:30"));
+
+        Note note2 = new Note();
+        note2.setTitle("TEST TASK 2");
+        note2.setDescription("You shouldnt run today!");
+        note2.setActive(true);
+        note2.setType(NoteType.TASK);
+        note2.setReminderTime(LocalDateTime.parse("2035-12-03T10:15:30"));
+
+        Note note3 = new Note();
+        note3.setTitle("TEST TASK 3");
+        note3.setDescription("You should run today!");
+        note3.setActive(true);
+        note3.setType(NoteType.NOTE);
+        note3.setReminderTime(LocalDateTime.parse("2045-12-03T10:35:30"));
+        List<Note> notes = List.of(note1, note2);
+
+        when(mockNoteRepository.findAllByTypeAndActiveOrderByReminderTime(NoteType.TASK, true)).thenReturn(notes);
+        List<Note> savedNotes = noteService.findAllActiveTasks();
+
+        Assertions.assertEquals(savedNotes.size(), notes.size());
+        Assertions.assertTrue(savedNotes.stream().allMatch(n -> n.getType() == NoteType.TASK));
+        Assertions.assertTrue(savedNotes.stream().allMatch(Note::isActive));
+    }
+
+    @Test
+    void testDeleteNote() {
+        Long noteId = 1L;
+
+        Note testNote = new Note();
+        testNote.setId(noteId);
+        testNote.setTitle("Test Note");
+
+        User testUser = new User();
+        testUser.setId(10L);
+        testUser.setNotes(new ArrayList<>(List.of(testNote)));
+
+        when(mockNoteRepository.findNoteById(noteId)).thenReturn(testNote);
+        when(mockUserService.getUserByNote(noteId)).thenReturn(testUser);
+
+        // Act
+        noteService.deleteNote(noteId);
+
+        // Assert
+        Assertions.assertFalse(testUser.getNotes().contains(testNote), "Note should be removed from user's notes");
+        verify(mockUserRepository).save(testUser);
+        verify(mockNoteRepository).delete(testNote);
+
+    }
+
 
 }
