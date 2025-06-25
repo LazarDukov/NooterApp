@@ -41,8 +41,7 @@ public class NoteServiceTests {
     @Captor
     private ArgumentCaptor<Note> noteArgumentCaptor;
 
-    @Captor
-    private ArgumentCaptor<List<Note>> listNotesArgumentCaptor;
+
 
     @BeforeEach
     void setUp() {
@@ -177,5 +176,47 @@ public class NoteServiceTests {
 
     }
 
+    @Test
+    void testDeleteArchived() {
+        Principal mockPrincipal = mock(Principal.class);
+        Note testNote = new Note();
+        Note testNote2 = new Note();
+        User testUser = new User();
+        testUser.setNotes(new ArrayList<>(List.of(testNote, testNote2)));
+        when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
+        noteService.deleteArchived(mockPrincipal);
+        Assertions.assertFalse(testUser.getNotes().size() > 0, "All notes should be removed.");
+        verify(mockUserRepository).save(testUser);
+        verify(mockNoteRepository).deleteAll();
+    }
+
+    @Test
+    void testAllNotesDone() {
+        Principal mockPrincipal = mock(Principal.class);
+        User testUser = new User();
+        testUser.setNotes(new ArrayList<>());
+        Note testNote = new Note();
+        testNote.setType(NoteType.NOTE);
+        testNote.setActive(true);
+        testUser.getNotes().add(testNote);
+        when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
+        noteService.allNotesDone(mockPrincipal);
+        Assertions.assertFalse(testUser.getNotes().get(0).isActive(), "Notes should be with isActive status false.");
+        verify(mockNoteRepository).saveAll(List.of(testNote));
+    }
+    @Test
+    void testAllTasksDone() {
+        Principal mockPrincipal = mock(Principal.class);
+        User testUser = new User();
+        testUser.setNotes(new ArrayList<>());
+        Note testNote = new Note();
+        testNote.setType(NoteType.TASK);
+        testNote.setActive(true);
+        testUser.getNotes().add(testNote);
+        when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
+        noteService.allTasksDone(mockPrincipal);
+        Assertions.assertFalse(testUser.getNotes().get(0).isActive(), "Tasks should be with isActive status false.");
+        verify(mockNoteRepository).saveAll(List.of(testNote));
+    }
 
 }
