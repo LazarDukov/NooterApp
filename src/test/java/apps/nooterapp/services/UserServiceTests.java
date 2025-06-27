@@ -1,5 +1,6 @@
 package apps.nooterapp.services;
 
+import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
@@ -81,5 +84,31 @@ public class UserServiceTests {
         verify(mockUserRepository).getUserByUsername(user.getUsername());
     }
 
+    @Test
+    void testSendNewPassword() {
+        String newPass = "newPass";
+        String encodedPassword = "encodedPass";
+        User user = new User();
+        user.setEmail("Mitko@abv.bg");
+        user.setPassword("123456");
+        Mockito.when(mockUserRepository.getUserByEmail("Mitko@abv.bg")).thenReturn(Optional.of(user));
+        Mockito.when(mockPasswordEncoder.encode(newPass)).thenReturn(encodedPassword);
+        userService.sendNewPassword(user.getEmail(), newPass);
+        verify(mockEmailSenderService).sendNewPassword(user.getEmail(), newPass);
+        Assertions.assertEquals(encodedPassword, user.getPassword());
+        verify(mockUserRepository).save(user);
 
+    }
+
+    @Test
+    void testGetUserByNote() {
+        Note note = new Note();
+        note.setId(1L);
+        User user = new User();
+        user.setUsername("Pinko");
+        user.setNotes(new ArrayList<>(List.of(note)));
+        Mockito.when(mockUserRepository.findUserByNoteId(note.getId())).thenReturn(Optional.of(user));
+        User savedUser = userService.getUserByNote(1L);
+        Assertions.assertEquals(user.getUsername(), savedUser.getUsername());
+    }
 }
