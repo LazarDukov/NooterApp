@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nooter application</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body class="my-profile">
+<div th:replace="~{fragments/welcome-button :: welcome-button}">
+    welcome button
+</div>
+<h1>My profile</h1>
+<div>
+    <div class="my-profile-item-label">
+        <div class="welcome-email">
+            <label>Username:</label>
+            <th:block th:text="${loggedUser}"></th:block>
+            <button class="update-email-button" popup-open="popup-edit-email">
+                <i class="material-icons" style="color: yellow">edit</i>
+            </button>
+        </div>
+        <br>
+        <div class="welcome-email">
+            <label>Email:</label>
+            <th:block th:text="${email}"></th:block>
+            <button class="update-email-button" popup-open="popup-edit-email">
+                <i class="material-icons" style="color: yellow">edit</i>
+            </button>
+        </div>
+        <!--TODO: create this page-->
+    </div>
+    <br>
+    <div class="my-profile-stats">
+        <div class="my-profile-item">
+            <div class="my-profile-item-label">Active notes:</div>
+            <div class="welcome-email">
+                <th:block th:text="${notesNumber}"></th:block>
+            </div>
+        </div>
+        <div class="my-profile-item">
+            <div class="my-profile-item-label">Active tasks:</div>
+            <div class="welcome-email">
+                <th:block th:text="${taskNumber}"></th:block>
+            </div>
+        </div>
+        <div class="my-profile-item">
+            <div class="my-profile-item-label">Total archived:</div>
+            <div class="welcome-email">
+                <th:block th:text="${totalArchived}"></th:block>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div th:replace="~{fragments/button-container :: button-container}">
+    Button container
+</div>
+<div class="popup" popup-name="popup-edit-email" style="display: none;">
+    <div class="popup-content">
+        <h2>Edit Your Email</h2>
+        <form id="editEmailForm"
+              th:action="@{/my-profile/edit-email}"
+              method="post">
+            <label for="newEmail">New Email:</label><br>
+            <input type="email" id="newEmail" name="newEmail" required
+                   th:value="${email}"><br><br>
+        </form>
+    </div>
+    <input class="edit-note-input" type="submit" value="Update Email" form="editEmailForm">
+    <a class="close-popUp-button" popup-close="popup-edit-email" href="javascript:void(0)">
+        Close
+    </a>
+</div>
+
+<footer th:replace="~{fragments/copyright :: footer}">
+
+
+</footer>
+
+<script>
+    $(function () {
+        // Open popup
+        $('[popup-open]').on('click', function () {
+            const popupName = $(this).attr('popup-open');
+            $('[popup-name="' + popupName + '"]').fadeIn(300);
+        });
+
+        // Close popup
+        $('[popup-close]').on('click', function () {
+            const popupName = $(this).attr('popup-close');
+            $('[popup-name="' + popupName + '"]').fadeOut(300);
+        });
+
+        // Close when clicking outside
+    });
+</script>
+</body>
+</html>

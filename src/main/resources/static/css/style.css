@@ -1,12 +1,33 @@
-body.index-page, body.register, body.login, body.my-profile, body.add-note, body.my-notes, body.archived-notes, body.edit-note, body.my-tasks {
-    background-color: rgba(0, 0, 0, 0.9);
-    color: darkgoldenrod;
+/*TODO: color for background #EFF0F3*/
+/*TODO: color for highlighted #EFF0F2*/
+/*TODO: color for text #black*/
+/*TODO: color for buttons #F0944F*/
+
+body.index-page,
+body.register,
+body.login,
+body.my-profile,
+body.add-note,
+body.edit-note {
+    background-color: #EFF0F3;
     font-family: Inter, SansSerif, fangsong;
     height: 100vh;
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+   justify-content: center;
+    align-items: center;
+    position: relative;
+}
+body.my-notes,
+body.archived-notes,
+body.my-tasks {
+    background-color: #EFF0F3;
+    font-family: Inter, SansSerif, fangsong;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     position: relative;
 }
@@ -17,17 +38,14 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    color: white;
+    color: black;
     font-size: 10px;
 }
 
 .register-form, .login-form, .add-note-form, .edit-note-form, .my-notes-table, .archived-notes-table, .my-tasks-table {
-    background-color: darkgoldenrod;
     padding: 30px;
-    color: black;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 12px;
     width: 250px;
     text-align: center;
     animation-fill-mode: forwards;
@@ -35,8 +53,22 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     animation: fade-in 2.0s ease-in forwards;
 }
 
+.button-container-format {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* space between rows */
+
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* space between buttons in the same row */
+    flex-wrap: wrap;
+}
+
 .register-form input, .login-form input, .add-note-form input, .add-note-form select, .edit-note-form input, .edit-note-form select {
-    background-color: gray;
     margin-bottom: 15px;
 }
 
@@ -53,14 +85,14 @@ body.index-page, body.register, body.login, body.my-profile, body.add-note, body
     text-align: center;
     justify-content: center;
     position: center;
-    color: darkgoldenrod;
+    color: black;
 }
 .info-welcome h1 {
     position: fixed;
     top: 5%;
     left: 50%;
     transform: translate(-50%);
-    color: darkgoldenrod;
+    color: black;
 }
 
 label {
@@ -78,7 +110,7 @@ label {
 }
 
 a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .update-email-button, .delete-all-archived {
-    background-color: darkgoldenrod;
+    background-color: #F0944F;
     color: black;
     padding: 15px 30px;
     font-size: 18px;
@@ -93,7 +125,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 .forgot-log-button {
-    background-color: rgba(218, 165, 32, 0.68);
+    background-color: #F0944F;
     color: black;
     padding: 3px 20px;
     font-size: 10px;
@@ -141,10 +173,10 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 .button-container {
+    margin-top: 20px;
     display: flex;
     gap: 20px;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     padding-top: 10px;
 }
@@ -182,7 +214,6 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 .welcome-username, .welcome-email {
-    color: gold;
     left: 0;
     width: 100%;
     text-align: center;
@@ -208,18 +239,16 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 }
 
 
+
 .information-text {
-    position: absolute;
-    top: 11%;
-    left: 0;
-    width: 100%;
-    margin-bottom: 10px;
     text-align: center;
     font-size: 24px;
     opacity: 0;
     animation: slideFromTop 1s ease-out forwards;
-    animation-delay: 0.7s; /* AFTER buttons */
+    animation-delay: 0.7s;
+    margin-top: 20px;
 }
+
 
 .my-profile h3 {
     display: flex;
@@ -233,22 +262,22 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
     border-collapse: collapse;
     width: auto;
     min-width: 1000px;
-    background-color: #1c1c1c;
+    background-color: #EFF0F3;
     border-radius: 8px;
     overflow: hidden;
     animation: fade-in 1s ease-out forwards;
 }
 
 .my-notes, .archived-notes, .my-tasks {
-    background-color: black;
-    color: darkgoldenrod;
+    margin-top: 20px;
+    background-color: #EFF0F3;
+    color: #F0944F;
     font-family: sans-serif;
     height: 100vh;
-    margin: 0;
+
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .my-notes-table th,

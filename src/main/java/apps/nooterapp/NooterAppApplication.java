@@ -15,3 +15,10 @@ public class NooterAppApplication {
     }
 
 }
+// TODO: Edit whole nav bar to be in left
+// TODO: create my profile page for better front end
+// TODO: password change - repair
+// TODO: check email is it real for registration
+// TODO: go back archived note - for secondary complete
+// TODO: maybe add images for notes
+// TODO: add new functionality for logged my home page

@@ -37,12 +37,12 @@ public class IndexController {
         String taskNumber = String.valueOf(loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK")).toList().size());
         String totalArchived = String.valueOf(loggedUser.getNotes().stream().filter(note -> (!note.isActive())).toList().size());
 
-        model.addAttribute("loggedUser", loggedUser);
+        model.addAttribute("loggedUser", loggedUser.getUsername());
         model.addAttribute("email", email);
         model.addAttribute("notesNumber", notesNumber);
         model.addAttribute("taskNumber", taskNumber);
         model.addAttribute("totalArchived", totalArchived);
-        return "my-profile";
+        return "my-profile1";
     }
 
     @PostMapping("/my-profile/edit-email")
