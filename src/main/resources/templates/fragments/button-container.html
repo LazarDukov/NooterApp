@@ -14,24 +14,16 @@
 <body>
 <header>
     <div th:fragment="button-container" class="button-container-format">
-        <div class="button-row">
-            <a class="my-profile-button" th:href="@{/my-profile}">My profile</a>
-            <form class="logout-form-wrapper" th:method="post" th:action="@{/logout}">
-                <input type="submit" value="Logout" class="my-profile-button logout-form">
-            </form>
-        </div>
 
-        <!-- Row 2 -->
-        <div class="button-row">
-            <a class="my-profile-button" th:href="@{/add-note}">Add note/task</a>
-        </div>
+            <a class="my-profile-button" th:href="@{/my-profile}">my profile</a>
+            <a class="my-profile-button" th:href="@{/add-note}">add new</a>
+        <a class="my-profile-button" th:href="@{/my-notes}">notes</a>
+        <a class="my-profile-button" th:href="@{/my-tasks}">tasks</a>
+        <a class="my-profile-button" th:href="@{/archived-notes}">archive</a>
+        <form class="logout-form-wrapper" th:method="post" th:action="@{/logout}">
+            <input type="submit" value="   logout   " class="my-profile-button logout-form">
+        </form>
 
-        <!-- Row 3 -->
-        <div class="button-row">
-            <a class="my-profile-button" th:href="@{/my-notes}">My notes</a>
-            <a class="my-profile-button" th:href="@{/my-tasks}">My tasks</a>
-            <a class="my-profile-button" th:href="@{/archived-notes}">Archived notes/tasks</a>
-        </div>
     </div>
 </header>
 </body>

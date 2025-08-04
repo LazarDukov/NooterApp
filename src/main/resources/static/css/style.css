@@ -6,7 +6,6 @@
 body.index-page,
 body.register,
 body.login,
-body.my-profile,
 body.add-note,
 body.edit-note {
     background-color: #EFF0F3;
@@ -19,6 +18,7 @@ body.edit-note {
     align-items: center;
     position: relative;
 }
+body.my-profile,
 body.my-notes,
 body.archived-notes,
 body.my-tasks {
@@ -54,19 +54,22 @@ body.my-tasks {
 }
 
 .button-container-format {
-    margin-top: 20px;
+    position: fixed;
+    top: 25%;
+    left: 1%;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* space between rows */
-
+    gap: 20px;
+    z-index: 100;
+    text-align: center;
 }
 
-.button-row {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* space between buttons in the same row */
-    flex-wrap: wrap;
-}
+/*.button-row {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 20px; !* space between buttons in the same row *!*/
+/*    flex-wrap: wrap;*/
+/*}*/
 
 .register-form input, .login-form input, .add-note-form input, .add-note-form select, .edit-note-form input, .edit-note-form select {
     margin-bottom: 15px;
@@ -109,7 +112,16 @@ label {
     animation: fade-in 0.5 ease-in forwards;
 }
 
-a.gold-button, .register-button-input, .login-button-input, .my-profile-button, .add-note-input, .edit-note-input, .popup a.close-popUp-button, .update-email-button, .delete-all-archived {
+a.gold-button,
+.register-button-input,
+.login-button-input,
+.my-profile-button,
+.add-note-input,
+.edit-note-input,
+.popup a.close-popUp-button,
+.update-email-button, .delete-all-archived,
+a.my-profile-button,
+input.my-profile-button {
     background-color: #F0944F;
     color: black;
     padding: 15px 30px;
@@ -201,6 +213,7 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 
 }
 
+
 @keyframes slideFromBottom {
     from {
         transform: translateY(100vh);
@@ -235,18 +248,17 @@ a.gold-button, .register-button-input, .login-button-input, .my-profile-button, 
 .my-profile-item-label {
     font-weight: bold;
     font-size: 20px;
-
+    padding: 20px;
 }
 
 
 
 .information-text {
     text-align: center;
-    font-size: 24px;
     opacity: 0;
     animation: slideFromTop 1s ease-out forwards;
     animation-delay: 0.7s;
-    margin-top: 20px;
+    margin-top: 200px;
 }
 
 
