@@ -235,20 +235,28 @@ input.my-profile-button {
 .my-profile-stats {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    padding: 10px
+    flex-direction: column;
+    gap: 5px;
+
 }
+
 
 .my-profile-item {
     display: flex;
-    flex-direction: column;
+    font-size: 20px;
+    font-weight: bold;
     align-items: center;
+}
+.my-profile-item h3 {
+    font-size: 20px;
+    padding: 0;
+    justify-content: center;
 }
 
 .my-profile-item-label {
     font-weight: bold;
     font-size: 20px;
-    padding: 20px;
+    padding: 40px;
 }
 
 
