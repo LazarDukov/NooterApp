@@ -10,49 +10,49 @@
 </head>
 <body class="my-profile">
 <h1 class="information-text">My profile</h1>
-<div>
-    <div class="my-profile-item-label">
-        <div class="welcome-email">
-            <label>Username:</label>
-            <th:block th:text="${loggedUser}"></th:block>
-            <button class="update-email-button" popup-open="popup-edit-email">
-                <i class="material-icons" style="color: yellow">edit</i>
-            </button>
-        </div>
-        <br>
-        <div class="welcome-email">
-            <label>Email:</label>
-            <th:block th:text="${email}"></th:block>
-            <button class="update-email-button" popup-open="popup-edit-email">
-                <i class="material-icons" style="color: yellow">edit</i>
-            </button>
-        </div>
-        <!--TODO: create this page-->
+
+<div class="my-profile-item-label">
+    <div class="welcome-email">
+        <label>Username:</label>
+        <th:block th:text="${loggedUser}"></th:block>
+        <button class="update-email-button" popup-open="popup-edit-email">
+            <i class="material-icons" style="color: yellow">edit</i>
+        </button>
     </div>
-
-    <div class="my-profile-stats">
-        <div class="my-profile-item">
-            <h3> Active notes:</h3>
-            <div class="welcome-email">
-                <th:block th:text="${notesNumber}"></th:block>
-            </div>
-        </div>
-        <div class="my-profile-item">
-            <h3>Active tasks:</h3>
-            <div class="welcome-email">
-                <th:block th:text="${taskNumber}"></th:block>
-            </div>
-        </div>
-        <div class="my-profile-item">
-            <h3> Total archived:</h3>
-            <div class="welcome-email">
-                <th:block th:text="${totalArchived}"></th:block>
-            </div>
-        </div>
-
+    <br>
+    <div class="welcome-email">
+        <label>Email:</label>
+        <th:block th:text="${email}"></th:block>
+        <button class="update-email-button" popup-open="popup-edit-email">
+            <i class="material-icons" style="color: yellow">edit</i>
+        </button>
     </div>
-
+    <br>
+    <div style="text-align: center">
+        <a class="forgot-log-button" th:href="@{/register}">change password here</a>
+    </div>
 </div>
+
+<br>
+<h1 class="information-text">Statistics</h1>
+<div class="my-profile-item-label">
+    <div class="welcome-email">
+        <label>Active notes:</label>
+        <th:block th:text="${notesNumber}"></th:block>
+    </div>
+    <br>
+    <div class="welcome-email">
+        <label>Active tasks:</label>
+        <th:block th:text="${taskNumber}"></th:block>
+    </div>
+    <br>
+    <div class="welcome-email">
+        <label>Total archived:</label>
+        <th:block th:text="${totalArchived}"></th:block>
+    </div>
+</div>
+
+
 <div th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
