@@ -1,13 +1,9 @@
 package apps.nooterapp.model.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Fetch;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -26,6 +22,11 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String registerDate;
+
+
+
     @OneToMany(fetch = FetchType.EAGER)
     private List<Note> notes;
 
@@ -33,11 +34,12 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String email, String password, List<Note> notes) {
+    public User(Long id, String username, String email, String password, String registerDate, List<Note> notes) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.registerDate = registerDate;
         this.notes = notes;
     }
 
@@ -76,6 +78,16 @@ public class User {
         this.password = password;
         return this;
     }
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+    public User setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
+        return this;
+    }
+
+
 
     public List<Note> getNotes() {
         return notes;

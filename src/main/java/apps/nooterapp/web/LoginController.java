@@ -1,5 +1,6 @@
 package apps.nooterapp.web;
 
+import apps.nooterapp.model.dtos.ChangePasswordDTO;
 import apps.nooterapp.model.dtos.ForgotPasswordDTO;
 import apps.nooterapp.services.UserService;
 import apps.nooterapp.util.CustomPasswordGenerator;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 public class LoginController {
     private UserService userService;
     private CustomPasswordGenerator customPasswordGenerator;
-
 
 
     public LoginController(UserService userService, CustomPasswordGenerator customPasswordGenerator) {
@@ -66,6 +68,26 @@ public class LoginController {
         System.out.println("generated passwrd = " + newPassword);
         userService.sendNewPassword(forgotPasswordDTO.getEmail(), newPassword);
         return "redirect:/login";
+    }
+
+    @ModelAttribute("changePasswordDTO")
+    public ChangePasswordDTO changePasswordDTO() {
+        return new ChangePasswordDTO();
+    }
+    @GetMapping("/change-password")
+    public String changePassword() {
+        return "change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@Valid @ModelAttribute ChangePasswordDTO changePasswordDTO, Principal principal, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("changePasswordDTO", changePasswordDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePasswordDTO", bindingResult);
+            return "redirect:/change-password";
+        }
+        userService.changePassword(principal, changePasswordDTO);
+        return "redirect:/my-profile";
     }
 
 }

@@ -29,7 +29,13 @@
     </div>
     <br>
     <div style="text-align: center">
-        <a class="forgot-log-button" th:href="@{/register}">change password here</a>
+        <a class="forgot-log-button" th:href="@{/change-password}">change password here</a>
+    </div>
+    <br>
+    <div class="welcome-email">
+        <label style="font-size: 10px">Register date:
+        <th:block th:text="${registerDate}"></th:block>
+        </label>
     </div>
 </div>
 

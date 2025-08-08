@@ -42,6 +42,7 @@ public class IndexController {
         model.addAttribute("notesNumber", notesNumber);
         model.addAttribute("taskNumber", taskNumber);
         model.addAttribute("totalArchived", totalArchived);
+        model.addAttribute("registerDate", loggedUser.getRegisterDate());
         return "my-profile1";
     }
 

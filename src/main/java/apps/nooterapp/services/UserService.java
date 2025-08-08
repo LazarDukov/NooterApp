@@ -1,5 +1,6 @@
 package apps.nooterapp.services;
 
+import apps.nooterapp.model.dtos.ChangePasswordDTO;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class UserService {
         return userRepository.getUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
     }
+
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
@@ -59,5 +61,11 @@ public class UserService {
     public User getUserByNote(Long id) {
         return userRepository.findUserByNoteId(id).orElseThrow(() -> new UsernameNotFoundException("User of this note is not found!"));
 
+    }
+
+    public void changePassword(Principal principal, ChangePasswordDTO changePasswordDTO) {
+        User user = loggedUser(principal);
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepository.save(user);
     }
 }
