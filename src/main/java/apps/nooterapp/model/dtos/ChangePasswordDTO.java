@@ -1,13 +1,14 @@
 package apps.nooterapp.model.dtos;
 
+import apps.nooterapp.util.PasswordMatcherInterface;
 import jakarta.validation.constraints.NotNull;
 
+@PasswordMatcherInterface(password = "newPassword", confirmPassword = "newPasswordConfirm", message = "New password doesn't matches!")
 public class ChangePasswordDTO {
     @NotNull
     private String oldPassword;
     @NotNull
     private String newPassword;
-    @NotNull
     private String newPasswordConfirm;
 
     public ChangePasswordDTO() {

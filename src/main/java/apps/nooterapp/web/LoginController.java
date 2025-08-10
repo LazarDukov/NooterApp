@@ -80,11 +80,12 @@ public class LoginController {
     }
 
     @PostMapping("/change-password")
-    public String changePassword(@Valid @ModelAttribute ChangePasswordDTO changePasswordDTO, Principal principal, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String changePassword(@ModelAttribute @Valid ChangePasswordDTO changePasswordDTO,BindingResult bindingResult, Principal principal,RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            System.out.println("Now have errors");
             redirectAttributes.addFlashAttribute("changePasswordDTO", changePasswordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePasswordDTO", bindingResult);
-            return "redirect:/change-password";
+            return "change-password";
         }
         userService.changePassword(principal, changePasswordDTO);
         return "redirect:/my-profile";
