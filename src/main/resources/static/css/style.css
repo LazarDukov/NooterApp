@@ -289,10 +289,11 @@ input.my-profile-button {
 }
 
 .my-notes-table, .my-tasks-table, .archived-notes-table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border: none;
+    gap: 10px;
     width: auto;
     min-width: 1000px;
-    background-color: #EFF0F3;
     border-radius: 8px;
     overflow: hidden;
     animation: fade-in 1s ease-out forwards;
@@ -316,17 +317,18 @@ input.my-profile-button {
 .my-tasks-table td,
 .archived-notes-table th,
 .archived-notes-table td {
-    background-color: darkgoldenrod;
     width: 200px;
     height: 20px;
     padding: 10px;
-    border: 1px solid #444;
+    border-radius: 8px;
+    border: 1px;
     text-align: center;
     color: black;
 }
 
 .my-notes-table th, .my-tasks-table th, .archived-notes-table th {
     font-size: 20px;
+    background-color: rgba(143, 143, 143, 0.51);
 }
 
 .my-notes-table td a, .my-notes-table td a i,
@@ -335,6 +337,10 @@ input.my-profile-button {
     color: black;
     text-decoration: none;
 
+}
+
+.my-notes-table tbody td {
+    background-color: rgba(222, 222, 222, 0.76);
 }
 
 .my-notes-table td a:hover, .my-tasks-table td a:hover, .archived-notes-table td a:hover {
