@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -101,5 +102,25 @@ public class NoteService {
         List<Note> tasks = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.TASK)).toList();
         tasks.forEach(task -> task.setActive(false));
         noteRepository.saveAll(tasks);
+    }
+
+    public void allNotesDelete(Principal principal) {
+        User loggedUser = userService.loggedUser(principal);
+        List<Note> notes = new ArrayList<>(loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.NOTE)).toList());
+        int notesSize = notes.size();
+        while (notesSize > 0) {
+            Note note = noteRepository.findNoteById(notes.get(0).getId());
+            loggedUser.getNotes().remove(note);
+            notes.remove(0);
+            notesSize--;
+        }
+        userRepository.save(loggedUser);
+
+    }
+
+    public void allTasksDelete(Principal principal) {
+        User loggedUser = userService.loggedUser(principal);
+        //loggedUser.set(new ArrayList<>());
+        userRepository.save(loggedUser);
     }
 }

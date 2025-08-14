@@ -161,6 +161,11 @@ public class NoteController {
         System.out.println("Im in controller for all done notes");
         return "redirect:/my-notes";
     }
+    @GetMapping("/my-notes/all-delete")
+    public String allNotesDelete(Principal principal) {
+        noteService.allNotesDelete(principal);
+        return "redirect:/my-notes";
+    }
 
     @GetMapping("/my-tasks/delete-task/{id}")
     public String deleteTask(@PathVariable Long id) {
@@ -180,4 +185,9 @@ public class NoteController {
         return "redirect:/my-tasks";
     }
 
+    @GetMapping("/my-tasks/all-delete")
+    public String allTasksDelete(Principal principal) {
+        noteService.allTasksDelete(principal);
+        return "redirect:/my-tasks";
+    }
 }

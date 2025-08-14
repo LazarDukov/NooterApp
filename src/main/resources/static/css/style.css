@@ -339,7 +339,7 @@ input.my-profile-button {
 
 }
 
-.my-notes-table tbody td {
+.my-notes-table tbody td, .my-tasks-table tbody td, .archived-notes-table tbody td {
     background-color: rgba(222, 222, 222, 0.76);
 }
 
