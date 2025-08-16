@@ -161,6 +161,7 @@ public class NoteController {
         System.out.println("Im in controller for all done notes");
         return "redirect:/my-notes";
     }
+
     @GetMapping("/my-notes/all-delete")
     public String allNotesDelete(Principal principal) {
         noteService.allNotesDelete(principal);
@@ -190,4 +191,13 @@ public class NoteController {
         noteService.allTasksDelete(principal);
         return "redirect:/my-tasks";
     }
+
+    @GetMapping("/archived-notes/restore/{id}")
+    public String restoreNoteOrTask(@PathVariable Long id) {
+        System.out.println("Im in CONTROLLER FOR RESTORE METHOD");
+        noteService.restoreNoteOrTask(id);
+        System.out.println("I ALREADY RETURN ARCHIVED NOTES");
+        return "redirect:/archived-notes";
+    }
+
 }

@@ -7,6 +7,7 @@ import apps.nooterapp.model.entities.User;
 import apps.nooterapp.model.enums.NoteType;
 import apps.nooterapp.repositories.NoteRepository;
 import apps.nooterapp.repositories.UserRepository;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class NoteService {
     private UserRepository userRepository;
     private NoteRepository noteRepository;
     private UserService userService;
+
 
     public NoteService(UserRepository userRepository, NoteRepository noteRepository, UserService userService) {
         this.userRepository = userRepository;
@@ -120,7 +122,28 @@ public class NoteService {
 
     public void allTasksDelete(Principal principal) {
         User loggedUser = userService.loggedUser(principal);
-        //loggedUser.set(new ArrayList<>());
+        List<Note> tasks = new ArrayList<>(loggedUser.getNotes().stream().filter(task -> task.getType().equals(NoteType.TASK)).toList());
+        int tasksSize = tasks.size();
+        while (tasksSize > 0) {
+            Note task = noteRepository.findNoteById(tasks.get(0).getId());
+            loggedUser.getNotes().remove(task);
+            tasks.remove(0);
+            tasksSize--;
+        }
         userRepository.save(loggedUser);
+    }
+
+    public void restoreNoteOrTask(Long id) {
+        System.out.println("IM in restore method in service");
+        User user = userService.getUserByNote(id);
+        System.out.println("USER IS " + user.getUsername());
+
+        Note taskOrNote = noteRepository.findNoteById(id);
+        System.out.println("TASK IS WITH ID " + taskOrNote.getId());
+        taskOrNote.setActive(true);
+        System.out.println("task is set TRUE");
+        userRepository.save(user);
+        noteRepository.save(taskOrNote);
+        System.out.println("ALLL SAVEDDDD");
     }
 }

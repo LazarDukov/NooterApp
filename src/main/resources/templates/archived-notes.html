@@ -17,17 +17,19 @@
 </div>
 <h1 class="information-text">Archived notes</h1>
 <div>
-    <a class="delete-all-archived" style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center" th:href="@{/archived-notes/delete-all}">Delete all</a>
+    <a class="delete-all-archived"
+       style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
+       th:href="@{/archived-notes/delete-all}">Delete all</a>
 </div>
 <div>
-    <table class="archived-notes-table" >
+    <table class="archived-notes-table">
         <thead>
         <tr>
             <th>Title</th>
             <th>Type</th>
             <th>Reminder time</th>
             <th>Description</th>
-
+            <th>Restore</th>
         </tr>
         </thead>
         <tbody>
@@ -52,6 +54,11 @@
                         Close
                     </a>
                 </div>
+            </td>
+            <td>
+                <a th:href="@{/archived-notes/restore/{id}(id=${note.id})}">
+                    <i class="material-icons" style="color: greenyellow">settings_backup_restore</i></a>
+
             </td>
 
         </tr>
