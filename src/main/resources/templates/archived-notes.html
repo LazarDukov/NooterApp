@@ -11,12 +11,17 @@
 </head>
 
 <body class="archived-notes">
-
+<div th:replace="~{fragments/clock :: clock}">
+    Clock
+</div>
 <div th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
 <h1 class="information-text">Archived notes</h1>
 <div>
+    <a class="delete-all-archived"
+       style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
+       th:href="@{/archived-notes/restore-all}">Restore all</a>
     <a class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
        th:href="@{/archived-notes/delete-all}">Delete all</a>

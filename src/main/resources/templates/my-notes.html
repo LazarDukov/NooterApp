@@ -11,7 +11,9 @@
 </head>
 
 <body class="my-notes">
-
+<div th:replace="~{fragments/clock :: clock}">
+    Clock
+</div>
 <div class="button-container-format" th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>

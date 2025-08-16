@@ -14,10 +14,11 @@ body.edit-note {
     margin: 0;
     display: flex;
     flex-direction: column;
-   justify-content: center;
+    justify-content: center;
     align-items: center;
     position: relative;
 }
+
 body.my-profile,
 body.my-notes,
 body.archived-notes,
@@ -90,6 +91,7 @@ body.my-tasks {
     position: center;
     color: black;
 }
+
 .info-welcome h1 {
     position: fixed;
     top: 5%;
@@ -196,7 +198,7 @@ input.my-profile-button {
 /*TODO: Should configure image */
 .welcome-button {
     position: fixed;
-    top: 5%;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
 
@@ -257,6 +259,7 @@ input.my-profile-button {
     width: 500px;
     /*white-space: nowrap; !* Prevents wrapping *!*/
 }
+
 .my-profile-item h3 {
     font-size: 20px;
     text-align: center;
@@ -268,7 +271,6 @@ input.my-profile-button {
     font-size: 20px;
     padding: 20px;
 }
-
 
 
 .information-text {

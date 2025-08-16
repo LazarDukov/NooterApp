@@ -200,4 +200,10 @@ public class NoteController {
         return "redirect:/archived-notes";
     }
 
+    @GetMapping("/archived-notes/restore-all")
+    public String restoreAll() {
+        noteService.restoreAll();
+        return "redirect:/archived-notes";
+    }
+
 }

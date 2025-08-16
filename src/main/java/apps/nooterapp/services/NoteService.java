@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -134,16 +135,30 @@ public class NoteService {
     }
 
     public void restoreNoteOrTask(Long id) {
-        System.out.println("IM in restore method in service");
+
         User user = userService.getUserByNote(id);
-        System.out.println("USER IS " + user.getUsername());
+
 
         Note taskOrNote = noteRepository.findNoteById(id);
-        System.out.println("TASK IS WITH ID " + taskOrNote.getId());
         taskOrNote.setActive(true);
-        System.out.println("task is set TRUE");
+        if (taskOrNote.getType().equals(NoteType.TASK)) {
+            taskOrNote.setReminderTime(LocalDateTime.now().plusHours(24));
+        }
+
         userRepository.save(user);
         noteRepository.save(taskOrNote);
-        System.out.println("ALLL SAVEDDDD");
+
+    }
+
+    public void restoreAll() {
+        List<Note> allArchived = noteRepository.findAll()
+                .stream()
+                .filter(noteOrTask -> (!noteOrTask.isActive())).toList();
+        allArchived
+                .stream()
+                .filter(task -> task.getType().equals(NoteType.TASK))
+                .forEach(task -> task.setReminderTime(LocalDateTime.now().plusHours(24)));
+        allArchived.forEach(noteOrTask -> noteOrTask.setActive(true));
+        noteRepository.saveAll(allArchived);
     }
 }
