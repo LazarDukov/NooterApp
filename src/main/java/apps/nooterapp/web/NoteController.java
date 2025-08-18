@@ -29,7 +29,7 @@ public class NoteController {
     }
 
 
-    @GetMapping("/my-notes")
+    @GetMapping("/my-notes-created-desc")
     public String myNotesPage(Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {
@@ -39,6 +39,20 @@ public class NoteController {
                 .collect(Collectors.toList());
         Collections.reverse(noteList);
         model.addAttribute("myNotes", noteList);
+        return "my-notes";
+    }
+
+    @GetMapping("/my-notes-created-asc")
+    public String myNotesSortedDesc(Principal principal, Model model) {
+        User loggedUser = userService.loggedUser(principal);
+        if (loggedUser == null) {
+            return "redirect:/login";
+        }
+        List<Note> noteListSortedAsc = loggedUser.getNotes().stream()
+                .filter(Note::isActive)
+                .filter(note -> note.getType().toString().equals("NOTE"))
+                .toList();
+        model.addAttribute("myNotes", noteListSortedAsc);
         return "my-notes";
     }
 

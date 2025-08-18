@@ -65,13 +65,6 @@ body.my-tasks {
     text-align: center;
 }
 
-/*.button-row {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    gap: 20px; !* space between buttons in the same row *!*/
-/*    flex-wrap: wrap;*/
-/*}*/
-
 .register-form input, .login-form input, .add-note-form input, .add-note-form select, .edit-note-form input, .edit-note-form select {
     margin-bottom: 15px;
 }
@@ -304,7 +297,7 @@ input.my-profile-button {
 .my-notes, .archived-notes, .my-tasks {
     margin-top: 20px;
     background-color: #EFF0F3;
-    color: #F0944F;
+    color: black;
     font-family: sans-serif;
     height: 100vh;
 

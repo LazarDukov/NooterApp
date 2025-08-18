@@ -44,6 +44,7 @@ public class NoteService {
         if (note.getType().equals(NoteType.TASK)) {
             note.setReminderTime(addNoteDTO.getReminderTime());
         }
+        note.setDateCreated(LocalDateTime.now());
         loggedUser.getNotes().add(note);
         noteRepository.save(note);
         userRepository.save(loggedUser);

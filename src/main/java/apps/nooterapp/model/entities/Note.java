@@ -4,6 +4,7 @@ import apps.nooterapp.model.enums.NoteType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table
@@ -28,13 +29,18 @@ public class Note {
     @Column
     private LocalDateTime reminderTime;
 
+    @Column
+    private LocalDateTime dateCreated;
+
+
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private User user;
 
     public Note() {
     }
 
-    public Note(Long id, String title, String description, NoteType type, boolean active, LocalDateTime reminderTime, User user) {
+    public Note(Long id, String title, String description, NoteType type, boolean active, LocalDateTime reminderTime, LocalDateTime dateCreated, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -42,6 +48,7 @@ public class Note {
         this.active = active;
         this.user = user;
         this.reminderTime = reminderTime;
+        this.dateCreated = dateCreated;
     }
 
     public Long getId() {
@@ -97,7 +104,14 @@ public class Note {
         this.reminderTime = reminderTime;
         return this;
     }
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
 
+    public Note setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+        return this;
+    }
     public User getUser() {
         return user;
     }
