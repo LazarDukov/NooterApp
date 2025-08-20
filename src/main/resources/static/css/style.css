@@ -44,7 +44,7 @@ body.my-tasks {
 }
 
 .register-form, .login-form, .add-note-form, .edit-note-form, .my-notes-table, .archived-notes-table, .my-tasks-table {
-    padding: 30px;
+    padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 250px;
@@ -232,14 +232,6 @@ input.my-profile-button {
     font-style: normal;
 }
 
-/*.my-profile-stats {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    width: 200px;*/
-/*    flex-direction: column;*/
-/*    gap: 5px;*/
-
-/*}*/
 
 
 .my-profile-item {

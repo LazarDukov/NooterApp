@@ -38,7 +38,9 @@ public class NoteController {
         List<Note> noteList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("NOTE"))
                 .collect(Collectors.toList());
         Collections.reverse(noteList);
+        String sortedByNewest = "Sorted by newest";
         model.addAttribute("myNotes", noteList);
+        model.addAttribute("sortedByNewest", sortedByNewest);
         return "my-notes";
     }
 
@@ -52,7 +54,9 @@ public class NoteController {
                 .filter(Note::isActive)
                 .filter(note -> note.getType().toString().equals("NOTE"))
                 .toList();
+        String sortedByOldest = "Sorted by oldest";
         model.addAttribute("myNotes", noteListSortedAsc);
+        model.addAttribute("sortedByOldest", sortedByOldest);
         return "my-notes";
     }
 

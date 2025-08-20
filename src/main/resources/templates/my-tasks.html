@@ -24,6 +24,16 @@
     <a class="delete-all-archived" style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center" th:href="@{/my-tasks/all-delete}">All delete</a>
 </div>
 <div>
+    <label>Sorted by </label>
+    <select name="type" id="type">
+        <option value="NEWEST">created date: newest</option>
+        <option value="OLDEST">created date: oldest</option>
+    </select>
+    <a href="#" id="sortBtn" class="delete-all-archived"
+       style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: right">Sort</a>
+</div>
+
+<div>
     <table class="my-tasks-table">
         <thead>
         <tr>
@@ -74,6 +84,31 @@
     </table>
 </div>
 <script>
+    window.addEventListener('DOMContentLoaded', function () {
+        const currentUrl = window.location.href;
+
+        if (currentUrl.endsWith("desc")) {
+            document.getElementById("type").value = "NEWEST";
+        } else if (currentUrl.endsWith("asc")) {
+            document.getElementById("type").value = "OLDEST";
+        }
+    });
+
+    // Existing sort button behavior
+    document.getElementById("sortBtn").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent default <a> behavior
+
+        const selected = document.getElementById("type").value;
+
+        let targetUrl = "/my-notes-created-desc"; // default
+        if (selected === "OLDEST") {
+            targetUrl = "/my-notes-created-asc";
+        }
+
+        window.location.href = targetUrl;
+    });
+
+
     $(function () {
         // Open Popup
         $('[popup-open]').on('click', function () {
