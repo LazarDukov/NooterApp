@@ -28,6 +28,8 @@
     <select name="type" id="type">
         <option value="NEWEST">created date: newest</option>
         <option value="OLDEST">created date: oldest</option>
+        <option value="REMINDER_SOONER">reminder time: sooner</option>
+        <option value="REMINDER_FURTHER">reminder time: further</option>
     </select>
     <a href="#" id="sortBtn" class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: right">Sort</a>
@@ -100,9 +102,13 @@
 
         const selected = document.getElementById("type").value;
 
-        let targetUrl = "/my-notes-created-desc"; // default
+        let targetUrl = "/my-tasks-created-desc"; // default
         if (selected === "OLDEST") {
-            targetUrl = "/my-notes-created-asc";
+            targetUrl = "/my-tasks-created-asc";
+        } else if (selected === "REMINDER_SOONER") {
+            targetUrl = "/my-tasks-reminder-sooner";
+        } else if (selected === "REMINDER_FURTHER") {
+            targetUrl = "/my-tasks-reminder-further";
         }
 
         window.location.href = targetUrl;

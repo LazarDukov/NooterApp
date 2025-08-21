@@ -1,0 +1,67 @@
+package apps.nooterapp.web;
+
+import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.User;
+import apps.nooterapp.services.NoteService;
+import apps.nooterapp.services.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Controller
+public class ArchiveController {
+    private UserService userService;
+    private NoteService noteService;
+
+    public ArchiveController(UserService userService, NoteService noteService) {
+        this.userService = userService;
+        this.noteService = noteService;
+    }
+
+    @GetMapping("/archived-notes")
+    public String archivedNotesPage(Principal principal, Model model) {
+        User loggedUser = userService.loggedUser(principal);
+        if (loggedUser == null) {
+            return "redirect:/login";
+        }
+        List<Note> archivedNotes = loggedUser.getNotes().stream().filter(note -> !note.isActive()).collect(Collectors.toList());
+        model.addAttribute("archivedNotes", archivedNotes);
+        return "archived-notes";
+
+    }
+    @GetMapping("/archived-notes/view/{id}")
+    @ResponseBody
+    public ResponseEntity<Note> viewArchivedNoteOrTask(@PathVariable Long id) {
+        Note note = noteService.viewNoteOrTask(id);
+        return ResponseEntity.ok(note);
+    }
+
+    @GetMapping("/archived-notes/delete-all")
+    public String deleteAllArchived(Principal principal) {
+        noteService.deleteArchived(principal);
+        return "redirect:/my-profile";
+    }
+
+
+
+    @GetMapping("/archived-notes/restore/{id}")
+    public String restoreNoteOrTask(@PathVariable Long id) {
+        System.out.println("Im in CONTROLLER FOR RESTORE METHOD");
+        noteService.restoreNoteOrTask(id);
+        System.out.println("I ALREADY RETURN ARCHIVED NOTES");
+        return "redirect:/archived-notes";
+    }
+
+    @GetMapping("/archived-notes/restore-all")
+    public String restoreAll() {
+        noteService.restoreAll();
+        return "redirect:/archived-notes";
+    }
+}
