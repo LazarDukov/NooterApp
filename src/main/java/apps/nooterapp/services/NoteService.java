@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,9 +43,9 @@ public class NoteService {
         note.setActive(true);
         note.setUser(loggedUser);
         if (note.getType().equals(NoteType.TASK)) {
-            note.setReminderTime(addNoteDTO.getReminderTime());
+            note.setReminderTime(addNoteDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
         }
-        note.setDateCreated(LocalDateTime.now());
+        note.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
         loggedUser.getNotes().add(note);
         noteRepository.save(note);
         userRepository.save(loggedUser);
@@ -70,13 +71,19 @@ public class NoteService {
         note.setType(editNoteDTO.getType());
         note.setActive(true);
         if (note.getType().equals(NoteType.TASK)) {
-            note.setReminderTime(editNoteDTO.getReminderTime());
+            note.setReminderTime(editNoteDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
         }
         noteRepository.save(note);
     }
 
     public List<Note> findAllActiveTasks() {
         return noteRepository.findAllByTypeAndActiveOrderByReminderTime(NoteType.TASK, true);
+    }
+
+    public Note archiveCurrentTask(String title, LocalDateTime localDateTime) {
+        System.out.println("in archive current task method in noteService and title is: " + title + " Local date time is " + localDateTime);
+        return noteRepository.findNoteByTitleAndReminderTime(title, localDateTime);
+
     }
 
     public void deleteNote(Long id) {
@@ -161,5 +168,10 @@ public class NoteService {
                 .forEach(task -> task.setReminderTime(LocalDateTime.now().plusHours(24)));
         allArchived.forEach(noteOrTask -> noteOrTask.setActive(true));
         noteRepository.saveAll(allArchived);
+    }
+
+    public void archiveExpiredReminder(Note expiredReminder) {
+        Note note = noteRepository.findNoteByTitleAndReminderTime(expiredReminder.getTitle(), expiredReminder.getReminderTime()).setActive(false);
+        noteRepository.save(note);
     }
 }

@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
     Note findNoteById(Long id);
+
     List<Note> findAllByTypeAndActiveOrderByReminderTime(NoteType type, boolean isActive);
 
+    Note findNoteByTitleAndReminderTime(String title, LocalDateTime localDateTime);
 
 }

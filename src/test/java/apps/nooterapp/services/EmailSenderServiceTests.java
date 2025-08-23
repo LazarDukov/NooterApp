@@ -17,11 +17,13 @@ import static org.mockito.Mockito.*;
 public class EmailSenderServiceTests {
     private EmailSenderService emailSenderService;
     private JavaMailSender javaMailSender;
+    private NoteService noteService;
 
     @BeforeEach
     void setUp() {
         javaMailSender = mock(JavaMailSender.class);
-        emailSenderService = new EmailSenderService(javaMailSender);
+        noteService = mock(NoteService.class);
+        emailSenderService = new EmailSenderService(javaMailSender, noteService);
         try {
             java.lang.reflect.Field field = EmailSenderService.class.getDeclaredField("fromEmailId");
             field.setAccessible(true);
