@@ -26,64 +26,46 @@ public class TaskController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/my-tasks-created-desc")
-    public String myTasksCreatedDesc(Principal principal, Model model) {
+    @GetMapping("/my-tasks")
+    public String getMyTasks(@RequestParam(defaultValue = "desc") String sort, Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
-        List<Note> taskList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK")).collect(Collectors.toList());
-        Collections.reverse(taskList);
-        model.addAttribute("myTasks", taskList);
-        model.addAttribute("sortedByNewest", "Sorted by newest");
-        return "my-tasks";
-    }
-
-    @GetMapping("/my-tasks-created-asc")
-    public String myTasksCreatedAsc(Principal principal, Model model) {
-        User loggedUser = userService.loggedUser(principal);
-        if (loggedUser == null) {
-            return "redirect:/login"; // or show an error
+        if (sort.equals("desc") || sort.equals("asc")) {
+            List<Note> taskListByCreatedDate = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK")).collect(Collectors.toList());
+            if (sort.equals("asc")) {
+                Collections.reverse(taskListByCreatedDate);
+                model.addAttribute("myTasks", taskListByCreatedDate);
+                model.addAttribute("sort", sort);
+                model.addAttribute("sortedByNewest", "Sorted by newest");
+            } else if (sort.equals("desc")) {
+                model.addAttribute("myTasks", taskListByCreatedDate);
+                model.addAttribute("sort", sort);
+                model.addAttribute("sortedByOldest", "Sorted by oldest");
+            }
+        } else if (sort.equals("sooner") || sort.equals("later")) {
+            List<Note> taskListByReminderTime = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK"))
+                    .sorted(Comparator.comparing(Note::getReminderTime)).collect(Collectors.toList());
+            if (sort.equals("sooner")) {
+                model.addAttribute("myTasks", taskListByReminderTime);
+                model.addAttribute("sort", sort);
+                model.addAttribute("sortedBySooner", "Sorted by sooner");
+            } else if (sort.equals("later")) {
+                Collections.reverse(taskListByReminderTime);
+                model.addAttribute("myTasks", taskListByReminderTime);
+                model.addAttribute("sort", sort);
+                model.addAttribute("sortedByLater", "Sorted by later");
+            }
         }
-        List<Note> taskList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK"))
-               .collect(Collectors.toList());
-        model.addAttribute("myTasks", taskList);
-        model.addAttribute("sortedByOldest", "Sorted by oldest");
-        return "my-tasks";
-    }
-
-    @GetMapping("/my-tasks-reminder-sooner")
-    public String myTasksReminderSooner(Principal principal, Model model) {
-        User loggedUser = userService.loggedUser(principal);
-        if (loggedUser == null) {
-            return "redirect:/login"; // or show an error
-        }
-        List<Note> taskList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK"))
-                .sorted(Comparator.comparing(Note::getReminderTime)).collect(Collectors.toList());
-        model.addAttribute("myTasks", taskList);
-        model.addAttribute("sortedByReminderSooner", "Sorted by reminder sooner");
-        return "my-tasks";
-    }
-
-
-    @GetMapping("/my-tasks-reminder-further")
-    public String myTasksReminderFurther(Principal principal, Model model) {
-        User loggedUser = userService.loggedUser(principal);
-        if (loggedUser == null) {
-            return "redirect:/login"; // or show an error
-        }
-        List<Note> taskList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK"))
-                .sorted(Comparator.comparing(Note::getReminderTime).reversed()).collect(Collectors.toList());
-        model.addAttribute("myTasks", taskList);
-        model.addAttribute("sortedByReminderFurther", "Sorted by reminder further");
         return "my-tasks";
     }
 
 
     @GetMapping("/my-tasks/finish/{id}")
-    public String archiveTask(@PathVariable Long id) {
+    public String archiveTask(@PathVariable Long id, @RequestParam (defaultValue = "desc") String sort) {
         noteService.archiveNoteOrTask(id);
-        return "redirect:/my-tasks";
+        return "redirect:/my-tasks?sort=" + sort;
     }
 
     @GetMapping("/my-tasks/view/{id}")
@@ -108,9 +90,9 @@ public class TaskController {
     }
 
     @GetMapping("/my-tasks/delete-task/{id}")
-    public String deleteTask(@PathVariable Long id) {
+    public String deleteTask(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
         noteService.deleteNote(id);
-        return "redirect:/my-tasks";
+        return "redirect:/my-tasks?sort=" + sort;
     }
 
     @GetMapping("/my-tasks/all-done")

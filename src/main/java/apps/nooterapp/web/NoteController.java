@@ -29,36 +29,30 @@ public class NoteController {
     }
 
 
-    @GetMapping("/my-notes-created-desc")
-    public String myNotesPage(Principal principal, Model model) {
+    @GetMapping("/my-notes")
+    public String myNotesPage(@RequestParam(defaultValue = "desc") String sort, Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {
             return "redirect:/login"; // or show an error
         }
         List<Note> noteList = loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("NOTE"))
                 .collect(Collectors.toList());
-        Collections.reverse(noteList);
-        String sortedByNewest = "Sorted by newest";
-        model.addAttribute("myNotes", noteList);
-        model.addAttribute("sortedByNewest", sortedByNewest);
+        if (sort.equals("asc")) {
+            Collections.reverse(noteList);
+            String sortedByNewest = "Sorted by newest";
+            model.addAttribute("myNotes", noteList);
+            model.addAttribute("sortedByNewest", sortedByNewest);
+            model.addAttribute("sort", sort);
+        } else if (sort.equals("desc")) {
+            String sortedByOldest = "Sorted by oldest";
+            model.addAttribute("myNotes", noteList);
+            model.addAttribute("sortedByOldest", sortedByOldest);
+            model.addAttribute("sort", sort);
+
+        }
         return "my-notes";
     }
 
-    @GetMapping("/my-notes-created-asc")
-    public String myNotesSortedDesc(Principal principal, Model model) {
-        User loggedUser = userService.loggedUser(principal);
-        if (loggedUser == null) {
-            return "redirect:/login";
-        }
-        List<Note> noteListSortedAsc = loggedUser.getNotes().stream()
-                .filter(Note::isActive)
-                .filter(note -> note.getType().toString().equals("NOTE"))
-                .toList();
-        String sortedByOldest = "Sorted by oldest";
-        model.addAttribute("myNotes", noteListSortedAsc);
-        model.addAttribute("sortedByOldest", sortedByOldest);
-        return "my-notes";
-    }
 
     @GetMapping("/add-note")
     public String addNotePage() {
@@ -82,9 +76,9 @@ public class NoteController {
     }
 
     @GetMapping("/my-notes/finish/{id}")
-    public String archiveNote(@PathVariable Long id) {
+    public String archiveNote(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
         noteService.archiveNoteOrTask(id);
-        return "redirect:/my-notes";
+        return "redirect:/my-notes?sort=" + sort ;
     }
 
 
@@ -96,16 +90,12 @@ public class NoteController {
     }
 
 
-
-
-
     @GetMapping("/my-notes/edit-note/{id}")
     public String showEditNotePage(@PathVariable Long id, Model model) {
         Note note = noteService.viewNoteOrTask(id);
         model.addAttribute("editNoteDTO", note);
         return "edit-note";
     }
-
 
 
     @PostMapping("/my-notes/edit-note/{id}")
@@ -116,11 +106,10 @@ public class NoteController {
     }
 
 
-
     @GetMapping("/my-notes/delete-note/{id}")
-    public String deleteNote(@PathVariable Long id) {
+    public String deleteNote(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
         noteService.deleteNote(id);
-        return "redirect:/my-notes";
+        return "redirect:/my-notes?sort=" + sort;
     }
 
     @GetMapping("/my-notes/all-done")
@@ -135,8 +124,6 @@ public class NoteController {
         noteService.allNotesDelete(principal);
         return "redirect:/my-notes";
     }
-
-
 
 
 }

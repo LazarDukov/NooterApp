@@ -2,10 +2,12 @@ package apps.nooterapp.model.dtos;
 
 import apps.nooterapp.model.enums.NoteType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
 public class AddNoteDTO {
+    @Size
     private String title;
     private String description;
 

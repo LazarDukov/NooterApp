@@ -31,13 +31,30 @@
 </div>
 <div>
     <label>Sorted by </label>
-    <select name="type" id="type">
-        <option value="NEWEST">created date: newest</option>
-        <option value="OLDEST">created date: oldest</option>
+    <select name="sort" id="sort">
+        <option value="desc">Created date: newest</option>
+        <option value="asc">Created date: oldest</option>
     </select>
     <a href="#" id="sortBtn" class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: right">Sort</a>
 </div>
+<script>
+    document.getElementById('sortBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        const sortValue = document.getElementById('sort').value;
+        window.location.href = '/my-notes?sort=' + sortValue;
+    });
+</script>
+<script>
+    // On page load, set the dropdown to current sort
+    window.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSort = urlParams.get('sort');
+        if (currentSort) {
+            document.getElementById('sort').value = currentSort;
+        }
+    });
+</script>
 
 <div>
     <table class="my-notes-table">
@@ -73,11 +90,11 @@
                     <i class="material-icons" style="color: yellow">edit</i></a>
             </td>
             <td>
-                <a th:href="@{/my-notes/delete-note/{id}(id=${note.id})}">
+                <a th:href="@{/my-notes/delete-note/{id}(id=${note.id}, sort=${sort})}">
                     <i class="material-icons" style="color: red">delete</i></a>
             </td>
             <td>
-                <a th:href="@{/my-notes/finish/{id}(id=${note.id})}">
+                <a th:href="@{/my-notes/finish/{id}(id=${note.id}, sort=${sort})}">
                     <i class="material-icons" style="color: greenyellow">done</i></a>
             </td>
         </tr>
