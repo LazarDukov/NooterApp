@@ -1,21 +1,32 @@
 package apps.nooterapp.model.dtos;
 
 import apps.nooterapp.model.enums.NoteType;
+import apps.nooterapp.util.TaskReminderDateValidationInterface;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.aspectj.lang.annotation.Before;
 
 import java.time.LocalDateTime;
 
+
 public class AddNoteDTO {
-    @Size
+    @NotNull
+    @Size(min = 3, max = 15, message = "Title should be with length minimum 3 and maximum 15 letters!")
     private String title;
+    @NotNull
+    @Size(min = 3, max = 255,message = "Description should be with length minimum 3 and maximum 255 letters!")
     private String description;
 
     @Enumerated
+    @NotNull
     private NoteType type;
 
     private boolean active;
-
+    @NotNull
+    @TaskReminderDateValidationInterface
     private LocalDateTime reminderTime;
 
     public AddNoteDTO() {
@@ -75,3 +86,4 @@ public class AddNoteDTO {
         return this;
     }
 }
+

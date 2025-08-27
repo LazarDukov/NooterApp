@@ -44,11 +44,23 @@
                name="title"
                type="text"
                placeholder="Title"><br>
+        <small th:if="${#fields.hasErrors('title')}"
+               th:errorclass="errors"
+               th:errors="*{title}"
+               class="text-danger">
+            Title error!
+        </small>
         <label>Description:</label><br>
         <input th:value="${addNoteDTO.description}" id="description"
                name="description"
                type="text"
                placeholder="Description"><br>
+        <small th:if="${#fields.hasErrors('description')}"
+               th:errorclass="errors"
+               th:errors="*{description}"
+               class="text-danger">
+            Description error!
+        </small>
         <label>Choose type:</label><br>
         <select name="type" id="type">
             <option disabled selected hidden>Choose note or task:</option>
@@ -59,8 +71,14 @@
             <label>Reminder date and time:</label><br>
             <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
                    name="reminderTime"><br>
-        </div>
 
+            <small th:if="${#fields.hasErrors('reminderTime')}"
+                   th:errorclass="errors"
+                   th:errors="*{reminderTime}"
+                   class="text-danger">
+                Reminder time error!
+            </small>
+        </div>
     </form>
 
 </div>

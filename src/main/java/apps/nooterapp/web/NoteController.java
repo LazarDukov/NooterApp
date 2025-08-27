@@ -7,10 +7,13 @@ import apps.nooterapp.model.entities.Note;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -70,7 +73,14 @@ public class NoteController {
     }
 
     @PostMapping("/add-note")
-    public String addNotePost(AddNoteDTO addNoteDTO, Principal principal) {
+    public String addNotePost(@Valid @ModelAttribute AddNoteDTO addNoteDTO,  BindingResult bindingResult, Principal principal,RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("ERRORS APPEARS!");
+            redirectAttributes.addFlashAttribute("addNoteDTO", addNoteDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNoteDTO", bindingResult);
+            return "redirect:/add-note";
+        }
+        System.out.println("NO ERRORS");
         noteService.addNote(principal, addNoteDTO);
         return "redirect:/my-profile";
     }
@@ -78,7 +88,7 @@ public class NoteController {
     @GetMapping("/my-notes/finish/{id}")
     public String archiveNote(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
         noteService.archiveNoteOrTask(id);
-        return "redirect:/my-notes?sort=" + sort ;
+        return "redirect:/my-notes?sort=" + sort;
     }
 
 
