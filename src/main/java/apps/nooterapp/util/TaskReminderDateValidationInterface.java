@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import java.time.LocalDateTime;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Constraint(validatedBy = TaskReminderDateValidation.class)
 public @interface TaskReminderDateValidationInterface {
 

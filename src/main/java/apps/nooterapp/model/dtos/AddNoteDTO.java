@@ -11,13 +11,13 @@ import org.aspectj.lang.annotation.Before;
 
 import java.time.LocalDateTime;
 
-
+@TaskReminderDateValidationInterface(message = "You should choose a date and it should be after now!")
 public class AddNoteDTO {
     @NotNull
     @Size(min = 3, max = 15, message = "Title should be with length minimum 3 and maximum 15 letters!")
     private String title;
     @NotNull
-    @Size(min = 3, max = 255,message = "Description should be with length minimum 3 and maximum 255 letters!")
+    @Size(min = 3, max = 255, message = "Description should be with length minimum 3 and maximum 255 letters!")
     private String description;
 
     @Enumerated
@@ -25,8 +25,7 @@ public class AddNoteDTO {
     private NoteType type;
 
     private boolean active;
-    @NotNull(message = "It cannot be empty! You should choose a date!")
-    @TaskReminderDateValidationInterface
+
     private LocalDateTime reminderTime;
 
     public AddNoteDTO() {
