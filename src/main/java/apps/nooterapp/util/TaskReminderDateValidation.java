@@ -17,6 +17,9 @@ public class TaskReminderDateValidation implements ConstraintValidator<TaskRemin
 
     @Override
     public boolean isValid(LocalDateTime localDateTime, ConstraintValidatorContext context) {
+        if (localDateTime == null) {
+            return false;
+        }
         if (localDateTime.isAfter(LocalDateTime.now())) {
             return true;
         } else {

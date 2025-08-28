@@ -62,16 +62,17 @@
             Description error!
         </small>
         <label>Choose type:</label><br>
-        <select name="type" id="type">
-            <option disabled selected hidden>Choose note or task:</option>
+        <select th:field="*{type}" id="type">
+            <option value="" disabled hidden>Choose note or task:</option>
             <option value="NOTE">Note</option>
             <option value="TASK">Task</option>
         </select>
-        <div id="reminderField" style="display: none;">
-            <label>Reminder date and time:</label><br>
-            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local" id="reminderTime"
-                   name="reminderTime"><br>
 
+        <div id="reminderField"
+             th:style="${addNoteDTO.type == 'TASK'} ? 'display:block;' : 'display:none;'">
+            <label>Reminder date and time:</label><br>
+            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local"
+                   id="reminderTime" name="reminderTime"><br>
             <small th:if="${#fields.hasErrors('reminderTime')}"
                    th:errorclass="errors"
                    th:errors="*{reminderTime}"
@@ -80,10 +81,10 @@
             </small>
         </div>
     </form>
-
 </div>
+
 <div>
-    <input class="add-note-input" type="submit" value="Add note" form="addNoteForm"><br>
+    <input class="add-note-input" id= "submit" type="submit" value="Add note" form="addNoteForm"><br>
 </div>
 
 <footer th:replace="~{fragments/copyright :: footer}">

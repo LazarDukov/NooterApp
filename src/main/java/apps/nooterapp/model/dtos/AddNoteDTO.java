@@ -25,7 +25,7 @@ public class AddNoteDTO {
     private NoteType type;
 
     private boolean active;
-    @NotNull
+    @NotNull(message = "It cannot be empty! You should choose a date!")
     @TaskReminderDateValidationInterface
     private LocalDateTime reminderTime;
 

@@ -73,12 +73,12 @@ public class NoteController {
     }
 
     @PostMapping("/add-note")
-    public String addNotePost(@Valid @ModelAttribute AddNoteDTO addNoteDTO,  BindingResult bindingResult, Principal principal,RedirectAttributes redirectAttributes) {
+    public String addNotePost(@Valid @ModelAttribute("addNoteDTO") AddNoteDTO addNoteDTO, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             System.out.println("ERRORS APPEARS!");
             redirectAttributes.addFlashAttribute("addNoteDTO", addNoteDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNoteDTO", bindingResult);
-            return "redirect:/add-note";
+            return "add-note";
         }
         System.out.println("NO ERRORS");
         noteService.addNote(principal, addNoteDTO);
