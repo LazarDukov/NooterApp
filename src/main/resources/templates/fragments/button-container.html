@@ -16,10 +16,10 @@
     <div th:fragment="button-container" class="button-container-format">
 
             <a class="my-profile-button" th:href="@{/my-profile}">my profile</a>
-            <a class="my-profile-button" th:href="@{/add-note}">add new</a>
-        <a class="my-profile-button" th:href="@{/my-notes(sort='desc')}">notes</a>
+            <a class="my-profile-button" th:href="@{/add-record}">add new</a>
+        <a class="my-profile-button" th:href="@{/my-records(sort='desc')}">records</a>
         <a class="my-profile-button" th:href="@{/my-tasks(sort='desc')}">tasks</a>
-        <a class="my-profile-button" th:href="@{/archived-notes}">archive</a>
+        <a class="my-profile-button" th:href="@{/archived-records}">archive</a>
         <form class="logout-form-wrapper" th:method="post" th:action="@{/logout}">
             <input type="submit" value="   logout   " class="my-profile-button logout-form">
         </form>

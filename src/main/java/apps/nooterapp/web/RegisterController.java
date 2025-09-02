@@ -19,14 +19,14 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
-    @GetMapping("/register")
-    public String registerPage() {
-        return "register";
-    }
-
     @ModelAttribute("registerDTO")
     public RegisterDTO initRegisterDTO() {
         return new RegisterDTO();
+    }
+
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
     }
 
     @PostMapping("/register")

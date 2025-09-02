@@ -26,21 +26,21 @@
         });
     </script>
 </head>
-<body class="add-note">
+<body class="add-record">
 <div th:replace="~{fragments/clock :: clock}">
     Clock
 </div>
 <div th:replace="~{fragments/button-container::button-container}">
     Button container
 </div>
-<div class="add-note-form">
-    <h1>Add note</h1>
+<div class="add-record-form">
+    <h1>Add record</h1>
     <form id="addNoteForm"
           th:method="post"
-          th:action="@{/add-note}"
-          th:object="${addNoteDTO}">
+          th:action="@{/add-record}"
+          th:object="${addRecordDTO}">
         <label>Title:</label><br>
-        <input th:value="${addNoteDTO.title}" id="title"
+        <input th:value="${addRecordDTO.title}" id="title"
                name="title"
                type="text"
                placeholder="Title"><br>
@@ -51,7 +51,7 @@
             Title error!
         </small>
         <label>Description:</label><br>
-        <input th:value="${addNoteDTO.description}" id="description"
+        <input th:value="${addRecordDTO.description}" id="description"
                name="description"
                type="text"
                placeholder="Description"><br>
@@ -63,15 +63,15 @@
         </small>
         <label>Choose type:</label><br>
         <select th:field="*{type}" id="type">
-            <option value="" hidden>Choose note or task:</option>
+            <option value="" hidden>Choose record or task:</option>
             <option value="NOTE">Note</option>
             <option value="TASK">Task</option>
         </select>
 
         <div id="reminderField"
-             th:style="${addNoteDTO.type == 'TASK'} ? 'display:block;' : 'display:none;'">
+             th:style="${addRecordDTO.type == 'TASK'} ? 'display:block;' : 'display:none;'">
             <label>Reminder date and time:</label><br>
-            <input th:value="${addNoteDTO.reminderTime}" type="datetime-local"
+            <input th:value="${addRecordDTO.reminderTime}" type="datetime-local"
                    id="reminderTime" name="reminderTime"><br>
             <small th:if="${#fields.hasErrors('reminderTime')}"
                    th:errorclass="errors"
@@ -84,7 +84,7 @@
 </div>
 
 <div>
-    <input class="add-note-input" id= "submit" type="submit" value="Add note" form="addNoteForm"><br>
+    <input class="add-record-input" id= "submit" type="submit" value="Add record" form="addNoteForm"><br>
 </div>
 
 <footer th:replace="~{fragments/copyright :: footer}">

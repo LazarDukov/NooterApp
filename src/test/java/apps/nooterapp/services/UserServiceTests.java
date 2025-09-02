@@ -1,6 +1,6 @@
 package apps.nooterapp.services;
 
-import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.springframework.data.relational.core.sql.When.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -102,12 +101,12 @@ public class UserServiceTests {
 
     @Test
     void testGetUserByNote() {
-        Note note = new Note();
-        note.setId(1L);
+        Record record = new Record();
+        record.setId(1L);
         User user = new User();
         user.setUsername("Pinko");
-        user.setNotes(new ArrayList<>(List.of(note)));
-        Mockito.when(mockUserRepository.findUserByNoteId(note.getId())).thenReturn(Optional.of(user));
+        user.setNotes(new ArrayList<>(List.of(record)));
+        Mockito.when(mockUserRepository.findUserByNoteId(record.getId())).thenReturn(Optional.of(user));
         User savedUser = userService.getUserByNote(1L);
         Assertions.assertEquals(user.getUsername(), savedUser.getUsername());
     }

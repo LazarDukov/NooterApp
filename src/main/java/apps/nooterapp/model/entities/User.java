@@ -1,9 +1,7 @@
 package apps.nooterapp.model.entities;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -28,19 +26,19 @@ public class User {
 
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Note> notes;
+    private List<Record> records;
 
 
     public User() {
     }
 
-    public User(Long id, String username, String email, String password, String registerDate, List<Note> notes) {
+    public User(Long id, String username, String email, String password, String registerDate, List<Record> records) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.registerDate = registerDate;
-        this.notes = notes;
+        this.records = records;
     }
 
     public Long getId() {
@@ -89,12 +87,12 @@ public class User {
 
 
 
-    public List<Note> getNotes() {
-        return notes;
+    public List<Record> getNotes() {
+        return records;
     }
 
-    public User setNotes(List<Note> notes) {
-        this.notes = notes;
+    public User setNotes(List<Record> records) {
+        this.records = records;
         return this;
     }
 }

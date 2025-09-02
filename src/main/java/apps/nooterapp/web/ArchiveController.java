@@ -1,6 +1,6 @@
 package apps.nooterapp.web;
 
-import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
@@ -31,16 +31,16 @@ public class ArchiveController {
         if (loggedUser == null) {
             return "redirect:/login";
         }
-        List<Note> archivedNotes = loggedUser.getNotes().stream().filter(note -> !note.isActive()).collect(Collectors.toList());
-        model.addAttribute("archivedNotes", archivedNotes);
+        List<Record> archivedRecords = loggedUser.getNotes().stream().filter(note -> !note.isActive()).collect(Collectors.toList());
+        model.addAttribute("archivedNotes", archivedRecords);
         return "archived-notes";
 
     }
     @GetMapping("/archived-notes/view/{id}")
     @ResponseBody
-    public ResponseEntity<Note> viewArchivedNoteOrTask(@PathVariable Long id) {
-        Note note = noteService.viewNoteOrTask(id);
-        return ResponseEntity.ok(note);
+    public ResponseEntity<Record> viewArchivedNoteOrTask(@PathVariable Long id) {
+        Record record = noteService.viewRecord(id);
+        return ResponseEntity.ok(record);
     }
 
     @GetMapping("/archived-notes/delete-all")
@@ -54,7 +54,7 @@ public class ArchiveController {
     @GetMapping("/archived-notes/restore/{id}")
     public String restoreNoteOrTask(@PathVariable Long id) {
         System.out.println("Im in CONTROLLER FOR RESTORE METHOD");
-        noteService.restoreNoteOrTask(id);
+        noteService.restoreRecord(id);
         System.out.println("I ALREADY RETURN ARCHIVED NOTES");
         return "redirect:/archived-notes";
     }

@@ -29,9 +29,9 @@
     <a class="gold-button from-top" sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a>
     <a class="gold-button from-bottom" sec:authorize="!isAuthenticated()" th:href="@{/login}">Log in</a>
 </div>
-<a sec:authorize="isAuthenticated()" th:href="@{/my-notes}">My notes</a>
-<a sec:authorize="isAuthenticated()" th:href="@{/add-note}">Add note</a>
-<a sec:authorize="isAuthenticated()" th:href="@{/archived-notes}">Archived note</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/my-records}">My records</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/add-record}">Add record</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/archived-records}">Archived record</a>
 
 <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}" th:href="@{/}">
     <input type="submit" name="" value="Logout">

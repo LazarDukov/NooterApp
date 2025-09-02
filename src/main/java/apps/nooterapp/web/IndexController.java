@@ -1,7 +1,7 @@
 package apps.nooterapp.web;
 
 
-import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -33,8 +31,8 @@ public class IndexController {
     public String myProfilePage(Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         String email = loggedUser.getEmail();
-        String notesNumber = String.valueOf(loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("NOTE")).toList().size());
-        String taskNumber = String.valueOf(loggedUser.getNotes().stream().filter(Note::isActive).filter(note -> note.getType().toString().equals("TASK")).toList().size());
+        String notesNumber = String.valueOf(loggedUser.getNotes().stream().filter(Record::isActive).filter(note -> note.getType().toString().equals("NOTE")).toList().size());
+        String taskNumber = String.valueOf(loggedUser.getNotes().stream().filter(Record::isActive).filter(note -> note.getType().toString().equals("TASK")).toList().size());
         String totalArchived = String.valueOf(loggedUser.getNotes().stream().filter(note -> (!note.isActive())).toList().size());
 
         model.addAttribute("loggedUser", loggedUser.getUsername());

@@ -26,18 +26,18 @@
         });
     </script>
 </head>
-<body class="edit-note">
+<body class="edit-record">
 <div th:replace="~{fragments/clock :: clock}">
     Clock
 </div>
 <div th:replace="~{fragments/button-container::button-container}">
     Button container
 </div>
-<div class="edit-note-form">
-    <h1>Edit note</h1>
+<div class="edit-record-form">
+    <h1>Edit record</h1>
     <form id="editNoteForm"
           th:method="post"
-          th:action="@{/my-notes/edit-note/{id}(id=${editNoteDTO.id})}"
+          th:action="@{/my-records/edit-record/{id}(id=${editNoteDTO.id})}"
           th:object="${editNoteDTO}">
         <label>Title:</label><br>
         <input th:field="${editNoteDTO.title}" id="title"
@@ -51,7 +51,7 @@
                placeholder="Description"><br>
         <label>Choose type:</label><br>
         <select name="type" id="type" th:field="*{type}">
-            <option disabled hidden value="">Choose note or task:</option>
+            <option disabled hidden value="">Choose record or task:</option>
             <option value="NOTE">Note</option>
             <option value="TASK">Task</option>
         </select>
@@ -65,7 +65,7 @@
 
 </div>
 <div>
-    <input class="edit-note-input" type="submit" value="Edit note" form="editNoteForm"><br>
+    <input class="edit-record-input" type="submit" value="Edit record" form="editNoteForm"><br>
 </div>
 <footer th:replace="~{fragments/copyright :: footer}">
 

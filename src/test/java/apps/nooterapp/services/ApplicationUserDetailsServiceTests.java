@@ -1,8 +1,8 @@
 package apps.nooterapp.services;
 
-import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
-import apps.nooterapp.model.enums.NoteType;
+import apps.nooterapp.model.enums.RecordType;
 import apps.nooterapp.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +39,8 @@ public class ApplicationUserDetailsServiceTests {
     @Test
     void testUserFound() {
         User testUser = new User().setUsername(EXISTING_USERNAME).setEmail(EXISTING_EMAIL).setPassword(EXISTING_PASSWORD);
-        Note testNote = new Note().setTitle("taskOne").setDescription("Its important").setType(NoteType.NOTE).setUser(testUser);
-        testUser.setNotes(List.of(testNote));
+        Record testRecord = new Record().setTitle("taskOne").setDescription("Its important").setType(RecordType.NOTE).setUser(testUser);
+        testUser.setNotes(List.of(testRecord));
         when(mockUserRepository.getUserByUsername(EXISTING_USERNAME)).thenReturn(Optional.of(testUser));
         UserDetails userDetails = toTest.loadUserByUsername(EXISTING_USERNAME);
         Assertions.assertNotNull(userDetails);

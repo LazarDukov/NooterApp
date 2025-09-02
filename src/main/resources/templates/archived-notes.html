@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,24 +11,24 @@
 
 </head>
 
-<body class="archived-notes">
+<body class="archived-records">
 <div th:replace="~{fragments/clock :: clock}">
     Clock
 </div>
 <div th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
-<h1 class="information-text">Archived notes</h1>
+<h1 class="information-text">Archived records</h1>
 <div>
     <a class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
-       th:href="@{/archived-notes/restore-all}">Restore all</a>
+       th:href="@{/archived-records/restore-all}">Restore all</a>
     <a class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
-       th:href="@{/archived-notes/delete-all}">Delete all</a>
+       th:href="@{/archived-records/delete-all}">Delete all</a>
 </div>
 <div>
-    <table class="archived-notes-table">
+    <table class="archived-records-table">
         <thead>
         <tr>
             <th>Title</th>
@@ -38,12 +39,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="note : ${archivedNotes}"
-            th:attr="data-description=${note.description}">
-            <td th:text="${note.title}"></td>
-            <td th:text="${note.type}"></td>
+        <tr th:each="record : ${archivedRecords}"
+            th:attr="data-description=${record.description}">
+            <td th:text="${record.title}"></td>
+            <td th:text="${record.type}"></td>
             <td>
-                <span th:text="${note.reminderTime != null ? #temporals.format(note.reminderTime, 'dd/MM/yy HH:mm') : 'no reminder time'}"></span>
+                <span th:text="${record.reminderTime != null ? #temporals.format(record.reminderTime, 'dd/MM/yy HH:mm') : 'no reminder time'}"></span>
 
             </td>
             <td>
@@ -52,7 +53,7 @@
                 <div class="popup" popup-name="popup-1">
                     <div class="popup-content">
                         <h2>Description</h2>
-                        <p th:text="${note.description}"></p>
+                        <p th:text="${record.description}"></p>
 
                     </div>
                     <a class="close-popUp-button" popup-close="popup-1" href="javascript:void(0)">
@@ -61,7 +62,7 @@
                 </div>
             </td>
             <td>
-                <a th:href="@{/archived-notes/restore/{id}(id=${note.id})}">
+                <a th:href="@{/archived-records/restore/{id}(id=${record.id})}">
                     <i class="material-icons" style="color: greenyellow">settings_backup_restore</i></a>
 
             </td>

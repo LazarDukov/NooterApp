@@ -1,15 +1,13 @@
 package apps.nooterapp.model.entities;
 
-import apps.nooterapp.model.enums.NoteType;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import apps.nooterapp.model.enums.RecordType;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table
 @Entity(name = "notes")
-public class Note {
+public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +19,7 @@ public class Note {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private NoteType type;
+    private RecordType type;
 
     @Column
     private boolean active;
@@ -37,10 +35,10 @@ public class Note {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private User user;
 
-    public Note() {
+    public Record() {
     }
 
-    public Note(Long id, String title, String description, NoteType type, boolean active, LocalDateTime reminderTime, LocalDateTime dateCreated, User user) {
+    public Record(Long id, String title, String description, RecordType type, boolean active, LocalDateTime reminderTime, LocalDateTime dateCreated, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -55,7 +53,7 @@ public class Note {
         return id;
     }
 
-    public Note setId(Long id) {
+    public Record setId(Long id) {
         this.id = id;
         return this;
     }
@@ -64,7 +62,7 @@ public class Note {
         return title;
     }
 
-    public Note setTitle(String title) {
+    public Record setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -73,16 +71,16 @@ public class Note {
         return description;
     }
 
-    public Note setDescription(String description) {
+    public Record setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public NoteType getType() {
+    public RecordType getType() {
         return type;
     }
 
-    public Note setType(NoteType type) {
+    public Record setType(RecordType type) {
         this.type = type;
         return this;
     }
@@ -91,7 +89,7 @@ public class Note {
         return active;
     }
 
-    public Note setActive(boolean active) {
+    public Record setActive(boolean active) {
         this.active = active;
         return this;
     }
@@ -100,7 +98,7 @@ public class Note {
         return reminderTime;
     }
 
-    public Note setReminderTime(LocalDateTime reminderTime) {
+    public Record setReminderTime(LocalDateTime reminderTime) {
         this.reminderTime = reminderTime;
         return this;
     }
@@ -108,7 +106,7 @@ public class Note {
         return dateCreated;
     }
 
-    public Note setDateCreated(LocalDateTime dateCreated) {
+    public Record setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
         return this;
     }
@@ -116,7 +114,7 @@ public class Note {
         return user;
     }
 
-    public Note setUser(User user) {
+    public Record setUser(User user) {
         this.user = user;
         return this;
     }

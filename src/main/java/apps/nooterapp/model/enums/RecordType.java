@@ -1,5 +1,5 @@
 package apps.nooterapp.model.enums;
 
-public enum NoteType {
+public enum RecordType {
     NOTE, TASK
 }

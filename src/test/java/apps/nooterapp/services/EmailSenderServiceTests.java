@@ -5,11 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 
 import static org.mockito.Mockito.*;
 
@@ -18,12 +16,15 @@ public class EmailSenderServiceTests {
     private EmailSenderService emailSenderService;
     private JavaMailSender javaMailSender;
     private NoteService noteService;
+    private TaskService taskService;
+
 
     @BeforeEach
     void setUp() {
         javaMailSender = mock(JavaMailSender.class);
         noteService = mock(NoteService.class);
-        emailSenderService = new EmailSenderService(javaMailSender, noteService);
+        taskService = mock(TaskService.class);
+        emailSenderService = new EmailSenderService(javaMailSender, noteService, taskService);
         try {
             java.lang.reflect.Field field = EmailSenderService.class.getDeclaredField("fromEmailId");
             field.setAccessible(true);

@@ -1,18 +1,15 @@
 package apps.nooterapp.model.dtos;
 
-import apps.nooterapp.model.enums.NoteType;
+import apps.nooterapp.model.enums.RecordType;
 import apps.nooterapp.util.TaskReminderDateValidationInterface;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.aspectj.lang.annotation.Before;
 
 import java.time.LocalDateTime;
 
 @TaskReminderDateValidationInterface(message = "You should choose a date and it should be after now!")
-public class AddNoteDTO {
+public class AddRecordDTO {
     @NotNull
     @Size(min = 3, max = 15, message = "Title should be with length minimum 3 and maximum 15 letters!")
     private String title;
@@ -22,16 +19,16 @@ public class AddNoteDTO {
 
     @Enumerated
     @NotNull
-    private NoteType type;
+    private RecordType type;
 
     private boolean active;
 
     private LocalDateTime reminderTime;
 
-    public AddNoteDTO() {
+    public AddRecordDTO() {
     }
 
-    public AddNoteDTO(String title, String description, NoteType type, boolean active, LocalDateTime reminderTime) {
+    public AddRecordDTO(String title, String description, RecordType type, boolean active, LocalDateTime reminderTime) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -44,7 +41,7 @@ public class AddNoteDTO {
         return title;
     }
 
-    public AddNoteDTO setTitle(String title) {
+    public AddRecordDTO setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -53,16 +50,16 @@ public class AddNoteDTO {
         return description;
     }
 
-    public AddNoteDTO setDescription(String description) {
+    public AddRecordDTO setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public NoteType getType() {
+    public RecordType getType() {
         return type;
     }
 
-    public AddNoteDTO setType(NoteType type) {
+    public AddRecordDTO setType(RecordType type) {
         this.type = type;
         return this;
     }
@@ -71,7 +68,7 @@ public class AddNoteDTO {
         return active;
     }
 
-    public AddNoteDTO setActive(boolean active) {
+    public AddRecordDTO setActive(boolean active) {
         this.active = active;
         return this;
     }
@@ -80,7 +77,7 @@ public class AddNoteDTO {
         return reminderTime;
     }
 
-    public AddNoteDTO setReminderTime(LocalDateTime reminderTime) {
+    public AddRecordDTO setReminderTime(LocalDateTime reminderTime) {
         this.reminderTime = reminderTime;
         return this;
     }

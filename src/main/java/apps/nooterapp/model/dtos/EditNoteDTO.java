@@ -1,6 +1,6 @@
 package apps.nooterapp.model.dtos;
 
-import apps.nooterapp.model.enums.NoteType;
+import apps.nooterapp.model.enums.RecordType;
 import jakarta.persistence.Enumerated;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,7 +11,7 @@ public class EditNoteDTO {
     private String description;
 
     @Enumerated
-    private NoteType type;
+    private RecordType type;
 
     private boolean active;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -20,7 +20,7 @@ public class EditNoteDTO {
     public EditNoteDTO() {
     }
 
-    public EditNoteDTO(String title, String description, NoteType type, boolean active, LocalDateTime reminderTime) {
+    public EditNoteDTO(String title, String description, RecordType type, boolean active, LocalDateTime reminderTime) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -46,11 +46,11 @@ public class EditNoteDTO {
         return this;
     }
 
-    public NoteType getType() {
+    public RecordType getType() {
         return type;
     }
 
-    public EditNoteDTO setType(NoteType type) {
+    public EditNoteDTO setType(RecordType type) {
         this.type = type;
         return this;
     }

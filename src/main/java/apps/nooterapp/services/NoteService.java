@@ -1,24 +1,19 @@
 package apps.nooterapp.services;
 
-import apps.nooterapp.model.dtos.AddNoteDTO;
+import apps.nooterapp.model.dtos.AddRecordDTO;
 import apps.nooterapp.model.dtos.EditNoteDTO;
-import apps.nooterapp.model.entities.Note;
+import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
-import apps.nooterapp.model.enums.NoteType;
+import apps.nooterapp.model.enums.RecordType;
 import apps.nooterapp.repositories.NoteRepository;
 import apps.nooterapp.repositories.UserRepository;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -34,64 +29,56 @@ public class NoteService {
     }
 
 
-    public void addNote(Principal principal, AddNoteDTO addNoteDTO) {
+    public void addRecord(Principal principal, AddRecordDTO addRecordDTO) {
         User loggedUser = userService.loggedUser(principal);
-        Note note = new Note();
-        note.setTitle(addNoteDTO.getTitle());
-        note.setDescription(addNoteDTO.getDescription());
-        note.setType(addNoteDTO.getType());
-        note.setActive(true);
-        note.setUser(loggedUser);
-        if (note.getType().equals(NoteType.TASK)) {
-            note.setReminderTime(addNoteDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
+        Record record = new Record();
+        record.setTitle(addRecordDTO.getTitle());
+        record.setDescription(addRecordDTO.getDescription());
+        record.setType(addRecordDTO.getType());
+        record.setActive(true);
+        record.setUser(loggedUser);
+        if (record.getType().equals(RecordType.TASK)) {
+            record.setReminderTime(addRecordDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
         }
-        note.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
-        loggedUser.getNotes().add(note);
-        noteRepository.save(note);
+        record.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+        loggedUser.getNotes().add(record);
+        noteRepository.save(record);
         userRepository.save(loggedUser);
 
 
     }
 
-    public void archiveNoteOrTask(Long id) {
-        Note note = noteRepository.findNoteById(id);
-        note.setActive(false);
-        noteRepository.save(note);
+    public void archiveRecord(Long id) {
+        Record record = noteRepository.findNoteById(id);
+        record.setActive(false);
+        noteRepository.save(record);
     }
 
-    public Note viewNoteOrTask(Long id) {
+    public Record viewRecord(Long id) {
         return noteRepository.findNoteById(id);
 
     }
 
-    public void editNoteOrTask(Long id, EditNoteDTO editNoteDTO) {
-        Note note = noteRepository.findNoteById(id);
-        note.setTitle(editNoteDTO.getTitle());
-        note.setDescription(editNoteDTO.getDescription());
-        note.setType(editNoteDTO.getType());
-        note.setActive(true);
-        if (note.getType().equals(NoteType.TASK)) {
-            note.setReminderTime(editNoteDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
+    public void editRecord(Long id, EditNoteDTO editNoteDTO) {
+        Record record = noteRepository.findNoteById(id);
+        record.setTitle(editNoteDTO.getTitle());
+        record.setDescription(editNoteDTO.getDescription());
+        record.setType(editNoteDTO.getType());
+        record.setActive(true);
+        if (record.getType().equals(RecordType.TASK)) {
+            record.setReminderTime(editNoteDTO.getReminderTime().truncatedTo(ChronoUnit.MINUTES));
         }
-        noteRepository.save(note);
+        noteRepository.save(record);
     }
 
-    public List<Note> findAllActiveTasks() {
-        return noteRepository.findAllByTypeAndActiveOrderByReminderTime(NoteType.TASK, true);
-    }
 
-    public Note archiveCurrentTask(String title, LocalDateTime localDateTime) {
-        System.out.println("in archive current task method in noteService and title is: " + title + " Local date time is " + localDateTime);
-        return noteRepository.findNoteByTitleAndReminderTime(title, localDateTime);
 
-    }
-
-    public void deleteNote(Long id) {
-        Note note = noteRepository.findNoteById(id);
-        User user = userService.getUserByNote(note.getId());
-        user.getNotes().remove(note);
+    public void deleteRecord(Long id) {
+        Record record = noteRepository.findNoteById(id);
+        User user = userService.getUserByNote(record.getId());
+        user.getNotes().remove(record);
         userRepository.save(user);
-        noteRepository.delete(note);
+        noteRepository.delete(record);
     }
 
     public void deleteArchived(Principal principal) {
@@ -103,25 +90,25 @@ public class NoteService {
 
     public void allNotesDone(Principal principal) {
         User loggedUser = userService.loggedUser(principal);
-        List<Note> notes = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.NOTE)).toList();
+        List<Record> notes = loggedUser.getNotes().stream().filter(note -> note.getType().equals(RecordType.NOTE)).toList();
         notes.forEach(note -> note.setActive(false));
         noteRepository.saveAll(notes);
     }
 
     public void allTasksDone(Principal principal) {
         User loggedUser = userService.loggedUser(principal);
-        List<Note> tasks = loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.TASK)).toList();
+        List<Record> tasks = loggedUser.getNotes().stream().filter(note -> note.getType().equals(RecordType.TASK)).toList();
         tasks.forEach(task -> task.setActive(false));
         noteRepository.saveAll(tasks);
     }
 
     public void allNotesDelete(Principal principal) {
         User loggedUser = userService.loggedUser(principal);
-        List<Note> notes = new ArrayList<>(loggedUser.getNotes().stream().filter(note -> note.getType().equals(NoteType.NOTE)).toList());
+        List<Record> notes = new ArrayList<>(loggedUser.getNotes().stream().filter(note -> note.getType().equals(RecordType.NOTE)).toList());
         int notesSize = notes.size();
         while (notesSize > 0) {
-            Note note = noteRepository.findNoteById(notes.get(0).getId());
-            loggedUser.getNotes().remove(note);
+            Record record = noteRepository.findNoteById(notes.get(0).getId());
+            loggedUser.getNotes().remove(record);
             notes.remove(0);
             notesSize--;
         }
@@ -131,10 +118,10 @@ public class NoteService {
 
     public void allTasksDelete(Principal principal) {
         User loggedUser = userService.loggedUser(principal);
-        List<Note> tasks = new ArrayList<>(loggedUser.getNotes().stream().filter(task -> task.getType().equals(NoteType.TASK)).toList());
+        List<Record> tasks = new ArrayList<>(loggedUser.getNotes().stream().filter(task -> task.getType().equals(RecordType.TASK)).toList());
         int tasksSize = tasks.size();
         while (tasksSize > 0) {
-            Note task = noteRepository.findNoteById(tasks.get(0).getId());
+            Record task = noteRepository.findNoteById(tasks.get(0).getId());
             loggedUser.getNotes().remove(task);
             tasks.remove(0);
             tasksSize--;
@@ -142,36 +129,36 @@ public class NoteService {
         userRepository.save(loggedUser);
     }
 
-    public void restoreNoteOrTask(Long id) {
+    public void restoreRecord(Long id) {
 
         User user = userService.getUserByNote(id);
 
 
-        Note taskOrNote = noteRepository.findNoteById(id);
-        taskOrNote.setActive(true);
-        if (taskOrNote.getType().equals(NoteType.TASK)) {
-            taskOrNote.setReminderTime(LocalDateTime.now().plusHours(24));
+        Record record = noteRepository.findNoteById(id);
+        record.setActive(true);
+        if (record.getType().equals(RecordType.TASK)) {
+            record.setReminderTime(LocalDateTime.now().plusHours(24));
         }
 
         userRepository.save(user);
-        noteRepository.save(taskOrNote);
+        noteRepository.save(record);
 
     }
 
     public void restoreAll() {
-        List<Note> allArchived = noteRepository.findAll()
+        List<Record> records = noteRepository.findAll()
                 .stream()
-                .filter(noteOrTask -> (!noteOrTask.isActive())).toList();
-        allArchived
+                .filter(record -> (!record.isActive())).toList();
+        records
                 .stream()
-                .filter(task -> task.getType().equals(NoteType.TASK))
+                .filter(task -> task.getType().equals(RecordType.TASK))
                 .forEach(task -> task.setReminderTime(LocalDateTime.now().plusHours(24)));
-        allArchived.forEach(noteOrTask -> noteOrTask.setActive(true));
-        noteRepository.saveAll(allArchived);
+        records.forEach(noteOrTask -> noteOrTask.setActive(true));
+        noteRepository.saveAll(records);
     }
 
-    public void archiveExpiredReminder(Note expiredReminder) {
-        Note note = noteRepository.findNoteByTitleAndReminderTime(expiredReminder.getTitle(), expiredReminder.getReminderTime()).setActive(false);
-        noteRepository.save(note);
+    public void archiveExpiredReminder(Record expiredReminder) {
+        Record record = noteRepository.findNoteByTitleAndReminderTime(expiredReminder.getTitle(), expiredReminder.getReminderTime()).setActive(false);
+        noteRepository.save(record);
     }
 }

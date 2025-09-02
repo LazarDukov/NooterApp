@@ -1,8 +1,7 @@
 package apps.nooterapp.services;
 
 
-import apps.nooterapp.model.entities.Note;
-import apps.nooterapp.util.CustomPasswordGenerator;
+import apps.nooterapp.model.entities.Record;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,19 +17,22 @@ public class EmailSenderService {
 
     private final NoteService noteService;
 
+    private final TaskService taskService;
 
-    public EmailSenderService(JavaMailSender javaMailSender, @Lazy  NoteService noteService) {
+
+    public EmailSenderService(JavaMailSender javaMailSender, @Lazy  NoteService noteService, TaskService taskService) {
         this.javaMailSender = javaMailSender;
         this.noteService = noteService;
 
 
+        this.taskService = taskService;
     }
 
     @Value("$(nooter.application)")
     private String fromEmailId;
 
     public void sendReminder(String recipient, String title, String body) {
-        Note expiredReminder = noteService.archiveCurrentTask(title, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+        Record expiredReminder = taskService.archiveCurrentTask(title, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
         noteService.archiveExpiredReminder(expiredReminder);
 
         SimpleMailMessage smm = new SimpleMailMessage();

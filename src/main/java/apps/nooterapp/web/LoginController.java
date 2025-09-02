@@ -44,14 +44,14 @@ public class LoginController {
         return "redirect:/login";
     }
 
-    @GetMapping("/forgot-log")
-    public String forgotLog() {
-        return "forgot-log";
-    }
-
     @ModelAttribute("forgotPasswordDTO")
     public ForgotPasswordDTO forgotPasswordDTO() {
         return new ForgotPasswordDTO();
+    }
+
+    @GetMapping("/forgot-log")
+    public String forgotLog() {
+        return "forgot-log";
     }
 
     @PostMapping("/forgot-log")

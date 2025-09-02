@@ -10,24 +10,24 @@
 
 </head>
 
-<body class="my-notes">
+<body class="my-records">
 <div th:replace="~{fragments/clock :: clock}">
     Clock
 </div>
 <div class="button-container-format" th:replace="~{fragments/button-container :: button-container}">
     Button container
 </div>
-<h1 class="information-text">My notes</h1>
+<h1 class="information-text">My records</h1>
 <div>
     <a class="delete-all-archived"
-       style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center" th:href="@{/add-note}">Add
+       style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center" th:href="@{/add-record}">Add
         new</a>
     <a class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
-       th:href="@{/my-notes/all-done}">All done</a>
+       th:href="@{/my-records/all-done}">All done</a>
     <a class="delete-all-archived"
        style="margin: 10px; padding-top: 10px; height:10px; font-size: 10px; text-align: center"
-       th:href="@{/my-notes/all-delete}">All delete</a>
+       th:href="@{/my-records/all-delete}">All delete</a>
 </div>
 <div>
     <label>Sorted by </label>
@@ -42,7 +42,7 @@
     document.getElementById('sortBtn').addEventListener('click', function (e) {
         e.preventDefault();
         const sortValue = document.getElementById('sort').value;
-        window.location.href = '/my-notes?sort=' + sortValue;
+        window.location.href = '/my-records?sort=' + sortValue;
     });
 </script>
 <script>
@@ -57,7 +57,7 @@
 </script>
 
 <div>
-    <table class="my-notes-table">
+    <table class="my-records-table">
         <thead>
         <tr>
             <th>Title</th>
@@ -68,16 +68,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="note : ${myNotes}"
-            th:attr="data-description=${note.description}">
-            <td th:text="${note.title}"></td>
+        <tr th:each="record : ${myNotes}"
+            th:attr="data-description=${record.description}">
+            <td th:text="${record.title}"></td>
             <td>
                 <a class="open-popUp-button" popup-open="popup-1" href="javascript:void(0)">
                     <i class="material-icons" style="color: antiquewhite">remove_red_eye</i></a>
                 <div class="popup" popup-name="popup-1">
                     <div class="popup-content">
                         <h2>Description</h2>
-                        <p th:text="${note.description}"></p>
+                        <p th:text="${record.description}"></p>
 
                     </div>
                     <a class="close-popUp-button" popup-close="popup-1" href="javascript:void(0)">
@@ -86,15 +86,15 @@
                 </div>
             </td>
             <td>
-                <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
+                <a th:href="@{/my-records/edit-record/{id}(id=${record.id})}">
                     <i class="material-icons" style="color: yellow">edit</i></a>
             </td>
             <td>
-                <a th:href="@{/my-notes/delete-note/{id}(id=${note.id}, sort=${sort})}">
+                <a th:href="@{/my-records/delete-record/{id}(id=${record.id}, sort=${sort})}">
                     <i class="material-icons" style="color: red">delete</i></a>
             </td>
             <td>
-                <a th:href="@{/my-notes/finish/{id}(id=${note.id}, sort=${sort})}">
+                <a th:href="@{/my-records/finish/{id}(id=${record.id}, sort=${sort})}">
                     <i class="material-icons" style="color: greenyellow">done</i></a>
             </td>
         </tr>
@@ -118,9 +118,9 @@
 
         const selected = document.getElementById("type").value;
 
-        let targetUrl = "/my-notes-created-desc"; // default
+        let targetUrl = "/my-records-created-desc"; // default
         if (selected === "OLDEST") {
-            targetUrl = "/my-notes-created-asc";
+            targetUrl = "/my-records-created-asc";
         }
 
         window.location.href = targetUrl;
