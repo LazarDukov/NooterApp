@@ -20,8 +20,8 @@ body.edit-note {
 }
 
 body.my-profile,
-body.my-notes,
-body.archived-notes,
+body.my-records,
+body.archived-records,
 body.my-tasks {
     background-color: #EFF0F3;
     font-family: Inter, SansSerif, fangsong;
@@ -43,7 +43,7 @@ body.my-tasks {
     font-size: 10px;
 }
 
-.register-form, .login-form, .add-note-form, .edit-note-form, .my-notes-table, .archived-notes-table, .my-tasks-table {
+.register-form, .login-form, .add-note-form, .edit-note-form, .my-records-table, .archived-records-table, .my-tasks-table {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -77,7 +77,7 @@ body.my-tasks {
 }
 
 
-.register h1, .login h1, .my-notes h1, .my-tasks h1, .archived-notes h1, .info-welcome h2 {
+.register h1, .login h1, .my-records h1, .my-tasks h1, .archived-records h1, .info-welcome h2 {
     display: flex;
     text-align: center;
     justify-content: center;
@@ -276,7 +276,7 @@ input.my-profile-button {
 
 }
 
-.my-notes-table, .my-tasks-table, .archived-notes-table {
+.my-records-table, .my-tasks-table, .archived-records-table {
     border-collapse: separate;
     border: none;
     gap: 10px;
@@ -287,7 +287,7 @@ input.my-profile-button {
     animation: fade-in 1s ease-out forwards;
 }
 
-.my-notes, .archived-notes, .my-tasks {
+.my-records, .archived-records, .my-tasks {
     margin-top: 20px;
     background-color: #EFF0F3;
     color: black;
@@ -299,12 +299,12 @@ input.my-profile-button {
     flex-direction: column;
 }
 
-.my-notes-table th,
-.my-notes-table td,
+.my-records-table th,
+.my-records-table td,
 .my-tasks-table th,
 .my-tasks-table td,
-.archived-notes-table th,
-.archived-notes-table td {
+.archived-records-table th,
+.archived-records-table td {
     width: 200px;
     height: 20px;
     padding: 10px;
@@ -314,24 +314,24 @@ input.my-profile-button {
     color: black;
 }
 
-.my-notes-table th, .my-tasks-table th, .archived-notes-table th {
+.my-records-table th, .my-tasks-table th, .archived-records-table th {
     font-size: 20px;
     background-color: rgba(143, 143, 143, 0.51);
 }
 
-.my-notes-table td a, .my-notes-table td a i,
+.my-records-table td a, .my-records-table td a i,
 .my-tasks-table td a, .my-tasks-table td a i,
-.archived-notes-table td a {
+.archived-records-table td a {
     color: black;
     text-decoration: none;
 
 }
 
-.my-notes-table tbody td, .my-tasks-table tbody td, .archived-notes-table tbody td {
+.my-records-table tbody td, .my-tasks-table tbody td, .archived-records-table tbody td {
     background-color: rgba(222, 222, 222, 0.76);
 }
 
-.my-notes-table td a:hover, .my-tasks-table td a:hover, .archived-notes-table td a:hover {
+.my-records-table td a:hover, .my-tasks-table td a:hover, .archived-records-table td a:hover {
     color: black;
     text-decoration: underline;
 }

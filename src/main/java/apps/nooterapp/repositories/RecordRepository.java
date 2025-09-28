@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface NoteRepository extends JpaRepository<Record, Long> {
-    Record findNoteById(Long id);
+public interface RecordRepository extends JpaRepository<Record, Long> {
+    Record findRecordById(Long id);
 
     List<Record> findAllByTypeAndActiveOrderByReminderTime(RecordType type, boolean isActive);
 
-    Record findNoteByTitleAndReminderTime(String title, LocalDateTime localDateTime);
+    Record findRecordByTitleAndReminderTime(String title, LocalDateTime localDateTime);
 
 }

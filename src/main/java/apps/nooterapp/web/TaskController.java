@@ -3,8 +3,8 @@ package apps.nooterapp.web;
 import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
-import apps.nooterapp.model.enums.RecordType;
-import apps.nooterapp.repositories.NoteRepository;
+import apps.nooterapp.repositories.RecordRepository;
+import apps.nooterapp.services.ArchiveService;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,13 +22,16 @@ import java.util.stream.Collectors;
 public class TaskController {
     private UserService userService;
     private NoteService noteService;
+    private ArchiveService archiveService;
 
-    private NoteRepository noteRepository;
 
-    public TaskController(UserService userService, NoteService noteService, NoteRepository noteRepository) {
+    private RecordRepository recordRepository;
+
+    public TaskController(UserService userService, NoteService noteService, ArchiveService archiveService, RecordRepository recordRepository) {
         this.userService = userService;
         this.noteService = noteService;
-        this.noteRepository = noteRepository;
+        this.archiveService = archiveService;
+        this.recordRepository = recordRepository;
     }
 
     @GetMapping("/my-tasks")
@@ -70,7 +72,7 @@ public class TaskController {
 
     @GetMapping("/my-tasks/finish/{id}")
     public String archiveTask(@PathVariable Long id, @RequestParam (defaultValue = "desc") String sort) {
-        noteService.archiveRecord(id);
+        archiveService.archiveRecord(id);
         return "redirect:/my-tasks?sort=" + sort;
     }
 

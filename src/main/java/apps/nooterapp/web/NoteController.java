@@ -4,6 +4,7 @@ package apps.nooterapp.web;
 import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
+import apps.nooterapp.services.ArchiveService;
 import apps.nooterapp.services.NoteService;
 import apps.nooterapp.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,16 @@ import java.util.stream.Collectors;
 public class NoteController {
     private NoteService noteService;
     private UserService userService;
+    private ArchiveService archiveService;
 
-    public NoteController(NoteService notesService, UserService userService) {
+    public NoteController(NoteService notesService, UserService userService, ArchiveService archiveService) {
         this.noteService = notesService;
         this.userService = userService;
+        this.archiveService = archiveService;
     }
 
 
-    @GetMapping("/my-notes")
+    @GetMapping("/my-records")
     public String myNotesPage(@RequestParam(defaultValue = "desc") String sort, Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {
@@ -55,7 +58,7 @@ public class NoteController {
 
     @GetMapping("/my-notes/finish/{id}")
     public String archiveNote(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
-        noteService.archiveRecord(id);
+        archiveService.archiveRecord(id);
         return "redirect:/my-notes?sort=" + sort;
     }
 

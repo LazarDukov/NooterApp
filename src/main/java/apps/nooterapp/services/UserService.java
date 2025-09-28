@@ -58,7 +58,7 @@ public class UserService {
     }
 
     public User getUserByNote(Long id) {
-        return userRepository.findUserByNoteId(id).orElseThrow(() -> new UsernameNotFoundException("User of this note is not found!"));
+        return userRepository.findUserByRecordsId(id).orElseThrow(() -> new UsernameNotFoundException("User of this note is not found!"));
 
     }
 

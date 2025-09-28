@@ -2,6 +2,7 @@ package apps.nooterapp.web;
 
 import apps.nooterapp.model.dtos.AddRecordDTO;
 import apps.nooterapp.services.NoteService;
+import apps.nooterapp.services.RecordService;
 import apps.nooterapp.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,14 @@ import java.security.Principal;
 public class RecordController {
     private NoteService noteService;
     private UserService userService;
+    private RecordService recordService;
 
-    public RecordController(NoteService notesService, UserService userService) {
+    public RecordController(NoteService notesService,RecordService recordService, UserService userService) {
         this.noteService = notesService;
+        this.recordService = recordService;
         this.userService = userService;
     }
+
     @ModelAttribute("addRecordDTO")
     public AddRecordDTO addRecordDTO() {
         return new AddRecordDTO();
@@ -39,7 +43,7 @@ public class RecordController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addRecordDTO", bindingResult);
             return "add-note";
         }
-        noteService.addRecord(principal, addRecordDTO);
+        recordService.addRecord(principal, addRecordDTO);
         return "redirect:/my-profile";
     }
 

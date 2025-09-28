@@ -20,11 +20,9 @@ public class EmailSenderService {
     private final TaskService taskService;
 
 
-    public EmailSenderService(JavaMailSender javaMailSender, @Lazy  NoteService noteService, TaskService taskService) {
+    public EmailSenderService(JavaMailSender javaMailSender, @Lazy NoteService noteService, @Lazy TaskService taskService) {
         this.javaMailSender = javaMailSender;
         this.noteService = noteService;
-
-
         this.taskService = taskService;
     }
 
@@ -33,8 +31,7 @@ public class EmailSenderService {
 
     public void sendReminder(String recipient, String title, String body) {
         Record expiredReminder = taskService.archiveCurrentTask(title, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
-        noteService.archiveExpiredReminder(expiredReminder);
-
+        taskService.archiveExpiredReminder(expiredReminder);
         SimpleMailMessage smm = new SimpleMailMessage();
         smm.setFrom(fromEmailId);
         smm.setTo(recipient);

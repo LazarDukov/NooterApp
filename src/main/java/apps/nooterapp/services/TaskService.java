@@ -2,7 +2,7 @@ package apps.nooterapp.services;
 
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.enums.RecordType;
-import apps.nooterapp.repositories.NoteRepository;
+import apps.nooterapp.repositories.RecordRepository;
 import apps.nooterapp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +12,28 @@ import java.util.List;
 @Service
 public class TaskService {
     private UserRepository userRepository;
-    private NoteRepository noteRepository;
+    private RecordRepository recordRepository;
     private UserService userService;
 
 
-    public TaskService(UserRepository userRepository, NoteRepository noteRepository, UserService userService) {
+    public TaskService(UserRepository userRepository, RecordRepository recordRepository, UserService userService) {
         this.userRepository = userRepository;
-        this.noteRepository = noteRepository;
+        this.recordRepository = recordRepository;
         this.userService = userService;
     }
 
     public List<Record> findAllActiveTasks() {
-        return noteRepository.findAllByTypeAndActiveOrderByReminderTime(RecordType.TASK, true);
+        return recordRepository.findAllByTypeAndActiveOrderByReminderTime(RecordType.TASK, true);
     }
 
     public Record archiveCurrentTask(String title, LocalDateTime localDateTime) {
         System.out.println("in archive current task method in noteService and title is: " + title + " Local date time is " + localDateTime);
-        return noteRepository.findNoteByTitleAndReminderTime(title, localDateTime);
+        return recordRepository.findRecordByTitleAndReminderTime(title, localDateTime);
 
+    }
+
+    public void archiveExpiredReminder(Record expiredReminder) {
+        Record record = recordRepository.findRecordByTitleAndReminderTime(expiredReminder.getTitle(), expiredReminder.getReminderTime()).setActive(false);
+        recordRepository.save(record);
     }
 }

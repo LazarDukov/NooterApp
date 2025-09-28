@@ -25,7 +25,7 @@ public class ArchiveController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/archived-notes")
+    @GetMapping("/archived-records")
     public String archivedNotesPage(Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {

@@ -5,7 +5,7 @@ import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.model.enums.RecordType;
-import apps.nooterapp.repositories.NoteRepository;
+import apps.nooterapp.repositories.RecordRepository;
 import apps.nooterapp.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +27,13 @@ import static org.mockito.Mockito.*;
 public class RecordServiceTests {
     private NoteService noteService;
     private TaskService taskService;
+    private RecordService recordService;
+    private ArchiveService archiveService;
     private AddRecordDTO addRecordDTO;
     private Record testRecord;
     private User testUser;
     @Mock
-    private NoteRepository mockNoteRepository;
+    private RecordRepository mockRecordRepository;
     @Mock
     private UserRepository mockUserRepository;
 
@@ -46,7 +48,7 @@ public class RecordServiceTests {
 
     @BeforeEach
     void setUp() {
-        noteService = new NoteService(mockUserRepository, mockNoteRepository, mockUserService);
+        noteService = new NoteService(mockUserRepository, mockRecordRepository, mockUserService);
 
         testRecord = new Record();
         testRecord.setId(1L);
@@ -75,8 +77,8 @@ public class RecordServiceTests {
         addRecordDTO.setDescription("I should run today!");
         addRecordDTO.setActive(true);
         addRecordDTO.setType(RecordType.NOTE);
-        noteService.addRecord(mockPrincipal, addRecordDTO);
-        verify(mockNoteRepository).save(noteArgumentCaptor.capture());
+        recordService.addRecord(mockPrincipal, addRecordDTO);
+        verify(mockRecordRepository).save(noteArgumentCaptor.capture());
         Record savedRecord = noteArgumentCaptor.getValue();
         Assertions.assertEquals(addRecordDTO.getTitle(), savedRecord.getTitle());
         Assertions.assertEquals(addRecordDTO.getType(), savedRecord.getType());
@@ -89,30 +91,30 @@ public class RecordServiceTests {
 
     @Test
     void testArchiveNoteOrTask() {
-        when(mockNoteRepository.findNoteById(testRecord.getId())).thenReturn(testRecord);
-        noteService.archiveRecord(testRecord.getId());
-        verify(mockNoteRepository).save(noteArgumentCaptor.capture());
+        when(mockRecordRepository.findRecordById(testRecord.getId())).thenReturn(testRecord);
+        archiveService.archiveRecord(testRecord.getId());
+        verify(mockRecordRepository).save(noteArgumentCaptor.capture());
         Record savedRecord = noteArgumentCaptor.getValue();
         Assertions.assertFalse(savedRecord.isActive(), "Note should be archived");
     }
 
     @Test
     void testViewNoteOrTask() {
-        when(mockNoteRepository.findNoteById(testRecord.getId())).thenReturn(testRecord);
+        when(mockRecordRepository.findRecordById(testRecord.getId())).thenReturn(testRecord);
         Record result = noteService.viewRecord(testRecord.getId());
         Assertions.assertSame(testRecord, result);
     }
 
     @Test
     void testEditNoteOrTask() {
-        when(mockNoteRepository.findNoteById(testRecord.getId())).thenReturn(testRecord);
+        when(mockRecordRepository.findRecordById(testRecord.getId())).thenReturn(testRecord);
         EditNoteDTO editNoteDTO = new EditNoteDTO();
         editNoteDTO.setTitle("EDIT TITLE");
         editNoteDTO.setDescription("EDIT DESCRIPTION");
         editNoteDTO.setType(RecordType.NOTE);
         editNoteDTO.setActive(true);
         noteService.editRecord(testRecord.getId(), editNoteDTO);
-        verify(mockNoteRepository).save(noteArgumentCaptor.capture());
+        verify(mockRecordRepository).save(noteArgumentCaptor.capture());
         Record savedRecord = noteArgumentCaptor.getValue();
         Assertions.assertEquals(editNoteDTO.getTitle(), savedRecord.getTitle());
         Assertions.assertEquals(editNoteDTO.getDescription(), savedRecord.getDescription());
@@ -144,7 +146,7 @@ public class RecordServiceTests {
         record3.setReminderTime(LocalDateTime.parse("2045-12-03T10:35:30"));
         List<Record> records = List.of(record1, record2);
 
-        when(mockNoteRepository.findAllByTypeAndActiveOrderByReminderTime(RecordType.TASK, true)).thenReturn(records);
+        when(mockRecordRepository.findAllByTypeAndActiveOrderByReminderTime(RecordType.TASK, true)).thenReturn(records);
         List<Record> savedRecords = taskService.findAllActiveTasks();
 
         Assertions.assertEquals(savedRecords.size(), records.size());
@@ -164,7 +166,7 @@ public class RecordServiceTests {
         testUser.setId(10L);
         testUser.setNotes(new ArrayList<>(List.of(testRecord)));
 
-        when(mockNoteRepository.findNoteById(noteId)).thenReturn(testRecord);
+        when(mockRecordRepository.findRecordById(noteId)).thenReturn(testRecord);
         when(mockUserService.getUserByNote(noteId)).thenReturn(testUser);
 
         // Act
@@ -173,7 +175,7 @@ public class RecordServiceTests {
         // Assert
         Assertions.assertFalse(testUser.getNotes().contains(testRecord), "Note should be removed from user's notes");
         verify(mockUserRepository).save(testUser);
-        verify(mockNoteRepository).delete(testRecord);
+        verify(mockRecordRepository).delete(testRecord);
 
     }
 
@@ -188,7 +190,7 @@ public class RecordServiceTests {
         noteService.deleteArchived(mockPrincipal);
         Assertions.assertFalse(testUser.getNotes().size() > 0, "All notes should be removed.");
         verify(mockUserRepository).save(testUser);
-        verify(mockNoteRepository).deleteAll();
+        verify(mockRecordRepository).deleteAll();
     }
 
     @Test
@@ -203,7 +205,7 @@ public class RecordServiceTests {
         when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
         noteService.allNotesDone(mockPrincipal);
         Assertions.assertFalse(testUser.getNotes().get(0).isActive(), "Notes should be with isActive status false.");
-        verify(mockNoteRepository).saveAll(List.of(testRecord));
+        verify(mockRecordRepository).saveAll(List.of(testRecord));
     }
     @Test
     void testAllTasksDone() {
@@ -217,7 +219,7 @@ public class RecordServiceTests {
         when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
         noteService.allTasksDone(mockPrincipal);
         Assertions.assertFalse(testUser.getNotes().get(0).isActive(), "Tasks should be with isActive status false.");
-        verify(mockNoteRepository).saveAll(List.of(testRecord));
+        verify(mockRecordRepository).saveAll(List.of(testRecord));
     }
 
 }

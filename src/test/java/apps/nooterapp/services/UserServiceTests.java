@@ -106,7 +106,7 @@ public class UserServiceTests {
         User user = new User();
         user.setUsername("Pinko");
         user.setNotes(new ArrayList<>(List.of(record)));
-        Mockito.when(mockUserRepository.findUserByNoteId(record.getId())).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findUserByRecordsId(record.getId())).thenReturn(Optional.of(user));
         User savedUser = userService.getUserByNote(1L);
         Assertions.assertEquals(user.getUsername(), savedUser.getUsername());
     }
