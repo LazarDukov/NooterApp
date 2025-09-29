@@ -30,7 +30,7 @@ public class NoteController {
     }
 
 
-    @GetMapping("/my-records")
+    @GetMapping("/my-notes")
     public String myNotesPage(@RequestParam(defaultValue = "desc") String sort, Principal principal, Model model) {
         User loggedUser = userService.loggedUser(principal);
         if (loggedUser == null) {

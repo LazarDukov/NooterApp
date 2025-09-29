@@ -32,18 +32,18 @@ public class ArchiveController {
             return "redirect:/login";
         }
         List<Record> archivedRecords = loggedUser.getNotes().stream().filter(note -> !note.isActive()).collect(Collectors.toList());
-        model.addAttribute("archivedNotes", archivedRecords);
-        return "archived-notes";
+        model.addAttribute("archivedRecords", archivedRecords);
+        return "archived-records";
 
     }
-    @GetMapping("/archived-notes/view/{id}")
+    @GetMapping("/archived-records/view/{id}")
     @ResponseBody
     public ResponseEntity<Record> viewArchivedNoteOrTask(@PathVariable Long id) {
         Record record = noteService.viewRecord(id);
         return ResponseEntity.ok(record);
     }
 
-    @GetMapping("/archived-notes/delete-all")
+    @GetMapping("/archived-records/delete-all")
     public String deleteAllArchived(Principal principal) {
         noteService.deleteArchived(principal);
         return "redirect:/my-profile";
@@ -51,17 +51,17 @@ public class ArchiveController {
 
 
 
-    @GetMapping("/archived-notes/restore/{id}")
+    @GetMapping("/archived-records/restore/{id}")
     public String restoreNoteOrTask(@PathVariable Long id) {
         System.out.println("Im in CONTROLLER FOR RESTORE METHOD");
         noteService.restoreRecord(id);
         System.out.println("I ALREADY RETURN ARCHIVED NOTES");
-        return "redirect:/archived-notes";
+        return "redirect:/archived-records";
     }
 
-    @GetMapping("/archived-notes/restore-all")
+    @GetMapping("/archived-records/restore-all")
     public String restoreAll() {
         noteService.restoreAll();
-        return "redirect:/archived-notes";
+        return "redirect:/archived-records";
     }
 }

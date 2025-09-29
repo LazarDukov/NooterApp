@@ -33,7 +33,7 @@ public class RecordController {
 
     @GetMapping("/add-record")
     public String addNotePage() {
-        return "add-note";
+        return "add-record";
     }
 
     @PostMapping("/add-record")
@@ -41,7 +41,7 @@ public class RecordController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addRecordDTO", addRecordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addRecordDTO", bindingResult);
-            return "add-note";
+            return "add-record";
         }
         recordService.addRecord(principal, addRecordDTO);
         return "redirect:/my-profile";
