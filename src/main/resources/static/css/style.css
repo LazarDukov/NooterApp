@@ -353,7 +353,7 @@ input.my-profile-button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.9);
-    background-color: rgba(222, 222, 222, 0.76);
+    background-color: rgba(222, 222, 222, 1);
     color: black;
     border-radius: 16px;
     padding: 30px;
@@ -393,11 +393,11 @@ input.my-profile-button {
     text-decoration: none;
     color: black;
     font-weight: bold;
-    border: 1px solid;
+    border: none;
     border-radius: 8px;
     background-color: #00000022;
     padding: 10px 20px;
-    /*transition: background-color 0.2s ease;*/
+
 }
 
 .close-popUp-button:hover {

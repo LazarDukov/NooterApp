@@ -57,7 +57,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getUserByNote(Long id) {
+    public User getUserByRecord(Long id) {
         return userRepository.findUserByRecordsId(id).orElseThrow(() -> new UsernameNotFoundException("User of this note is not found!"));
 
     }

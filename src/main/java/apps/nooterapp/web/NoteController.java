@@ -6,6 +6,7 @@ import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.services.ArchiveService;
 import apps.nooterapp.services.NoteService;
+import apps.nooterapp.services.RecordService;
 import apps.nooterapp.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,14 @@ import java.util.stream.Collectors;
 public class NoteController {
     private NoteService noteService;
     private UserService userService;
+
+    private RecordService recordService;
     private ArchiveService archiveService;
 
-    public NoteController(NoteService notesService, UserService userService, ArchiveService archiveService) {
+    public NoteController(NoteService notesService, UserService userService, RecordService recordService, ArchiveService archiveService) {
         this.noteService = notesService;
         this.userService = userService;
+        this.recordService = recordService;
         this.archiveService = archiveService;
     }
 
@@ -66,7 +70,7 @@ public class NoteController {
     @GetMapping("/my-notes/view/{id}")
     @ResponseBody
     public ResponseEntity<Record> viewNote(@PathVariable Long id) {
-        Record record = noteService.viewRecord(id);
+        Record record = recordService.viewRecord(id);
         return ResponseEntity.ok(record);
     }
 
@@ -78,7 +82,7 @@ public class NoteController {
 
     @GetMapping("/my-notes/edit-note/{id}")
     public String showEditNotePage(@PathVariable Long id, Model model) {
-        Record record = noteService.viewRecord(id);
+        Record record = recordService.viewRecord(id);
         model.addAttribute("editNoteDTO", record);
         return "edit-note";
     }
@@ -86,15 +90,15 @@ public class NoteController {
 
     @PostMapping("/my-notes/edit-note/{id}")
     public String postEditNotePage(@PathVariable Long id, @ModelAttribute EditNoteDTO editNoteDTO) {
-        noteService.editRecord(id, editNoteDTO);
+        recordService.editRecord(id, editNoteDTO);
         return "redirect:/my-notes";
 
     }
 
 
-    @GetMapping("/my-notes/delete-note/{id}")
+    @GetMapping("/my-notes/delete-record/{id}")
     public String deleteNote(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
-        noteService.deleteRecord(id);
+        recordService.deleteRecord(id);
         return "redirect:/my-notes?sort=" + sort;
     }
 

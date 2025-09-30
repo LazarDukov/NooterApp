@@ -4,9 +4,7 @@ import apps.nooterapp.model.dtos.EditNoteDTO;
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
 import apps.nooterapp.repositories.RecordRepository;
-import apps.nooterapp.services.ArchiveService;
-import apps.nooterapp.services.NoteService;
-import apps.nooterapp.services.UserService;
+import apps.nooterapp.services.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +21,18 @@ public class TaskController {
     private UserService userService;
     private NoteService noteService;
     private ArchiveService archiveService;
+    private TaskService taskService;
+    private RecordService recordService;
 
 
     private RecordRepository recordRepository;
 
-    public TaskController(UserService userService, NoteService noteService, ArchiveService archiveService, RecordRepository recordRepository) {
+    public TaskController(UserService userService, NoteService noteService, ArchiveService archiveService, TaskService taskService, RecordService recordService, RecordRepository recordRepository) {
         this.userService = userService;
         this.noteService = noteService;
         this.archiveService = archiveService;
+        this.taskService = taskService;
+        this.recordService = recordService;
         this.recordRepository = recordRepository;
     }
 
@@ -71,7 +73,7 @@ public class TaskController {
 
 
     @GetMapping("/my-tasks/finish/{id}")
-    public String archiveTask(@PathVariable Long id, @RequestParam (defaultValue = "desc") String sort) {
+    public String archiveTask(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
         archiveService.archiveRecord(id);
         return "redirect:/my-tasks?sort=" + sort;
     }
@@ -79,42 +81,41 @@ public class TaskController {
     @GetMapping("/my-tasks/view/{id}")
     @ResponseBody
     public ResponseEntity<Record> viewTask(@PathVariable Long id) {
-        Record record = noteService.viewRecord(id);
+        Record record = recordService.viewRecord(id);
         return ResponseEntity.ok(record);
     }
 
     @GetMapping("/my-tasks/edit-task/{id}")
     public String showEditTaskPage(@PathVariable Long id, Model model) {
-        Record record = noteService.viewRecord(id);
+        Record record = recordService.viewRecord(id);
         model.addAttribute("editNoteDTO", record);
         return "edit-task";
     }
 
     @PostMapping("/my-tasks/edit-task/{id}")
     public String postEditTaskPage(@PathVariable Long id, @ModelAttribute EditNoteDTO editNoteDTO) {
-        noteService.editRecord(id, editNoteDTO);
+        recordService.editRecord(id, editNoteDTO);
         return "redirect:/my-tasks";
 
     }
 
-    @GetMapping("/my-tasks/delete-task/{id}")
+    @GetMapping("/my-tasks/delete-record/{id}")
     public String deleteTask(@PathVariable Long id, @RequestParam(defaultValue = "desc") String sort) {
-        noteService.deleteRecord(id);
+        recordService.deleteRecord(id);
         return "redirect:/my-tasks?sort=" + sort;
     }
 
     @GetMapping("/my-tasks/all-done")
     public String allTasksDone(Principal principal) {
-        noteService.allTasksDone(principal);
+        taskService.allTasksDone(principal);
         return "redirect:/my-tasks";
     }
 
     @GetMapping("/my-tasks/all-delete")
     public String allTasksDelete(Principal principal) {
-        noteService.allTasksDelete(principal);
+        taskService.allTasksDelete(principal);
         return "redirect:/my-tasks";
     }
-
 
 
 }

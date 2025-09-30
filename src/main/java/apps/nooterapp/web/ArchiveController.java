@@ -2,7 +2,9 @@ package apps.nooterapp.web;
 
 import apps.nooterapp.model.entities.Record;
 import apps.nooterapp.model.entities.User;
+import apps.nooterapp.services.ArchiveService;
 import apps.nooterapp.services.NoteService;
+import apps.nooterapp.services.RecordService;
 import apps.nooterapp.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,14 @@ import java.util.stream.Collectors;
 public class ArchiveController {
     private UserService userService;
     private NoteService noteService;
+    private RecordService recordService;
+    private ArchiveService archiveService;
 
-    public ArchiveController(UserService userService, NoteService noteService) {
+    public ArchiveController(UserService userService, NoteService noteService, RecordService recordService, ArchiveService archiveService) {
         this.userService = userService;
         this.noteService = noteService;
+        this.recordService = recordService;
+        this.archiveService = archiveService;
     }
 
     @GetMapping("/archived-records")
@@ -39,13 +45,13 @@ public class ArchiveController {
     @GetMapping("/archived-records/view/{id}")
     @ResponseBody
     public ResponseEntity<Record> viewArchivedNoteOrTask(@PathVariable Long id) {
-        Record record = noteService.viewRecord(id);
+        Record record = recordService.viewRecord(id);
         return ResponseEntity.ok(record);
     }
 
     @GetMapping("/archived-records/delete-all")
     public String deleteAllArchived(Principal principal) {
-        noteService.deleteArchived(principal);
+        archiveService.deleteArchived(principal);
         return "redirect:/my-profile";
     }
 
@@ -54,14 +60,14 @@ public class ArchiveController {
     @GetMapping("/archived-records/restore/{id}")
     public String restoreNoteOrTask(@PathVariable Long id) {
         System.out.println("Im in CONTROLLER FOR RESTORE METHOD");
-        noteService.restoreRecord(id);
+        recordService.restoreRecord(id);
         System.out.println("I ALREADY RETURN ARCHIVED NOTES");
         return "redirect:/archived-records";
     }
 
     @GetMapping("/archived-records/restore-all")
     public String restoreAll() {
-        noteService.restoreAll();
+        recordService.restoreAll();
         return "redirect:/archived-records";
     }
 }

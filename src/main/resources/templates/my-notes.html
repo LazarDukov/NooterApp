@@ -86,7 +86,7 @@
                 </div>
             </td>
             <td>
-                <a th:href="@{/my-notes/edit-record/{id}(id=${note.id})}">
+                <a th:href="@{/my-notes/edit-note/{id}(id=${note.id})}">
                     <i class="material-icons" style="color: yellow">edit</i></a>
             </td>
             <td>
@@ -153,13 +153,7 @@
             $('[popup-name="' + popup_name + '"]').fadeOut(300);
         });
 
-        // Close Popup When Click Outside
-        $('.popup').on('click', function () {
-            var popup_name = $(this).find('[popup-close]').attr('popup-close');
-            $('[popup-name="' + popup_name + '"]').fadeOut(300);
-        }).children().click(function () {
-            return false;
-        });
+
     });
 </script>
 <footer th:replace="~{fragments/copyright :: footer}">

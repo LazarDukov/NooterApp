@@ -101,7 +101,7 @@ public class RecordServiceTests {
     @Test
     void testViewNoteOrTask() {
         when(mockRecordRepository.findRecordById(testRecord.getId())).thenReturn(testRecord);
-        Record result = noteService.viewRecord(testRecord.getId());
+        Record result = recordService.viewRecord(testRecord.getId());
         Assertions.assertSame(testRecord, result);
     }
 
@@ -113,7 +113,7 @@ public class RecordServiceTests {
         editNoteDTO.setDescription("EDIT DESCRIPTION");
         editNoteDTO.setType(RecordType.NOTE);
         editNoteDTO.setActive(true);
-        noteService.editRecord(testRecord.getId(), editNoteDTO);
+        recordService.editRecord(testRecord.getId(), editNoteDTO);
         verify(mockRecordRepository).save(noteArgumentCaptor.capture());
         Record savedRecord = noteArgumentCaptor.getValue();
         Assertions.assertEquals(editNoteDTO.getTitle(), savedRecord.getTitle());
@@ -170,7 +170,7 @@ public class RecordServiceTests {
         when(mockUserService.getUserByNote(noteId)).thenReturn(testUser);
 
         // Act
-        noteService.deleteRecord(noteId);
+        recordService.deleteRecord(noteId);
 
         // Assert
         Assertions.assertFalse(testUser.getNotes().contains(testRecord), "Note should be removed from user's notes");
@@ -187,7 +187,7 @@ public class RecordServiceTests {
         User testUser = new User();
         testUser.setNotes(new ArrayList<>(List.of(testRecord, testRecord2)));
         when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
-        noteService.deleteArchived(mockPrincipal);
+        archiveService.deleteArchived(mockPrincipal);
         Assertions.assertFalse(testUser.getNotes().size() > 0, "All notes should be removed.");
         verify(mockUserRepository).save(testUser);
         verify(mockRecordRepository).deleteAll();
@@ -217,7 +217,7 @@ public class RecordServiceTests {
         testRecord.setActive(true);
         testUser.getNotes().add(testRecord);
         when(mockUserService.loggedUser(mockPrincipal)).thenReturn(testUser);
-        noteService.allTasksDone(mockPrincipal);
+        taskService.allTasksDone(mockPrincipal);
         Assertions.assertFalse(testUser.getNotes().get(0).isActive(), "Tasks should be with isActive status false.");
         verify(mockRecordRepository).saveAll(List.of(testRecord));
     }
